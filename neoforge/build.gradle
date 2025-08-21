@@ -2,6 +2,10 @@ plugins {
     id 'multiloader-loader'
     id 'net.neoforged.moddev'
 }
+dependencies {
+    api "fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi:${configApiVer}"
+    implementation "me.cybersteve:equiplib-neoforge:${equipLibVer}"
+}
 
 neoForge {
     version = neoforge_version
