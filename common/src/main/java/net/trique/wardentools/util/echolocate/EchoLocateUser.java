@@ -96,7 +96,7 @@ public class EchoLocateUser implements VibrationSystem {
 
         @Override
         public void onReceiveVibration(ServerLevel serverLevel, BlockPos blockPos, Holder<GameEvent> gameEventHolder, @Nullable Entity entity, @Nullable Entity possibleShooter, float distance) {
-
+            Constants.LOGGER.info("Received sound!");
             if (!holder.isDeadOrDying()) {
                 holder.playSound(SoundEvents.WARDEN_TENDRIL_CLICKS, 5.0F, holder.getVoicePitch());
                 if (holder instanceof ServerPlayer player) {
