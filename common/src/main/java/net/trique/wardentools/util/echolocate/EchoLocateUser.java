@@ -16,6 +16,7 @@ import net.minecraft.world.level.gameevent.EntityPositionSource;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.PositionSource;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
+import net.trique.wardentools.Constants;
 import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.platform.Services;
 import org.jetbrains.annotations.Contract;
@@ -80,15 +81,17 @@ public class EchoLocateUser implements VibrationSystem {
 
         @Override
         public boolean canReceiveVibration(ServerLevel serverLevel, BlockPos blockPos, Holder<GameEvent> gameEventHolder, GameEvent.Context context) {
-            if (!holder.isDeadOrDying() && serverLevel.getWorldBorder().isWithinBounds(blockPos)) {
-                Entity source = context.sourceEntity();
-                if (source instanceof LivingEntity livingEntity) {
-                    return this.canTargetEntity(livingEntity);
-                }
-                return true;
-            } else {
-                return false;
-            }
+            Constants.LOGGER.info("Can receive vibration called");
+            return true;
+//            if (!holder.isDeadOrDying() && serverLevel.getWorldBorder().isWithinBounds(blockPos)) {
+//                Entity source = context.sourceEntity();
+//                if (source instanceof LivingEntity livingEntity) {
+//                    return this.canTargetEntity(livingEntity);
+//                }
+//                return true;
+//            } else {
+//                return false;
+//            }
         }
 
         @Override
