@@ -1,5 +1,6 @@
 package net.trique.wardentools.platform;
 
+import net.fabricmc.api.EnvType;
 import net.trique.wardentools.platform.services.IPlatformHelper;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -21,4 +22,10 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
         return FabricLoader.getInstance().isDevelopmentEnvironment();
     }
+
+    @Override
+    public boolean isClient() {
+        return FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT);
+    }
+
 }

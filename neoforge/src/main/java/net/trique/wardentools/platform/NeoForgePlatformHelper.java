@@ -1,5 +1,6 @@
 package net.trique.wardentools.platform;
 
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.trique.wardentools.platform.services.IPlatformHelper;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
@@ -23,4 +24,10 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 
         return !FMLLoader.isProduction();
     }
+
+    @Override
+    public boolean isClient() {
+        return FMLEnvironment.dist.isClient();
+    }
+
 }

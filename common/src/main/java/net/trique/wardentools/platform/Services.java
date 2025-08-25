@@ -1,6 +1,9 @@
 package net.trique.wardentools.platform;
 
 import net.trique.wardentools.Constants;
+import net.trique.wardentools.platform.services.IClientItemPropertiesHelper;
+import net.trique.wardentools.platform.services.IPacketHelper;
+import net.trique.wardentools.platform.services.IParticleHelper;
 import net.trique.wardentools.platform.services.IPlatformHelper;
 
 import java.util.ServiceLoader;
@@ -14,6 +17,10 @@ public class Services {
     // For example this can be used to check if the code is running on Forge vs Fabric, or to ask the modloader if another
     // mod is loaded.
     public static final IPlatformHelper PLATFORM = load(IPlatformHelper.class);
+    public static final IParticleHelper PARTICLE_HELPER = load(IParticleHelper.class);
+    public static final IPacketHelper PACKET_HELPER = load(IPacketHelper.class);
+    public static final IClientItemPropertiesHelper CLIENT_ITEM_PROPERTIES_HELPER =
+            load(IClientItemPropertiesHelper.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.
@@ -24,7 +31,7 @@ public class Services {
         final T loadedService = ServiceLoader.load(clazz)
                 .findFirst()
                 .orElseThrow(() -> new NullPointerException("Failed to load service for " + clazz.getName()));
-        Constants.LOG.debug("Loaded {} for service {}", loadedService, clazz);
+        Constants.LOGGER.debug("Loaded {} for service {}", loadedService, clazz);
         return loadedService;
     }
 }

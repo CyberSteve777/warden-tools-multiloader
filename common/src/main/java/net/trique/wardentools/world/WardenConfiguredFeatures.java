@@ -6,7 +6,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GeodeBlockSettings;
 import net.minecraft.world.level.levelgen.GeodeCrackSettings;
@@ -19,10 +18,11 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
-import net.trique.wardentools.WardenTools;
-import net.trique.wardentools.block.WardenBlocks;
+import net.trique.wardentools.Constants;
 
 import java.util.List;
+
+import static net.trique.wardentools.registry.BlockRegistry.*;
 
 public class WardenConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?,?>> SCULKHYST_GEODE_KEY = registerKey("sculkhyst_geode");
@@ -36,11 +36,12 @@ public class WardenConfiguredFeatures {
 
         register(context, SCULKHYST_GEODE_KEY, Feature.GEODE ,
                 new GeodeConfiguration(new GeodeBlockSettings(BlockStateProvider.simple(Blocks.AIR),
-                        BlockStateProvider.simple(WardenBlocks.SCULKHYST_BLOCK),
-                        BlockStateProvider.simple(WardenBlocks.BUDDING_SCULKHYST),
+                        BlockStateProvider.simple(SCULKHYST_BLOCK.get()),
+                        BlockStateProvider.simple(BUDDING_SCULKHYST.get()),
                         BlockStateProvider.simple(Blocks.CALCITE),
                         BlockStateProvider.simple(Blocks.SMOOTH_BASALT),
-                        List.of(WardenBlocks.SMALL_SCULKHYST_BUD.defaultBlockState(), WardenBlocks.MEDIUM_SCULKHYST_BUD.defaultBlockState(), WardenBlocks.LARGE_SCULKHYST_BUD.defaultBlockState(), WardenBlocks.SCULKHYST_CLUSTER.defaultBlockState()),
+                        List.of(SMALL_SCULKHYST_BUD.get().defaultBlockState(), MEDIUM_SCULKHYST_BUD.get().defaultBlockState(),
+                                LARGE_SCULKHYST_BUD.get().defaultBlockState(), SCULKHYST_CLUSTER.get().defaultBlockState()),
                         BlockTags.FEATURES_CANNOT_REPLACE , BlockTags.GEODE_INVALID_BLOCKS),
                         new GeodeLayerSettings(1.7, 2.2, 3.2, 4.2),
                         new GeodeCrackSettings(0.95, 2.0, 2),
@@ -51,7 +52,7 @@ public class WardenConfiguredFeatures {
     }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(WardenTools.MOD_ID, name));
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name));
     }
 
     private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstrapContext<ConfiguredFeature<?, ?>> context,

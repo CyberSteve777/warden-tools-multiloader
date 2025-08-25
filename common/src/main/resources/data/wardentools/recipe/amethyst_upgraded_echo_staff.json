@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "wardentools:echo_staff"
+    },
+    {
+      "item": "wardentools:amethyst_ingot"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "wardentools:amethyst_upgraded_echo_staff"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "a": {
+      "item": "wardentools:echo_ingot"
+    },
+    "e": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "pattern": [
+    " e ",
+    "eae",
+    " e "
+  ],
+  "result": {
+    "count": 1,
+    "id": "wardentools:amethyst_ingot"
+  }
+}
