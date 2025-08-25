@@ -3,7 +3,6 @@ package net.trique.wardentools.mixin;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.core.Holder;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
@@ -69,12 +68,12 @@ public abstract class LivingEntityMixin extends Entity {
                     user.getVibrationUser());
         }
     }
-
-    @Inject(method = "onEffectAdded", at = @At("TAIL"))
-    private void setEchoLocateUser(MobEffectInstance effectInstance, Entity entity, CallbackInfo ci) {
+    @Inject(method = "tickEffects", at = @At("TAIL"))
+    private void setEchoLocateUser(CallbackInfo ci) {
         LivingEntity self = (LivingEntity) (Object) this;
-        if (effectInstance.is(EffectRegistry.ECHOLOCATE)) {
-            wardentools$echolocateUser = new EchoLocateUser(self, effectInstance.getAmplifier());
+        if (self.hasEffect(EffectRegistry.ECHOLOCATE) && wardentools$echolocateUser == null) {
+            MobEffectInstance echoLocateInstance = self.getEffect(EffectRegistry.ECHOLOCATE);
+            wardentools$echolocateUser = new EchoLocateUser(self, echoLocateInstance.getAmplifier());
         }
     }
 
@@ -100,11 +99,5 @@ public abstract class LivingEntityMixin extends Entity {
             return original.call(source, amount * 0.4f);
         }
         return original.call(source, amount);
-    }
-
-    @Override
-    public boolean dampensVibrations() {
-        LivingEntity self = (LivingEntity) (Object) this;
-        return self.hasEffect(EffectRegistry.SCULK_ADAPTION);
     }
 }
