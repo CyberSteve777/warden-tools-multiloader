@@ -25,13 +25,19 @@ import org.jetbrains.annotations.Nullable;
 public class EchoLocateUser implements VibrationSystem {
     protected LivingEntity holder;
     protected int amplifier;
+    protected int extraBonus;
     private final VibrationSystem.Data vibrationData = new VibrationSystem.Data();
     private final VibrationSystem.User vibrationUser;
 
-    public EchoLocateUser(LivingEntity livingEntity, int amplifier) {
+    public EchoLocateUser(LivingEntity livingEntity, int amplifier, int extraBonus) {
         holder = livingEntity;
         this.amplifier = amplifier;
+        this.extraBonus = extraBonus;
         vibrationUser = new VibrationUser(livingEntity);
+    }
+
+    public EchoLocateUser(LivingEntity livingEntity, int amplifier) {
+        this(livingEntity, amplifier, 0);
     }
 
     @Override
@@ -42,6 +48,14 @@ public class EchoLocateUser implements VibrationSystem {
     @Override
     public User getVibrationUser() {
         return vibrationUser;
+    }
+
+    public int getExtraBonus() {
+        return extraBonus;
+    }
+
+    public void setExtraBonus(int extraBonus) {
+        this.extraBonus = extraBonus;
     }
 
     public LivingEntity getHolder() {
@@ -61,7 +75,7 @@ public class EchoLocateUser implements VibrationSystem {
 
         @Override
         public int getListenerRadius() {
-            return 8 * amplifier;
+            return 8 * amplifier + extraBonus;
         }
 
         @Override
