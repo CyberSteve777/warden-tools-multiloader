@@ -24,13 +24,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Objects;
 
 @Debug(export = true)
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
     @Unique
-    private VibrationSystem wardentools$echolocateUser;
+    private EchoLocateUser wardentools$echolocateUser;
 
     public LivingEntityMixin(EntityType<?> entityType, Level level) {
         super(entityType, level);
@@ -71,24 +70,14 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "tickEffects", at = @At("TAIL"))
     private void setEchoLocateUser(CallbackInfo ci) {
         LivingEntity self = (LivingEntity) (Object) this;
-        if (self.hasEffect(EffectRegistry.ECHOLOCATE) && wardentools$echolocateUser == null) {
+        if (self.hasEffect(EffectRegistry.ECHOLOCATE)) {
             MobEffectInstance echoLocateInstance = self.getEffect(EffectRegistry.ECHOLOCATE);
-            wardentools$echolocateUser = new EchoLocateUser(self, echoLocateInstance.getAmplifier());
-        }
-    }
-
-    @Inject(method = "onEffectRemoved", at = @At("TAIL"))
-    private void removeEchoLocateUser(MobEffectInstance effectInstance, CallbackInfo ci) {
-        if (effectInstance.is(EffectRegistry.ECHOLOCATE)) {
+            int amplifier = echoLocateInstance.getAmplifier();
+            if (wardentools$echolocateUser == null || wardentools$echolocateUser.getAmplifier() != amplifier) {
+                wardentools$echolocateUser = new EchoLocateUser(self, amplifier);
+            }
+        } else if (wardentools$echolocateUser != null) {
             wardentools$echolocateUser = null;
-        }
-    }
-
-    @Inject(method = "onEffectUpdated", at = @At("TAIL"))
-    private void updateEchoLocateUser(MobEffectInstance effectInstance, boolean forced, Entity entity, CallbackInfo ci) {
-        LivingEntity self = (LivingEntity) (Object) this;
-        if (!self.level().isClientSide() && effectInstance.is(EffectRegistry.ECHOLOCATE)) {
-            wardentools$echolocateUser = new EchoLocateUser(self, effectInstance.getAmplifier());
         }
     }
 
