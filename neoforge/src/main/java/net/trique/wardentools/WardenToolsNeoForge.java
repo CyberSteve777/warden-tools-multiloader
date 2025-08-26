@@ -39,12 +39,4 @@ public class WardenToolsNeoForge {
             context.enqueueWork(() -> EchoLocateClientHelper.addEntity(message.Id(), 300));
         });
     }
-
-    @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
-    private static class ClientModEvents {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-            Services.CLIENT_ITEM_PROPERTIES_HELPER.registerCustomBow(ItemRegistry.ECHO_SHRIEKER.get());
-        }
-    }
 }
