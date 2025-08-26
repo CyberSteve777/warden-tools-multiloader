@@ -61,10 +61,10 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tickEchoLocateIfPossible(CallbackInfo ci) {
-        if (wardentools$echolocateUser instanceof EchoLocateUser user && !this.level().isClientSide()) {
-            Constants.LOGGER.info("amplifier: {}", user.getAmplifier());
-            VibrationSystem.Ticker.tick(this.level(), user.getVibrationData(),
-                    user.getVibrationUser());
+        if (wardentools$echolocateUser != null && !this.level().isClientSide()) {
+            Constants.LOGGER.info("amplifier: {}", wardentools$echolocateUser.getAmplifier());
+            VibrationSystem.Ticker.tick(this.level(), wardentools$echolocateUser.getVibrationData(),
+                    wardentools$echolocateUser.getVibrationUser());
         }
     }
     @Inject(method = "tickEffects", at = @At("TAIL"))
