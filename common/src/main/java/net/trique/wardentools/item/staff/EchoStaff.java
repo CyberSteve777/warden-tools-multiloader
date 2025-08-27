@@ -69,8 +69,14 @@ public class EchoStaff extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
-        user.startUsingItem(hand);
-        return super.use(world, user, hand);
+        ItemStack itemStack = user.getItemInHand(hand);
+        boolean bl = !findEchoShard(user).isEmpty();
+        if (!user.hasInfiniteMaterials() && !bl) {
+            return InteractionResultHolder.fail(itemStack);
+        } else {
+            user.startUsingItem(hand);
+            return InteractionResultHolder.consume(itemStack);
+        }
     }
 
     @Override
@@ -94,21 +100,15 @@ public class EchoStaff extends Item {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
-        if (!world.isClientSide && user instanceof Player player) {
-            if (!player.isCreative()) {
-                ItemStack echoShardStack = findEchoShard(player);
-
-                if (!echoShardStack.isEmpty()) {
-                    spawnSonicBoom(world, user);
-                    echoShardStack.shrink(1);
-                    player.getCooldowns().addCooldown(this, cooldown);
-                    stack.hurtAndBreak(1, user, EquipmentSlot.MAINHAND);
-                }
-            } else {
-                spawnSonicBoom(world, user);
+        if (!world.isClientSide() && user instanceof Player player) {
+            ItemStack echoShardStack = findEchoShard(player);
+            spawnSonicBoom(world, player);
+            if (!player.hasInfiniteMaterials()) {
+                echoShardStack.shrink(1);
+                player.getCooldowns().addCooldown(this, cooldown);
+                stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
             }
         }
-
         return super.finishUsingItem(stack, world, user);
     }
 
