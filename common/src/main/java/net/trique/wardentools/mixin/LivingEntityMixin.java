@@ -73,7 +73,7 @@ public abstract class LivingEntityMixin extends Entity {
         }
     }
     @Inject(method = "tickEffects", at = @At("TAIL"))
-    private void setEchoLocateUser(CallbackInfo ci) {
+    private void updateEchoLocateStatus(CallbackInfo ci) {
         LivingEntity self = (LivingEntity) (Object) this;
         if (this.level() instanceof ServerLevel level) {
             if (self.hasEffect(EffectRegistry.ECHOLOCATE)) {
@@ -86,7 +86,7 @@ public abstract class LivingEntityMixin extends Entity {
                 if (currentBiome.is(Biomes.DEEP_DARK) && !wardentools$wasDeepDarkBonusApplied) {
                     wardentools$wasDeepDarkBonusApplied = true;
                     wardentools$echolocateUser.setExtraBonus(16);
-                } else if (wardentools$wasDeepDarkBonusApplied) {
+                } else if (!currentBiome.is(Biomes.DEEP_DARK) && wardentools$wasDeepDarkBonusApplied) {
                     wardentools$wasDeepDarkBonusApplied = false;
                     wardentools$echolocateUser.setExtraBonus(0);
                 }
