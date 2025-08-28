@@ -37,7 +37,7 @@ public class ItemRegistry {
 
     public static final RegistryObject<Item, RoseGoldEchoStaff> ROSE_GOLD_UPGRADED_ECHO_STAFF = ITEMS.register("rose_gold_upgraded_echo_staff",
             () -> new RoseGoldEchoStaff(getFireResistantProperties().rarity(Rarity.EPIC).durability(76),
-                    80, 20, 40, 14, 20.0f, 2.5, 0.5));
+                    80, 20, 40, 7, 20.0f, 2.5, 0.5));
 
     public static final RegistryObject<Item, EchoShrieker> ECHO_SHRIEKER = ITEMS.register("echo_shrieker",
             () -> new EchoShrieker(getFireResistantProperties().rarity(Rarity.EPIC).durability(50)));
