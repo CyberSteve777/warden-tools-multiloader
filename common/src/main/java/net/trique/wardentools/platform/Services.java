@@ -1,10 +1,7 @@
 package net.trique.wardentools.platform;
 
 import net.trique.wardentools.Constants;
-import net.trique.wardentools.platform.services.IClientItemPropertiesHelper;
-import net.trique.wardentools.platform.services.IPacketHelper;
-import net.trique.wardentools.platform.services.IParticleHelper;
-import net.trique.wardentools.platform.services.IPlatformHelper;
+import net.trique.wardentools.platform.services.*;
 
 import java.util.ServiceLoader;
 
@@ -19,8 +16,6 @@ public class Services {
     public static final IPlatformHelper PLATFORM = load(IPlatformHelper.class);
     public static final IParticleHelper PARTICLE_HELPER = load(IParticleHelper.class);
     public static final IPacketHelper PACKET_HELPER = load(IPacketHelper.class);
-    public static final IClientItemPropertiesHelper CLIENT_ITEM_PROPERTIES_HELPER =
-            load(IClientItemPropertiesHelper.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.
