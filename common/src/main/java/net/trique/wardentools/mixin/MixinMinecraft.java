@@ -27,7 +27,7 @@ public class MixinMinecraft {
     @WrapMethod(method = "shouldEntityAppearGlowing")
     private boolean renderEchoLocatedEntity(Entity entity, Operation<Boolean> original) {
         LocalPlayer player = ClientFunctions.getLocalPlayer();
-        return (player.hasEffect(EffectRegistry.ECHOLOCATE) && !entity.is(player) &&
-                EchoLocateClientHelper.getEntitiesToRenderGlowing().contains(entity.getId())) || original.call(entity);
+        return original.call(entity) || (player.hasEffect(EffectRegistry.ECHOLOCATE) && !entity.is(player) &&
+                EchoLocateClientHelper.getEntitiesToRenderGlowing().contains(entity.getId()));
     }
 }
