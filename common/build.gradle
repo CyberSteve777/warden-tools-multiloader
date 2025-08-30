@@ -3,6 +3,9 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+
+sourceSets.main.resources { srcDir file('../common/src/generated/resources').getAbsolutePath() }
+
 neoForge {
     neoFormVersion = neo_form_version
     // Automatically enable AccessTransformers if the file exists
@@ -38,6 +41,8 @@ configurations {
 
 artifacts {
     commonJava sourceSets.main.java.sourceDirectories.singleFile
-    commonResources sourceSets.main.resources.sourceDirectories.singleFile
+    for (def dir: sourceSets.main.resources.sourceDirectories.files) {
+        commonResources dir
+    }
 }
 
