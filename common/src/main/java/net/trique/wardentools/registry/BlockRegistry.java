@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 
 public class BlockRegistry {
 
-    protected static final RegistrationProvider<Block> BLOCKS = RegistrationProvider.get(Registries.BLOCK, Constants.MOD_ID);
+    public static final RegistrationProvider<Block> BLOCKS = RegistrationProvider.get(Registries.BLOCK, Constants.MOD_ID);
 
     public static final RegistryObject<Block, SculkhystBlock> SCULKHYST_BLOCK = registerBlock("sculkhyst_block", () ->
             new SculkhystBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).strength(1.5f).sound(SoundType.SCULK), UniformInt.of(8, 16)));
