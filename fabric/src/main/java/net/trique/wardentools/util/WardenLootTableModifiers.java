@@ -10,6 +10,7 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.trique.wardentools.registry.ItemRegistry;
 
 public class WardenLootTableModifiers {
     private static final ResourceLocation ANCIENT_CITY_ID = BuiltInLootTables.ANCIENT_CITY.location();
@@ -19,10 +20,9 @@ public class WardenLootTableModifiers {
     public static void modifyLootTables() {
         LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
             if(ANCIENT_CITY_ID.equals(key.location())) {
-                LootPool.Builder TemplatePoolBuilder = LootPool.lootPool();
-                TemplatePoolBuilder
+                LootPool.Builder TemplatePoolBuilder = LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(WardenItems.WARDEN_UPGRADE_SMITHING_TEMPLATE)
+                        .add(LootItem.lootTableItem(ItemRegistry.WARDEN_UPGRADE_SMITHING_TEMPLATE.get())
                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f)))
                                 .when(LootItemRandomChanceCondition.randomChance(0.1f))
                         );
@@ -32,12 +32,12 @@ public class WardenLootTableModifiers {
                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0f))))
                         .setRolls(ConstantValue.exactly(1));
                 LootPool.Builder EchoApplePoolBuilder = LootPool.lootPool()
-                        .add(LootItem.lootTableItem(WardenItems.ECHO_APPLE)
+                        .add(LootItem.lootTableItem(ItemRegistry.ECHO_APPLE.get())
                                 .when(LootItemRandomChanceCondition.randomChance(0.75f))
                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
                         .setRolls(ConstantValue.exactly(1));
                 LootPool.Builder SculkShellPoolBuilder = LootPool.lootPool()
-                        .add(LootItem.lootTableItem(WardenItems.SCULK_SHELL)
+                        .add(LootItem.lootTableItem(ItemRegistry.SCULK_SHELL.get())
                                 .when(LootItemRandomChanceCondition.randomChance(0.25f))
                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
                         .setRolls(ConstantValue.exactly(1));
@@ -50,7 +50,7 @@ public class WardenLootTableModifiers {
             if(SCULK_SHRIEKER_ID.equals(key.location())) {
                 LootPool.Builder poolBuilder = LootPool.lootPool()
                         .when(LootItemRandomChanceCondition.randomChance(0.25f))
-                        .add(LootItem.lootTableItem(WardenItems.SHRIEKER_FANG))
+                        .add(LootItem.lootTableItem(ItemRegistry.SHRIEKER_FANG.get()))
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f)));
                 tableBuilder.withPool(poolBuilder);
             }
