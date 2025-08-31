@@ -23,7 +23,7 @@ import static net.trique.wardentools.registry.ItemRegistry.*;
 
 public class WTGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
-    private static final ResourceLocation ANCIENT_CITY_LOOT_LOCATION = BuiltInLootTables.DESERT_PYRAMID.location();
+    private static final ResourceLocation ANCIENT_CITY_LOOT_LOCATION = BuiltInLootTables.ANCIENT_CITY.location();
     private static final ResourceLocation SCULK_SHRIEKER_LOOT_LOCATION = Blocks.SCULK_SHRIEKER.getLootTable().location();
     private static final ResourceLocation WARDEN_LOOT_LOCATION = EntityType.WARDEN.getDefaultLootTable().location();
 
@@ -51,7 +51,7 @@ public class WTGlobalLootModifierProvider extends GlobalLootModifierProvider {
         }, Items.ECHO_SHARD, 1, 3));
         add("add_warden_soul_to_warden_loot", new AddItemToWardenLootModifier(new LootItemCondition[]{
                 LootTableIdCondition.builder(WARDEN_LOOT_LOCATION).build()
-        }, WARDEN_SOUL.get(), 0.5f, 0.1f, 1, 2));
+        }, WARDEN_SOUL.get(), 0.3f, 0.1f, 1, 2));
         add("add_warden_soul_to_shrieker_loot", new AddItemToShriekerLootModifier(new LootItemCondition[]{
                 LootTableIdCondition.builder(SCULK_SHRIEKER_LOOT_LOCATION).build()
         }, WARDEN_SOUL.get(), 0.05f, 0.05f, 1, 2));
