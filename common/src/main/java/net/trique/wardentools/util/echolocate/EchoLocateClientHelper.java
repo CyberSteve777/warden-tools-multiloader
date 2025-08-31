@@ -9,7 +9,6 @@ public class EchoLocateClientHelper {
     private static final HashMap<Integer, EntityGlowTicker> TO_RENDER_GLOWING = new HashMap<>();
 
 
-
     public static void tickClientGlowingEntities() {
         Iterator<Integer> iterator = TO_RENDER_GLOWING.keySet().iterator();
         try {
@@ -19,7 +18,6 @@ public class EchoLocateClientHelper {
                 if (!ticker.tick()) {
                     iterator.remove();
                 }
-
             }
         } catch (ConcurrentModificationException ignored) {
         }
