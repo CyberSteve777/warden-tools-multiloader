@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.trique.wardentools.Constants;
 
 
-public record AddEntityGlowPacket(int Id) implements CustomPacketPayload {
+public record AddEntityGlowPacket(int id) implements CustomPacketPayload {
     public static final Type<AddEntityGlowPacket> TYPE = new Type<>(
             ResourceLocation.fromNamespaceAndPath(
                     Constants.MOD_ID,
@@ -24,7 +24,7 @@ public record AddEntityGlowPacket(int Id) implements CustomPacketPayload {
     }
 
     public void write(FriendlyByteBuf buf) {
-        buf.writeInt(Id);
+        buf.writeInt(id);
     }
 
     @Override
