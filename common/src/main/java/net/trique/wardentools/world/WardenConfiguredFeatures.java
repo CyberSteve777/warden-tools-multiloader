@@ -15,9 +15,6 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.GeodeConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
-import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
-import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.trique.wardentools.Constants;
 
 import java.util.List;
@@ -28,11 +25,6 @@ public class WardenConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?,?>> SCULKHYST_GEODE_KEY = registerKey("sculkhyst_geode");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
-        var placedFeatureRegistryEntryLookup = context.lookup(Registries.PLACED_FEATURE);
-        RuleTest stoneReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
-        RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
-        RuleTest netherReplaceables = new TagMatchTest(BlockTags.BASE_STONE_NETHER);
-        RuleTest endstoneReplaceables = new BlockMatchTest(Blocks.END_STONE);
 
         register(context, SCULKHYST_GEODE_KEY, Feature.GEODE ,
                 new GeodeConfiguration(new GeodeBlockSettings(BlockStateProvider.simple(Blocks.AIR),
