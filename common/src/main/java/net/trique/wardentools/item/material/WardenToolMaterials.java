@@ -2,16 +2,17 @@ package net.trique.wardentools.item.material;
 
 import com.google.common.base.Suppliers;
 import java.util.function.Supplier;
-import net.minecraft.tags.BlockTags;
+
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.trique.wardentools.registry.ItemRegistry;
+import net.trique.wardentools.util.WTBlockTags;
 
 public enum WardenToolMaterials implements Tier {
-    SCULKIFIED(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 2106, 10.0f, 5.0f, 18, () -> Ingredient.of(ItemRegistry.ECHO_INGOT.get())),
-    WARDEN(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 3006, 11.0f, 6.0f, 21, () -> Ingredient.of(ItemRegistry.SCULK_SHELL.get()));
+    SCULKIFIED(WTBlockTags.INCORRECT_FOR_SCULKHYST_TOOLS, 2106, 10.0f, 5.0f, 18, () -> Ingredient.of(ItemRegistry.ECHO_INGOT.get())),
+    WARDEN(WTBlockTags.INCORRECT_FOR_WARDEN_TOOLS, 3006, 11.0f, 6.0f, 21, () -> Ingredient.of(ItemRegistry.SCULK_SHELL.get()));
 
     private final TagKey<Block> inverseTag;
     private final int itemDurability;
