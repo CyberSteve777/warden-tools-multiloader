@@ -52,6 +52,6 @@ public class WTBlockLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return BlockRegistry.BLOCKS.getEntries().stream().map((blockRegistryObject -> (Block) blockRegistryObject.get()))::iterator;
+        return BlockRegistry.getModBlocks();
     }
 }

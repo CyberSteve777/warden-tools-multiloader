@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 
 public class BlockRegistry {
 
-    public static final RegistrationProvider<Block> BLOCKS = RegistrationProvider.get(Registries.BLOCK, Constants.MOD_ID);
+    protected static final RegistrationProvider<Block> BLOCKS = RegistrationProvider.get(Registries.BLOCK, Constants.MOD_ID);
 
     public static final RegistryObject<Block, SculkhystBlock> SCULKHYST_BLOCK = registerBlock("sculkhyst_block", () ->
             new SculkhystBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).strength(1.5f).sound(SoundType.SCULK), UniformInt.of(8, 16)));
@@ -53,5 +53,9 @@ public class BlockRegistry {
         var reg = BLOCKS.register(name, block);
         ItemRegistry.ITEMS.register(name, () -> item.apply(reg).get());
         return reg;
+    }
+
+    public static Iterable<Block> getModBlocks() {
+        return BlockRegistry.BLOCKS.getEntries().stream().map((blockRegistryObject -> (Block) blockRegistryObject.get()))::iterator;
     }
 }
