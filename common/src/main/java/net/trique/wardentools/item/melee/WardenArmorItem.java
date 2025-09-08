@@ -1,13 +1,13 @@
 package net.trique.wardentools.item.melee;
 
 import me.cybersteve.equiplib.armorset.base.EffectArmorSet;
-import me.cybersteve.equiplib.item.armor.base.IEffectArmorItemExtension;
+import me.cybersteve.equiplib.item.armor.base.IEffectArmorItem;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 
 
-public class WardenArmorItem extends ArmorItem implements IEffectArmorItemExtension {
+public class WardenArmorItem extends ArmorItem implements IEffectArmorItem {
     protected EffectArmorSet set;
 
     public WardenArmorItem(Holder<ArmorMaterial> material, Type type, Properties settings, EffectArmorSet set) {
