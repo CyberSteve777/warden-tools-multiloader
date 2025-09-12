@@ -1,11 +1,11 @@
-package net.trique.wardentools.data;
+package net.trique.wardentools.util;
 
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BowItem;
 import net.trique.wardentools.registry.ItemRegistry;
 
-public class WardenModelPredicateProvider {
+public class WTRegModelUtil {
     public static void registerModModels() {
         registerBow(ItemRegistry.ECHO_SHRIEKER.get());
     }

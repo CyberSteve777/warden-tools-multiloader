@@ -13,8 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.trique.wardentools.registry.BlockRegistry;
 
-public class BuddingSculkhystBlock
-extends AmethystBlock {
+public class BuddingSculkhystBlock extends AmethystBlock {
     public static final int GROW_CHANCE = 5;
     private static final Direction[] DIRECTIONS = Direction.values();
 
@@ -24,7 +23,7 @@ extends AmethystBlock {
 
     @Override
     public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
-        if (random.nextInt(5) != 0) {
+        if (random.nextInt(GROW_CHANCE) != 0) {
             return;
         }
         Direction direction = UPDATE_SHAPE_ORDER[random.nextInt(UPDATE_SHAPE_ORDER.length)];
@@ -41,7 +40,7 @@ extends AmethystBlock {
             block = BlockRegistry.SCULKHYST_CLUSTER.get();
         }
         if (block != null) {
-            BlockState blockState2 = (BlockState)((BlockState)block.defaultBlockState().setValue(AmethystClusterBlock.FACING, direction)).setValue(AmethystClusterBlock.WATERLOGGED, blockState.getFluidState().getType() == Fluids.WATER);
+            BlockState blockState2 = block.defaultBlockState().setValue(AmethystClusterBlock.FACING, direction).setValue(AmethystClusterBlock.WATERLOGGED, blockState.getFluidState().getType() == Fluids.WATER);
             world.setBlockAndUpdate(blockPos, blockState2);
         }
     }
