@@ -31,6 +31,7 @@ public class WTDataGenerator {
         BlockTagsProvider blockTagsProvider = new WTBlockTagProvider(packOutput, lookupProvider, existingFileHelper);
         generator.addProvider(event.includeServer(), blockTagsProvider);
         generator.addProvider(event.includeServer(), new WTWorldGenProvider(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), new WTBiomeTagProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new WTItemTagProvider(packOutput, lookupProvider,
                 blockTagsProvider.contentsGetter(), existingFileHelper));
         generator.addProvider(event.includeServer(), new WTRecipeProvider(packOutput, lookupProvider));
