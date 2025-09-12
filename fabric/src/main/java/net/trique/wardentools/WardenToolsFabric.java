@@ -1,15 +1,8 @@
 package net.trique.wardentools;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
-import net.trique.wardentools.particle.AmethystSonicBoomParticle;
-import net.trique.wardentools.particle.EnderSonicBoomParticle;
-import net.trique.wardentools.particle.RoseGoldSonicBoomParticle;
-import net.trique.wardentools.particle.ShriekParticle;
-import net.trique.wardentools.registry.ParticleRegistry;
+import net.trique.wardentools.util.WTLootTableModifiers;
+import net.trique.wardentools.worldgen.WardenWorldGeneration;
 
 public class WardenToolsFabric implements ModInitializer {
     
@@ -23,5 +16,7 @@ public class WardenToolsFabric implements ModInitializer {
         // Use Fabric to bootstrap the Common mod.
         Constants.LOGGER.info("Hello Fabric world!");
         WardenToolsCommon.init();
+        WTLootTableModifiers.modifyLootTables();
+        WardenWorldGeneration.generateWardenWorldGen();
     }
 }
