@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.renderer.RenderType;
-import net.trique.wardentools.data.WardenModelPredicateProvider;
+import net.trique.wardentools.util.WTRegModelUtil;
 import net.trique.wardentools.entity.SculkArrowRenderer;
 import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.particle.*;
@@ -20,7 +20,7 @@ public class WardenToolsFabricClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.LARGE_SCULKHYST_BUD.get(), RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.MEDIUM_SCULKHYST_BUD.get(), RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.SMALL_SCULKHYST_BUD.get(), RenderType.cutout());
-        WardenModelPredicateProvider.registerModModels();
+        WTRegModelUtil.registerModModels();
         ParticleFactoryRegistry.getInstance().register(ParticleRegistry.SHRIEK_PARTICLE.get(), ShriekParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ParticleRegistry.ROSE_GOLD_SONIC_BOOM.get(), RoseGoldSonicBoomParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ParticleRegistry.AMETHYST_SONIC_BOOM.get(), AmethystSonicBoomParticle.Factory::new);
