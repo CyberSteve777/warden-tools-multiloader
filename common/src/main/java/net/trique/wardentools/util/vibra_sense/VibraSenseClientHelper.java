@@ -1,11 +1,11 @@
-package net.trique.wardentools.util.echolocate;
+package net.trique.wardentools.util.vibra_sense;
 
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-public class EchoLocateClientHelper {
+public class VibraSenseClientHelper {
     private static final HashMap<Integer, EntityGlowTicker> TO_RENDER_GLOWING = new HashMap<>();
 
 
