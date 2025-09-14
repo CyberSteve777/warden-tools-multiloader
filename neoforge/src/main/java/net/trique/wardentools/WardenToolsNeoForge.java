@@ -7,7 +7,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.trique.wardentools.loot.ModLootModifiers;
 import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
-import net.trique.wardentools.util.echolocate.EchoLocateClientHelper;
+import net.trique.wardentools.util.vibra_sense.VibraSenseClientHelper;
 
 @Mod(Constants.MOD_ID)
 public class WardenToolsNeoForge {
@@ -28,7 +28,7 @@ public class WardenToolsNeoForge {
     private void setupPackets(final RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar(Constants.MOD_ID).versioned("1").optional();
         registrar.playToClient(AddEntityGlowPacket.TYPE, AddEntityGlowPacket.CODEC, (message, context) -> {
-            context.enqueueWork(() -> EchoLocateClientHelper.addEntity(message.id(), 100));
+            context.enqueueWork(() -> VibraSenseClientHelper.addEntity(message.id(), 100));
         });
     }
 }

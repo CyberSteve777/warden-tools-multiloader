@@ -1,4 +1,4 @@
-package net.trique.wardentools.util.echolocate;
+package net.trique.wardentools.util.vibra_sense;
 
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 
@@ -17,16 +17,15 @@ public class EntityGlowTicker {
         return hasRemainingDuration();
     }
 
-    private boolean hasRemainingDuration() {
+    public boolean hasRemainingDuration() {
         return this.isInfiniteDuration() || this.duration > 0;
     }
-
 
     public boolean isInfiniteDuration() {
         return duration == INFINITE_DURATION;
     }
 
-    public int mapDuration(Int2IntFunction mapper) {
+    private int mapDuration(Int2IntFunction mapper) {
         return !this.isInfiniteDuration() && duration != 0 ? mapper.applyAsInt(duration) : duration;
     }
 

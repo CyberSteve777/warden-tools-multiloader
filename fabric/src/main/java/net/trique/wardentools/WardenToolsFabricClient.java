@@ -11,7 +11,7 @@ import net.trique.wardentools.entity.SculkArrowRenderer;
 import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.particle.*;
 import net.trique.wardentools.registry.*;
-import net.trique.wardentools.util.echolocate.EchoLocateClientHelper;
+import net.trique.wardentools.util.vibra_sense.VibraSenseClientHelper;
 
 public class WardenToolsFabricClient implements ClientModInitializer {
     @Override
@@ -26,8 +26,8 @@ public class WardenToolsFabricClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(ParticleRegistry.AMETHYST_SONIC_BOOM.get(), AmethystSonicBoomParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ParticleRegistry.ENDER_SONIC_BOOM.get(), EnderSonicBoomParticle.Factory::new);
         EntityRendererRegistry.register(EntityRegistry.SCULK_ARROW.get(), SculkArrowRenderer::new);
-        ClientPlayNetworking.registerGlobalReceiver(AddEntityGlowPacket.TYPE, ((payload, context) -> {
-            EchoLocateClientHelper.addEntity(payload.id(), 100);
-        }));
+        ClientPlayNetworking.registerGlobalReceiver(AddEntityGlowPacket.TYPE, ((payload, context) ->
+                VibraSenseClientHelper.addEntity(payload.id(), 100))
+        );
     }
 }

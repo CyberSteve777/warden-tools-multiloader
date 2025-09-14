@@ -29,6 +29,6 @@ public class EffectRegistry {
 
     static {
         SCULK_ADAPTION = registerEffect("sculk_adaptation", () -> new SculkAdaptionEffect(MobEffectCategory.BENEFICIAL, 11524864));
-        ECHOLOCATE = registerEffect("echolocate", () -> new EcholocateEffect(MobEffectCategory.BENEFICIAL, 16119285));
+        ECHOLOCATE = registerEffect("vibra_sense", () -> new VibraSenseEffect(MobEffectCategory.BENEFICIAL, 16119285));
     }
 }

@@ -12,9 +12,8 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.gameevent.DynamicGameEventListener;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
-import net.trique.wardentools.Constants;
 import net.trique.wardentools.registry.EffectRegistry;
-import net.trique.wardentools.util.echolocate.EchoLocateUser;
+import net.trique.wardentools.util.vibra_sense.VibraSenseUser;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,7 +25,7 @@ import java.util.function.BiConsumer;
 @Mixin(Player.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
     @Unique
-    private EchoLocateUser wardentools$echolocateUser;
+    private VibraSenseUser wardentools$echolocateUser;
 
     @Unique
     private boolean wardentools$wasDeepDarkBonusApplied = false;
@@ -47,7 +46,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                 int amplifier = echoLocateInstance.getAmplifier();
                 Holder<Biome> currentBiome = level.getBiome(self.getOnPos());
                 if (wardentools$echolocateUser == null || wardentools$echolocateUser.getAmplifier() != amplifier) {
-                    wardentools$echolocateUser = new EchoLocateUser(self, amplifier);
+                    wardentools$echolocateUser = new VibraSenseUser(self, amplifier);
                 }
                 if (currentBiome.is(Biomes.DEEP_DARK) && !wardentools$wasDeepDarkBonusApplied) {
                     wardentools$wasDeepDarkBonusApplied = true;

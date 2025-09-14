@@ -8,7 +8,7 @@ import net.trique.wardentools.Constants;
 import net.minecraft.client.Minecraft;
 import net.trique.wardentools.registry.EffectRegistry;
 import net.trique.wardentools.util.ClientFunctions;
-import net.trique.wardentools.util.echolocate.EchoLocateClientHelper;
+import net.trique.wardentools.util.vibra_sense.VibraSenseClientHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,6 +28,6 @@ public class MixinMinecraft {
     private boolean renderEchoLocatedEntity(Entity entity, Operation<Boolean> original) {
         LocalPlayer player = ClientFunctions.getLocalPlayer();
         return original.call(entity) || (player.hasEffect(EffectRegistry.ECHOLOCATE) && !entity.is(player) &&
-                EchoLocateClientHelper.getEntitiesToRenderGlowing().contains(entity.getId()));
+                VibraSenseClientHelper.getEntitiesToRenderGlowing().contains(entity.getId()));
     }
 }
