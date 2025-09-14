@@ -15,7 +15,7 @@ public class EffectRegistry {
     protected static final RegistrationProvider<MobEffect> EFFECTS = RegistrationProvider.get(Registries.MOB_EFFECT, Constants.MOD_ID);
 
     public static Holder<MobEffect> SCULK_ADAPTION;
-    public static Holder<MobEffect> ECHOLOCATE;
+    public static Holder<MobEffect> VIBRA_SENCE;
 
     private static <T extends MobEffect> Holder<MobEffect> registerEffect(String name, Supplier<T> effectSupplier) {
         RegistryObject<MobEffect, T> effectObject = EFFECTS.register(name, effectSupplier);
@@ -29,6 +29,6 @@ public class EffectRegistry {
 
     static {
         SCULK_ADAPTION = registerEffect("sculk_adaptation", () -> new SculkAdaptionEffect(MobEffectCategory.BENEFICIAL, 11524864));
-        ECHOLOCATE = registerEffect("vibra_sense", () -> new VibraSenseEffect(MobEffectCategory.BENEFICIAL, 16119285));
+        VIBRA_SENCE = registerEffect("vibra_sense", () -> new VibraSenseEffect(MobEffectCategory.BENEFICIAL, 16119285));
     }
 }

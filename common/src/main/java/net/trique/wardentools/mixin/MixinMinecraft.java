@@ -27,7 +27,7 @@ public class MixinMinecraft {
     @WrapMethod(method = "shouldEntityAppearGlowing")
     private boolean renderEchoLocatedEntity(Entity entity, Operation<Boolean> original) {
         LocalPlayer player = ClientFunctions.getLocalPlayer();
-        return original.call(entity) || (player.hasEffect(EffectRegistry.ECHOLOCATE) && !entity.is(player) &&
+        return original.call(entity) || (player.hasEffect(EffectRegistry.VIBRA_SENCE) && !entity.is(player) &&
                 VibraSenseClientHelper.getEntitiesToRenderGlowing().contains(entity.getId()));
     }
 }
