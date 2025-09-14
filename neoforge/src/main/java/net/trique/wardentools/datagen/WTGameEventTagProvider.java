@@ -21,6 +21,6 @@ public class WTGameEventTagProvider extends GameEventTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         tag(WTGameEventTags.VIBRA_SENSE_CAN_LISTEN)
                 .addTag(GameEventTags.WARDEN_CAN_LISTEN)
-                .add(GameEventRegistry.ENTITY_SOUND_EVENT.getResourceKey());
+                .add(GameEventRegistry.ENTITY_SOUND.getResourceKey());
     }
 }

@@ -18,6 +18,6 @@ public abstract class EntityMixin {
     @Inject(method = "playSound(Lnet/minecraft/sounds/SoundEvent;FF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;playSound(Lnet/minecraft/world/entity/player/Player;DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V"), cancellable = true)
     private void makeGameEvent(SoundEvent sound, float volume, float pitch, CallbackInfo ci) {
         Entity self = (Entity) (Object) this;
-        level().gameEvent(self, GameEventRegistry.ENTITY_SOUND_EVENT.asHolder(), self.position());
+        level().gameEvent(self, GameEventRegistry.ENTITY_SOUND.asHolder(), self.position());
     }
 }
