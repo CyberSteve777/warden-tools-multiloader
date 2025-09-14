@@ -41,8 +41,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     private void updateEchoLocateStatus(CallbackInfo ci) {
         Player self = (Player) (Object) this;
         if (this.level() instanceof ServerLevel level) {
-            if (self.hasEffect(EffectRegistry.ECHOLOCATE)) {
-                MobEffectInstance echoLocateInstance = self.getEffect(EffectRegistry.ECHOLOCATE);
+            if (self.hasEffect(EffectRegistry.VIBRA_SENCE)) {
+                MobEffectInstance echoLocateInstance = self.getEffect(EffectRegistry.VIBRA_SENCE);
                 int amplifier = echoLocateInstance.getAmplifier();
                 Holder<Biome> currentBiome = level.getBiome(self.getOnPos());
                 if (wardentools$echolocateUser == null || wardentools$echolocateUser.getAmplifier() != amplifier) {
@@ -78,5 +78,10 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         if (wardentools$dynamicGameEventListener != null && this.level() instanceof ServerLevel level) {
             listenerConsumer.accept(wardentools$dynamicGameEventListener, level);
         }
+    }
+
+    @Override
+    public boolean dampensVibrations() {
+        return hasEffect(EffectRegistry.SCULK_ADAPTION);
     }
 }
