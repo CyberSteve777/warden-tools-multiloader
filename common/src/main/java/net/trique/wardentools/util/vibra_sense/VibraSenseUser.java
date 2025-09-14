@@ -1,42 +1,40 @@
-package net.trique.wardentools.util.echolocate;
+package net.trique.wardentools.util.vibra_sense;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.GameEventTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.level.gameevent.EntityPositionSource;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.PositionSource;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
-import net.trique.wardentools.Constants;
 import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.platform.Services;
+import net.trique.wardentools.util.WTGameEventTags;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
-public class EchoLocateUser implements VibrationSystem {
+public class VibraSenseUser implements VibrationSystem {
     protected LivingEntity holder;
     protected int amplifier;
     protected int extraBonus;
     private final VibrationSystem.Data vibrationData = new VibrationSystem.Data();
     private final VibrationSystem.User vibrationUser;
 
-    public EchoLocateUser(LivingEntity livingEntity, int amplifier, int extraBonus) {
+    public VibraSenseUser(LivingEntity livingEntity, int amplifier, int extraBonus) {
         holder = livingEntity;
         this.amplifier = amplifier;
         this.extraBonus = extraBonus;
         vibrationUser = new VibrationUser(livingEntity);
     }
 
-    public EchoLocateUser(LivingEntity livingEntity, int amplifier) {
+    public VibraSenseUser(LivingEntity livingEntity, int amplifier) {
         this(livingEntity, amplifier, 0);
     }
 
@@ -80,7 +78,7 @@ public class EchoLocateUser implements VibrationSystem {
 
         @Override
         public TagKey<GameEvent> getListenableEvents() {
-            return GameEventTags.WARDEN_CAN_LISTEN;
+            return WTGameEventTags.VIBRA_SENSE_CAN_LISTEN;
         }
 
         @Override

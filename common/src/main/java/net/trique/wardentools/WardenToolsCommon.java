@@ -22,6 +22,7 @@ public class WardenToolsCommon {
         Constants.LOGGER.info("Hello from Common init on {}! we are currently in a {} environment!", Services.PLATFORM.getPlatformName(), Services.PLATFORM.getEnvironmentName());
         Constants.LOGGER.info("The ID for diamonds is {}", BuiltInRegistries.ITEM.getKey(Items.DIAMOND));
 
+        GameEventRegistry.init();
         EffectRegistry.init();
         WTArmorSets.init();
         ItemRegistry.init();
