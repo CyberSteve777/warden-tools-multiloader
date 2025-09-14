@@ -56,6 +56,9 @@ public class WTItemTagProvider extends ItemTagsProvider {
         tag(ItemTags.FOOT_ARMOR).add(
                 SCULKIFIED_BOOTS.get(), WARDEN_BOOTS.get()
         );
+        tag(ItemTags.ARROWS).add(
+                SCULK_ARROW.get()
+        );
         tag(WTItemTags.SCULKHYST_CLUSTER_MAX_HARVESTABLES).addTag(
                 ItemTags.HOES
         );
