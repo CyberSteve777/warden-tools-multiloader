@@ -19,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -47,27 +48,44 @@ public class EchoShrieker extends BowItem {
 
     public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
         ItemStack itemStack = user.getItemInHand(hand);
-        user.startUsingItem(hand);
-        world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.BLOCKS, 3.0f, 1.0f);
-        return InteractionResultHolder.consume(itemStack);
+        boolean bl = !findEchoShard(user).isEmpty();
+        if (!user.hasInfiniteMaterials() && !bl) {
+            return InteractionResultHolder.fail(itemStack);
+        } else {
+            user.startUsingItem(hand);
+            world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.BLOCKS, 3.0f, 1.0f);
+            return InteractionResultHolder.consume(itemStack);
+        }
     }
 
     public void releaseUsing(ItemStack stack, Level world, LivingEntity user, int remainingUseTicks) {
-        if (!world.isClientSide && user instanceof Player player) {
+        if (!world.isClientSide() && user instanceof Player player) {
             int i = this.getUseDuration(stack, user) - remainingUseTicks;
             float loadAmount = getPowerForTime(i);
             remainTicks = loadAmount;
+            ItemStack ammo = findEchoShard(player);
             if (!((double) loadAmount < 0.1f)) {
                 if (!player.isCreative()) {
                     spawnSonicBoom(world, user);
                     player.getCooldowns().addCooldown(this, 120);
                     stack.hurtAndBreak(1, user, EquipmentSlot.MAINHAND);
+                    ammo.shrink(1);
                 } else {
 //                    Constants.LOGGER.info(loadAmount);
                     spawnSonicBoom(world, user);
                 }
             }
         }
+    }
+
+    protected ItemStack findEchoShard(Player player) {
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            ItemStack stack = player.getInventory().getItem(i);
+            if (stack.is(Items.ECHO_SHARD)) {
+                return stack;
+            }
+        }
+        return ItemStack.EMPTY;
     }
 
     public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
