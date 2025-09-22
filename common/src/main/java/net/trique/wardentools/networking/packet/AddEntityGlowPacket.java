@@ -1,6 +1,7 @@
 package net.trique.wardentools.networking.packet;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
@@ -15,17 +16,9 @@ public record AddEntityGlowPacket(int id) implements CustomPacketPayload {
             )
     );
 
-    public static final StreamCodec<FriendlyByteBuf, AddEntityGlowPacket> CODEC = StreamCodec.ofMember(
-            AddEntityGlowPacket::write, AddEntityGlowPacket::new
+    public static final StreamCodec<FriendlyByteBuf, AddEntityGlowPacket> CODEC = StreamCodec.composite(
+            ByteBufCodecs.INT,AddEntityGlowPacket::id, AddEntityGlowPacket::new
     );
-
-    public AddEntityGlowPacket(FriendlyByteBuf buf) {
-        this(buf.readInt());
-    }
-
-    public void write(FriendlyByteBuf buf) {
-        buf.writeInt(id);
-    }
 
     @Override
     public Type<? extends CustomPacketPayload> type() {
