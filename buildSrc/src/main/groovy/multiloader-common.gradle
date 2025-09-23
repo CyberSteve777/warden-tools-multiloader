@@ -47,8 +47,15 @@ repositories {
         url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
     }
     maven {
-        name = "Cloudsmith"
+        name = "EquipLib"
         url = "https://dl.cloudsmith.io/public/cyberworkspace/equiplib/maven"
+    }
+    maven {
+        name = 'GeckoLib'
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+        content {
+            includeGroup("software.bernie.geckolib")
+        }
     }
 }
 
