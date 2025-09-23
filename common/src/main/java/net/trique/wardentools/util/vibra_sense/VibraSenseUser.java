@@ -111,11 +111,11 @@ public class VibraSenseUser implements VibrationSystem {
             if (!holder.isDeadOrDying()) {
                 holder.playSound(SoundEvents.WARDEN_TENDRIL_CLICKS, 5.0F, holder.getVoicePitch());
                 if (holder instanceof ServerPlayer player) {
-                    if (entity instanceof LivingEntity livingEntity) {
-                        Services.PACKET_HELPER.sendPacket(player, new AddEntityGlowPacket(livingEntity.getId()));
+                    if (entity != null) {
+                        Services.PACKET_HELPER.sendPacket(player, new AddEntityGlowPacket(entity.getId()));
                     }
-                    if (possibleShooter instanceof LivingEntity livingEntity) {
-                        Services.PACKET_HELPER.sendPacket(player, new AddEntityGlowPacket(livingEntity.getId()));
+                    if (possibleShooter != null) {
+                        Services.PACKET_HELPER.sendPacket(player, new AddEntityGlowPacket(possibleShooter.getId()));
                     }
                 }
             }
