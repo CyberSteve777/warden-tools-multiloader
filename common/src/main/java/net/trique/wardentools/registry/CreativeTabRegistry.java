@@ -22,7 +22,8 @@ public class CreativeTabRegistry {
     protected static final RegistrationProvider<CreativeModeTab> CREATIVE_MODE_TABS = RegistrationProvider.get(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
 
 
-    public static final RegistryObject<CreativeModeTab, CreativeModeTab> WARDEN_TOOLS_TAB = CREATIVE_MODE_TABS.register(Constants.MOD_ID + "_tab", () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
+    public static final RegistryObject<CreativeModeTab, CreativeModeTab> WARDEN_TOOLS_TAB = CREATIVE_MODE_TABS.register(Constants.MOD_ID + "_tab",
+            () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
             .icon(() -> new ItemStack(WARDEN_CHESTPLATE.get()))
             .displayItems(
                     (itemDisplayParameters, output) -> {
@@ -47,6 +48,7 @@ public class CreativeTabRegistry {
                         output.accept(WARDEN_HOE.get());
                         output.accept(WARDEN_SWORD.get());
                         output.accept(WARDEN_HELMET.get());
+                        output.accept(WARDEN_MASK.get());
                         output.accept(WARDEN_CHESTPLATE.get());
                         output.accept(WARDEN_LEGGINGS.get());
                         output.accept(WARDEN_BOOTS.get());
@@ -63,6 +65,7 @@ public class CreativeTabRegistry {
                         output.accept(WARDEN_SOUL.get());
                         output.accept(SCULK_SHELL.get());
                         output.accept(SHRIEKER_FANG.get());
+                        output.accept(WARDEN_TENDRIL.get());
                         output.accept(SCULK_ARROW.get());
                         output.accept(PotionContents.createItemStack(Items.POTION, PotionRegistry.SCULK_ADAPTION_POTION));
                         output.accept(PotionContents.createItemStack(Items.SPLASH_POTION, PotionRegistry.SCULK_ADAPTION_POTION));

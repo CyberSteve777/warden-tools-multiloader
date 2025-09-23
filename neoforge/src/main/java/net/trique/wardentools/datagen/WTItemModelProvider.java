@@ -55,6 +55,7 @@ public class WTItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(SCULKIFIED_BOOTS);
 
         basicItem(SCULK_SHELL.get());
+//        basicItem(WARDEN_TENDRIL.get());
         handheldItem(WARDEN_AXE.get());
         handheldItem(WARDEN_PICKAXE.get());
         handheldItem(WARDEN_HOE.get());
@@ -64,6 +65,7 @@ public class WTItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(WARDEN_CHESTPLATE);
         trimmedArmorItem(WARDEN_LEGGINGS);
         trimmedArmorItem(WARDEN_BOOTS);
+        basicItem(WARDEN_MASK.get());
 
         basicItem(WARDEN_UPGRADE_SMITHING_TEMPLATE.get());
         basicItem(ECHO_APPLE.get());

@@ -66,6 +66,7 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
         offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(),
                 SCULKIFIED_BOOTS.get(), SCULK_SHELL.get(), RecipeCategory.COMBAT, WARDEN_BOOTS.get());
 
+        offerWardenMaskRecipe(recipeOutput);
         offerShapedEchoShriekerRecipe(recipeOutput);
         offerCrossShapedRecipe(recipeOutput, RecipeCategory.MISC, Items.COPPER_INGOT, Items.ECHO_SHARD,
                 ECHO_INGOT.get(), 1);
@@ -118,6 +119,18 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .pattern("e")
                 .unlockedBy("has_sculk_shell", RecipeProvider.has(SCULK_SHELL.get()))
                 .unlockedBy("has_warden_soul", RecipeProvider.has(WARDEN_SOUL.get()))
+                .save(exporter);
+    }
+
+    private static void offerWardenMaskRecipe(RecipeOutput exporter) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, WARDEN_MASK.get())
+                .define('t', WARDEN_TENDRIL.get())
+                .define('e', Items.ECHO_SHARD)
+                .define('h', SCULKIFIED_HELMET.get())
+                .define('s', SCULK_SHELL.get())
+                .pattern("tet")
+                .pattern("shs")
+                .unlockedBy(RecipeProvider.getHasName(WARDEN_TENDRIL::get), RecipeProvider.has(WARDEN_TENDRIL::get))
                 .save(exporter);
     }
 

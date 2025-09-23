@@ -52,6 +52,9 @@ public class WTGlobalLootModifierProvider extends GlobalLootModifierProvider {
         add("add_warden_soul_to_warden_loot", new AddItemToWardenLootModifier(new LootItemCondition[]{
                 LootTableIdCondition.builder(WARDEN_LOOT_LOCATION).build()
         }, WARDEN_SOUL.get(), 0.3f, 0.1f, 1, 2));
+        add("add_warden_tendril_to_warden_loot", new AddItemToWardenLootModifier(new LootItemCondition[]{
+                LootTableIdCondition.builder(WARDEN_LOOT_LOCATION).build()
+        }, WARDEN_TENDRIL.get(), 0.4f, 0.1f, 1, 2));
         add("add_warden_soul_to_shrieker_loot", new AddItemToShriekerLootModifier(new LootItemCondition[]{
                 LootTableIdCondition.builder(SCULK_SHRIEKER_LOOT_LOCATION).build()
         }, WARDEN_SOUL.get(), 0.05f, 0.05f, 1, 2));
