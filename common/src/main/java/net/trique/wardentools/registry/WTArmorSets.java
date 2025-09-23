@@ -1,4 +1,4 @@
-package net.trique.wardentools.util;
+package net.trique.wardentools.registry;
 
 import me.cybersteve.equiplib.armorset.base.EffectArmorSet;
 import net.trique.wardentools.Constants;

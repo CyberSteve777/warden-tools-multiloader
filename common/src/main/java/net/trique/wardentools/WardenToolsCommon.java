@@ -1,12 +1,11 @@
 package net.trique.wardentools;
 
-import net.minecraft.core.BlockBox;
 import net.trique.wardentools.item.material.WardenArmorMaterials;
 import net.trique.wardentools.platform.Services;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Items;
 import net.trique.wardentools.registry.*;
-import net.trique.wardentools.util.WTArmorSets;
+import net.trique.wardentools.registry.WTArmorSets;
 
 // This class is part of the common project meaning it is shared between all supported loaders. Code written here can only
 // import and access the vanilla codebase, libraries used by vanilla, and optionally third party libraries that provide
