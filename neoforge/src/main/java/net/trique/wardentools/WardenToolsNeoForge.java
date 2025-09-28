@@ -10,12 +10,14 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.trique.wardentools.config.WTConfigClient;
+import net.trique.wardentools.config.WTConfigServer;
 import net.trique.wardentools.loot.ModLootModifiers;
-import net.trique.wardentools.networking.packet.AddGlowPacket;
+import net.trique.wardentools.networking.packet.AddBlockOutlinePacket;
+import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.platform.Services;
 import net.trique.wardentools.util.warden_curse.WardenCurseClientHelper;
 
-import static net.trique.wardentools.config.WTConfigClient.CLIENT_CONFIG;
+import static net.trique.wardentools.config.WTConfigClient.CONFIG;
 
 @Mod(Constants.MOD_ID)
 public class WardenToolsNeoForge {
@@ -29,7 +31,8 @@ public class WardenToolsNeoForge {
         // Use NeoForge to bootstrap the Common mod.
         Constants.LOGGER.info("Hello NeoForge world!");
         WardenToolsCommon.init();
-        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIENT, WTConfigClient.CLIENT_SPEC);
+        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.SERVER, WTConfigServer.SPEC);
+        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIENT, WTConfigClient.SPEC);
         eventBus.addListener(this::setupPackets);
         ModLootModifiers.register(eventBus);
         if (Services.PLATFORM.isClient()) {
@@ -40,9 +43,11 @@ public class WardenToolsNeoForge {
 
     private void setupPackets(final RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar(Constants.MOD_ID).versioned("1").optional();
-        registrar.playToClient(AddGlowPacket.TYPE, AddGlowPacket.CODEC, (message, context) -> context.enqueueWork(() -> {
-            WardenCurseClientHelper.addEntity(message.id(), 100);
-            if (CLIENT_CONFIG.outline_pos.get()) WardenCurseClientHelper.addBlockPos(message.pos(), 100);
+        registrar.playToClient(AddEntityGlowPacket.TYPE, AddEntityGlowPacket.CODEC, (message, context) -> context.enqueueWork(() -> {
+            WardenCurseClientHelper.addEntity(message.id(), message.ticks());
+        }));
+        registrar.playToClient(AddBlockOutlinePacket.TYPE, AddBlockOutlinePacket.CODEC, (message, context) -> context.enqueueWork(() -> {
+            WardenCurseClientHelper.addBlockPos(message.pos(), message.ticks());
         }));
     }
 }

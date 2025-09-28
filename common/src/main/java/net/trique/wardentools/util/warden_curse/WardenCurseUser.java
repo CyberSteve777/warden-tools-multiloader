@@ -14,7 +14,9 @@ import net.minecraft.world.level.gameevent.EntityPositionSource;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.PositionSource;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
-import net.trique.wardentools.networking.packet.AddGlowPacket;
+import net.trique.wardentools.config.WTConfigServer;
+import net.trique.wardentools.networking.packet.AddBlockOutlinePacket;
+import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.platform.Services;
 import net.trique.wardentools.util.WTGameEventTags;
 import org.jetbrains.annotations.Contract;
@@ -111,12 +113,20 @@ public class WardenCurseUser implements VibrationSystem {
             if (!holder.isDeadOrDying()) {
                 holder.playSound(SoundEvents.WARDEN_TENDRIL_CLICKS, 5.0F, holder.getVoicePitch());
                 if (holder instanceof ServerPlayer player) {
+                    int entity_glow_seconds = (int)(WTConfigServer.CONFIG.seconds_to_glow_entity.get() * 20);
+                    int block_outline_seconds = (int)(WTConfigServer.CONFIG.seconds_to_outline_block.get() * 20);
                     if (entity != null) {
-                        Services.PACKET_HELPER.sendPacket(player, new AddGlowPacket(entity.getId(), blockPos));
+                        Services.PACKET_HELPER.sendPacket(player, new AddEntityGlowPacket(entity.getId(),
+                                entity_glow_seconds));
+                        Services.PACKET_HELPER.sendPacket(player, new AddBlockOutlinePacket(blockPos,
+                                block_outline_seconds));
                     }
                     if (possibleShooter != null) {
-                        Services.PACKET_HELPER.sendPacket(player, new AddGlowPacket(possibleShooter.getId(),
-                                possibleShooter.getOnPos().above()));
+                        Services.PACKET_HELPER.sendPacket(player, new AddEntityGlowPacket(possibleShooter.getId(),
+                                entity_glow_seconds));
+                        Services.PACKET_HELPER.sendPacket(player, new AddBlockOutlinePacket(
+                                possibleShooter.getOnPos().above(), block_outline_seconds
+                        ));
                     }
                 }
             }

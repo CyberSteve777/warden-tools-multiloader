@@ -1,6 +1,5 @@
 package net.trique.wardentools;
 
-import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
 import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.client.ConfigScreenFactoryRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -10,17 +9,16 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.renderer.RenderType;
-import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
-import net.trique.wardentools.config.WTConfigClient;
+import net.trique.wardentools.networking.packet.AddBlockOutlinePacket;
 import net.trique.wardentools.util.WTRegModelUtil;
 import net.trique.wardentools.entity.SculkArrowRenderer;
-import net.trique.wardentools.networking.packet.AddGlowPacket;
+import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.particle.*;
 import net.trique.wardentools.registry.*;
 import net.trique.wardentools.util.warden_curse.WardenCurseClientHelper;
 
-import static net.trique.wardentools.config.WTConfigClient.CLIENT_CONFIG;
+import static net.trique.wardentools.config.WTConfigClient.CONFIG;
 
 public class WardenToolsFabricClient implements ClientModInitializer {
     @Override
@@ -41,10 +39,11 @@ public class WardenToolsFabricClient implements ClientModInitializer {
         });
         WorldRenderEvents.AFTER_TRANSLUCENT.register(worldRenderContext ->
                 WardenCurseClientHelper.renderOutlinedBlocks(worldRenderContext.matrixStack()));
-        ClientPlayNetworking.registerGlobalReceiver(AddGlowPacket.TYPE, ((payload, context) -> {
-                    WardenCurseClientHelper.addEntity(payload.id(), 100);
-                    if (CLIENT_CONFIG.outline_pos.get()) WardenCurseClientHelper.addBlockPos(payload.pos(), 100);
-                })
+        ClientPlayNetworking.registerGlobalReceiver(AddEntityGlowPacket.TYPE, ((payload, context) ->
+                WardenCurseClientHelper.addEntity(payload.id(), payload.ticks()))
+        );
+        ClientPlayNetworking.registerGlobalReceiver(AddBlockOutlinePacket.TYPE, ((payload, context) ->
+                WardenCurseClientHelper.addBlockPos(payload.pos(), payload.ticks()))
         );
         ConfigScreenFactoryRegistry.INSTANCE.register(Constants.MOD_ID, ConfigurationScreen::new);
     }

@@ -4,8 +4,8 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import net.trique.wardentools.util.ModHelper;
 
 public final class WTConfigClient {
-    public static final ModConfigSpec CLIENT_SPEC;
-    public static final WTConfigClient CLIENT_CONFIG;
+    public static final ModConfigSpec SPEC;
+    public static final WTConfigClient CONFIG;
 
     public final ModConfigSpec.BooleanValue outline_pos;
 
@@ -17,7 +17,7 @@ public final class WTConfigClient {
 
     static {
         ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
-        CLIENT_CONFIG = new WTConfigClient(configBuilder);
-        CLIENT_SPEC = configBuilder.build();
+        CONFIG = new WTConfigClient(configBuilder);
+        SPEC = configBuilder.build();
     }
 }
