@@ -27,6 +27,7 @@ public class ClientFunctions {
             }
         }
     }
+
     public static LocalPlayer getLocalPlayer() {
         return Minecraft.getInstance().player;
     }

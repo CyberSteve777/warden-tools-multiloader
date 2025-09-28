@@ -8,7 +8,7 @@ import net.trique.wardentools.Constants;
 import net.minecraft.client.Minecraft;
 import net.trique.wardentools.registry.EffectRegistry;
 import net.trique.wardentools.util.ClientFunctions;
-import net.trique.wardentools.util.vibra_sense.VibraSenseClientHelper;
+import net.trique.wardentools.util.warden_curse.WardenCurseClientHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,7 +27,7 @@ public class MixinMinecraft {
     @WrapMethod(method = "shouldEntityAppearGlowing")
     private boolean renderEchoLocatedEntity(Entity entity, Operation<Boolean> original) {
         LocalPlayer player = ClientFunctions.getLocalPlayer();
-        return original.call(entity) || (player.hasEffect(EffectRegistry.VIBRA_SENCE) && !entity.is(player) &&
-                VibraSenseClientHelper.getEntitiesToRenderGlowing().contains(entity.getId()));
+        return original.call(entity) || (player.hasEffect(EffectRegistry.WARDEN_CURSE) && !entity.is(player) &&
+                WardenCurseClientHelper.getEntitiesToRenderGlowing().contains(entity.getId()));
     }
 }

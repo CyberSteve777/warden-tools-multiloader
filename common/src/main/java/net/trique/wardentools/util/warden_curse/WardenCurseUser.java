@@ -1,4 +1,4 @@
-package net.trique.wardentools.util.vibra_sense;
+package net.trique.wardentools.util.warden_curse;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -14,27 +14,27 @@ import net.minecraft.world.level.gameevent.EntityPositionSource;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.PositionSource;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
-import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
+import net.trique.wardentools.networking.packet.AddGlowPacket;
 import net.trique.wardentools.platform.Services;
 import net.trique.wardentools.util.WTGameEventTags;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
-public class VibraSenseUser implements VibrationSystem {
+public class WardenCurseUser implements VibrationSystem {
     protected LivingEntity holder;
     protected int amplifier;
     protected int extraBonus;
     private final VibrationSystem.Data vibrationData = new VibrationSystem.Data();
     private final VibrationSystem.User vibrationUser;
 
-    public VibraSenseUser(LivingEntity livingEntity, int amplifier, int extraBonus) {
+    public WardenCurseUser(LivingEntity livingEntity, int amplifier, int extraBonus) {
         holder = livingEntity;
         this.amplifier = amplifier;
         this.extraBonus = extraBonus;
         vibrationUser = new VibrationUser(livingEntity);
     }
 
-    public VibraSenseUser(LivingEntity livingEntity, int amplifier) {
+    public WardenCurseUser(LivingEntity livingEntity, int amplifier) {
         this(livingEntity, amplifier, 0);
     }
 
@@ -112,10 +112,11 @@ public class VibraSenseUser implements VibrationSystem {
                 holder.playSound(SoundEvents.WARDEN_TENDRIL_CLICKS, 5.0F, holder.getVoicePitch());
                 if (holder instanceof ServerPlayer player) {
                     if (entity != null) {
-                        Services.PACKET_HELPER.sendPacket(player, new AddEntityGlowPacket(entity.getId()));
+                        Services.PACKET_HELPER.sendPacket(player, new AddGlowPacket(entity.getId(), blockPos));
                     }
                     if (possibleShooter != null) {
-                        Services.PACKET_HELPER.sendPacket(player, new AddEntityGlowPacket(possibleShooter.getId()));
+                        Services.PACKET_HELPER.sendPacket(player, new AddGlowPacket(possibleShooter.getId(),
+                                possibleShooter.getOnPos().above()));
                     }
                 }
             }

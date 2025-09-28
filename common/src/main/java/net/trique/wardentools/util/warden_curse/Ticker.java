@@ -1,12 +1,12 @@
-package net.trique.wardentools.util.vibra_sense;
+package net.trique.wardentools.util.warden_curse;
 
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 
-public class EntityGlowTicker {
+public class Ticker {
     public static int INFINITE_DURATION = -1;
     private int duration;
 
-    public EntityGlowTicker(int duration) {
+    public Ticker(int duration) {
         this.duration = duration;
     }
 

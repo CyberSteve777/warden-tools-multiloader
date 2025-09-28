@@ -3,8 +3,8 @@ package net.trique.wardentools.effect;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 
-public class VibraSenseEffect extends MobEffect {
-    public VibraSenseEffect(MobEffectCategory category, int color) {
+public class WardenCurseEffect extends MobEffect {
+    public WardenCurseEffect(MobEffectCategory category, int color) {
         super(category, color);
     }
 

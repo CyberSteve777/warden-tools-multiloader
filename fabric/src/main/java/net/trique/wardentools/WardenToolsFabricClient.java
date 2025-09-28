@@ -1,17 +1,26 @@
 package net.trique.wardentools;
 
+import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
+import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.client.ConfigScreenFactoryRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.renderer.RenderType;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.trique.wardentools.config.WTConfigClient;
 import net.trique.wardentools.util.WTRegModelUtil;
 import net.trique.wardentools.entity.SculkArrowRenderer;
-import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
+import net.trique.wardentools.networking.packet.AddGlowPacket;
 import net.trique.wardentools.particle.*;
 import net.trique.wardentools.registry.*;
-import net.trique.wardentools.util.vibra_sense.VibraSenseClientHelper;
+import net.trique.wardentools.util.warden_curse.WardenCurseClientHelper;
+
+import static net.trique.wardentools.config.WTConfigClient.CLIENT_CONFIG;
 
 public class WardenToolsFabricClient implements ClientModInitializer {
     @Override
@@ -26,8 +35,18 @@ public class WardenToolsFabricClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(ParticleRegistry.AMETHYST_SONIC_BOOM.get(), AmethystSonicBoomParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ParticleRegistry.ENDER_SONIC_BOOM.get(), EnderSonicBoomParticle.Factory::new);
         EntityRendererRegistry.register(EntityRegistry.SCULK_ARROW.get(), SculkArrowRenderer::new);
-        ClientPlayNetworking.registerGlobalReceiver(AddEntityGlowPacket.TYPE, ((payload, context) ->
-                VibraSenseClientHelper.addEntity(payload.id(), 100))
+        ClientTickEvents.START_CLIENT_TICK.register((client) -> {
+            WardenCurseClientHelper.tickClientGlowingEntities();
+            WardenCurseClientHelper.tickOutlinedBlocks();
+        });
+        WorldRenderEvents.AFTER_TRANSLUCENT.register(worldRenderContext ->
+                WardenCurseClientHelper.renderOutlinedBlocks(worldRenderContext.matrixStack()));
+        ClientPlayNetworking.registerGlobalReceiver(AddGlowPacket.TYPE, ((payload, context) -> {
+                    WardenCurseClientHelper.addEntity(payload.id(), 100);
+                    if (CLIENT_CONFIG.outline_pos.get()) WardenCurseClientHelper.addBlockPos(payload.pos(), 100);
+                })
         );
+        NeoForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.CLIENT, WTConfigClient.CLIENT_SPEC);
+        ConfigScreenFactoryRegistry.INSTANCE.register(Constants.MOD_ID, ConfigurationScreen::new);
     }
 }

@@ -13,7 +13,7 @@ import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.gameevent.DynamicGameEventListener;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
 import net.trique.wardentools.registry.EffectRegistry;
-import net.trique.wardentools.util.vibra_sense.VibraSenseUser;
+import net.trique.wardentools.util.warden_curse.WardenCurseUser;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,7 +25,7 @@ import java.util.function.BiConsumer;
 @Mixin(Player.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
     @Unique
-    private VibraSenseUser wardentools$echolocateUser;
+    private WardenCurseUser wardentools$echolocateUser;
 
     @Unique
     private boolean wardentools$wasDeepDarkBonusApplied = false;
@@ -41,12 +41,12 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     private void updateEchoLocateStatus(CallbackInfo ci) {
         Player self = (Player) (Object) this;
         if (this.level() instanceof ServerLevel level) {
-            if (self.hasEffect(EffectRegistry.VIBRA_SENCE)) {
-                MobEffectInstance echoLocateInstance = self.getEffect(EffectRegistry.VIBRA_SENCE);
+            if (self.hasEffect(EffectRegistry.WARDEN_CURSE)) {
+                MobEffectInstance echoLocateInstance = self.getEffect(EffectRegistry.WARDEN_CURSE);
                 int amplifier = echoLocateInstance.getAmplifier();
                 Holder<Biome> currentBiome = level.getBiome(self.getOnPos());
                 if (wardentools$echolocateUser == null || wardentools$echolocateUser.getAmplifier() != amplifier) {
-                    wardentools$echolocateUser = new VibraSenseUser(self, amplifier);
+                    wardentools$echolocateUser = new WardenCurseUser(self, amplifier);
                 }
                 if (currentBiome.is(Biomes.DEEP_DARK) && !wardentools$wasDeepDarkBonusApplied) {
                     wardentools$wasDeepDarkBonusApplied = true;
