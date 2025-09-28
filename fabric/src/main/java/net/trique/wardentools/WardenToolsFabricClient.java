@@ -46,7 +46,6 @@ public class WardenToolsFabricClient implements ClientModInitializer {
                     if (CLIENT_CONFIG.outline_pos.get()) WardenCurseClientHelper.addBlockPos(payload.pos(), 100);
                 })
         );
-        NeoForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.CLIENT, WTConfigClient.CLIENT_SPEC);
         ConfigScreenFactoryRegistry.INSTANCE.register(Constants.MOD_ID, ConfigurationScreen::new);
     }
 }
