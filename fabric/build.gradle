@@ -21,7 +21,7 @@ dependencies {
     modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${configApiVer}"
     modRuntimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
     modImplementation "me.cybersteve:equiplib-fabric:${equipLibVer}"
-    modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_version}"
+    modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolibVer}"
 }
 
 loom {
