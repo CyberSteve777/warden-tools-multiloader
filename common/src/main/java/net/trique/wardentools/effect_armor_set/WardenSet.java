@@ -1,5 +1,6 @@
 package net.trique.wardentools.effect_armor_set;
 
+import me.cybersteve.equiplib.armorset.base.EffectArmorSet;
 import me.cybersteve.equiplib.armorset.impl.FullEffectArmorSet;
 import me.cybersteve.equiplib.item.armor.base.IEffectArmorItem;
 import me.cybersteve.equiplib.util.ArmorSetHelper;
@@ -15,18 +16,17 @@ import java.util.List;
 
 import static net.trique.wardentools.util.ModHelper.getLoc;
 
-public class WardenSet extends FullEffectArmorSet {
-    private static WardenSet instance;
+public class WardenSet extends EffectArmorSet {
 
     public WardenSet() {
-        super(getLoc("warden_set"), WardenSet::getWearingEffects, WardenSet::filler, WardenSet::filler);
-        instance = this;
+        super(getLoc("warden_set"));
     }
 
-    private static EffectList getWearingEffects(LivingEntity entity) {
+    @Override
+    public EffectList getEffectsWhenWearing(LivingEntity entity) {
         EffectList.Builder builder = new EffectList.Builder();
         if (!entity.getItemBySlot(EquipmentSlot.HEAD).is(ItemRegistry.WARDEN_MASK.get())) {
-            if (ArmorSetHelper.hasFullEffectSetArmorOn(entity, instance)) {
+            if (ArmorSetHelper.hasFullEffectSetArmorOn(entity, this)) {
                 builder = builder.addInfiniteEffect(EffectRegistry.SCULK_ADAPTION, 1, true, false, true)
                         .addInfiniteEffect(MobEffects.FIRE_RESISTANCE, 0, true, false, true)
                         .addInfiniteEffect(MobEffects.HEALTH_BOOST, 4, true, false, true);
@@ -35,21 +35,17 @@ public class WardenSet extends FullEffectArmorSet {
             int wardenCurseAmpl = 1;
             for (EquipmentSlot slot : List.of(EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET)) {
                 if (entity.getItemBySlot(slot).getItem() instanceof IEffectArmorItem effectArmorItem &&
-                        effectArmorItem.getEffectArmorSet().equals(instance)) {
+                        effectArmorItem.getEffectArmorSet().equals(this)) {
                     wardenCurseAmpl++;
                 }
             }
             builder = builder.addInfiniteEffect(EffectRegistry.WARDEN_CURSE, wardenCurseAmpl, true, false, true);
-            if (ArmorSetHelper.hasFullEffectSetArmorOn(entity, instance)) {
+            if (ArmorSetHelper.hasFullEffectSetArmorOn(entity, this)) {
                 builder = builder.addInfiniteEffect(EffectRegistry.SCULK_ADAPTION, 3, true, false, true)
                         .addInfiniteEffect(MobEffects.FIRE_RESISTANCE, 0, true, false, true)
                         .addInfiniteEffect(MobEffects.HEALTH_BOOST, 14, true, false, true);
             }
         }
         return builder.build();
-    }
-
-    private static EffectList filler(DamageSource source, LivingEntity target, float amount) {
-        return EffectList.getEmptyList();
     }
 }
