@@ -75,7 +75,7 @@ public class WardenCurseUser implements VibrationSystem {
 
         @Override
         public int getListenerRadius() {
-            return 8 * amplifier + extraBonus;
+            return 8 * (amplifier + 1) + extraBonus;
         }
 
         @Override
