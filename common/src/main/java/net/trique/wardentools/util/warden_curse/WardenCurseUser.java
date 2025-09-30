@@ -20,7 +20,6 @@ import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.platform.Services;
 import net.trique.wardentools.util.WTGameEventTags;
 import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.util.GeckoLibUtil;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
