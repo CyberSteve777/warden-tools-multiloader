@@ -13,10 +13,10 @@ public class WTConfigServer {
     private WTConfigServer(ModConfigSpec.Builder builder) {
         seconds_to_outline_block = builder.comment("Seconds the block will be outlined for")
                 .translation(ModHelper.getTranslationKey("seconds_to_outline_block"))
-                .defineInRange("seconds_to_outline_block", 5., 1., 10.);
+                .defineInRange("seconds_to_outline_block", 5., 0., 10.);
         seconds_to_glow_entity = builder.comment("Seconds the entity will appear glowing for")
                 .translation(ModHelper.getTranslationKey("seconds_to_glow_entity"))
-                .defineInRange("seconds_to_glow_entity", 5., 1., 10.);
+                .defineInRange("seconds_to_glow_entity", 5., 0., 10.);
 
     }
 
