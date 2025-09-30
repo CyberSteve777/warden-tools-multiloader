@@ -6,19 +6,21 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.gameevent.EntityPositionSource;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.PositionSource;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
+import net.trique.wardentools.Constants;
 import net.trique.wardentools.config.WTConfigServer;
+import net.trique.wardentools.item.melee.WardenMaskItem;
 import net.trique.wardentools.networking.packet.AddBlockOutlinePacket;
 import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.platform.Services;
 import net.trique.wardentools.util.WTGameEventTags;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.util.GeckoLibUtil;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
@@ -127,6 +129,12 @@ public class WardenCurseUser implements VibrationSystem {
                         Services.PACKET_HELPER.sendPacket(player, new AddBlockOutlinePacket(
                                 possibleShooter.getOnPos().above(), block_outline_seconds
                         ));
+                    }
+                    ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
+                    if (head.getItem() instanceof WardenMaskItem mask) {
+                        Constants.LOGGER.info("should trigger animation");
+                        mask.triggerAnim(player, GeoItem.getOrAssignId(head, player.serverLevel()),
+                                "warden_mask", "tendrils_click");
                     }
                 }
             }

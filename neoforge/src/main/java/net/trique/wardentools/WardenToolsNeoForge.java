@@ -47,7 +47,7 @@ public class WardenToolsNeoForge {
             WardenCurseClientHelper.addEntity(message.id(), message.ticks());
         }));
         registrar.playToClient(AddBlockOutlinePacket.TYPE, AddBlockOutlinePacket.CODEC, (message, context) -> context.enqueueWork(() -> {
-            WardenCurseClientHelper.addBlockPos(message.pos(), message.ticks());
+            if (CONFIG.outline_pos.get()) WardenCurseClientHelper.addBlockPos(message.pos(), message.ticks());
         }));
     }
 }

@@ -11,20 +11,24 @@ import net.trique.wardentools.client.renderer.WardenMaskRenderer;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.animatable.client.GeoRenderProvider;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
 import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
 
 public class WardenMaskItem extends WardenArmorItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private static final RawAnimation TENDRILS_CLICK = RawAnimation.begin().thenPlay("mask.tendrils.click");
 
     public WardenMaskItem(Holder<ArmorMaterial> material, Type type, Properties settings, EffectArmorSet set) {
         super(material, type, settings, set);
+        SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
     @Override
@@ -46,7 +50,9 @@ public class WardenMaskItem extends WardenArmorItem implements GeoItem {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<GeoAnimatable>(this,
-                state -> PlayState.STOP));
+                "warden_mask",
+                state -> PlayState.STOP)
+                .triggerableAnim("tendrils_click", TENDRILS_CLICK));
     }
 
     @Override

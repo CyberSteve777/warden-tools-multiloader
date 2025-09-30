@@ -42,9 +42,9 @@ public class WardenToolsFabricClient implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(AddEntityGlowPacket.TYPE, ((payload, context) ->
                 WardenCurseClientHelper.addEntity(payload.id(), payload.ticks()))
         );
-        ClientPlayNetworking.registerGlobalReceiver(AddBlockOutlinePacket.TYPE, ((payload, context) ->
-                WardenCurseClientHelper.addBlockPos(payload.pos(), payload.ticks()))
-        );
+        ClientPlayNetworking.registerGlobalReceiver(AddBlockOutlinePacket.TYPE, ((payload, context) ->  {
+            if (CONFIG.outline_pos.get()) WardenCurseClientHelper.addBlockPos(payload.pos(), payload.ticks());
+        }));
         ConfigScreenFactoryRegistry.INSTANCE.register(Constants.MOD_ID, ConfigurationScreen::new);
     }
 }
