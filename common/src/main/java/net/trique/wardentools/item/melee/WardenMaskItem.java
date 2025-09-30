@@ -55,14 +55,7 @@ public class WardenMaskItem extends WardenArmorItem implements GeoItem {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<GeoAnimatable>(this,
                 "warden_mask",
-                state -> {
-                    if (Services.PLATFORM.isDevelopmentEnvironment()) {
-                        RawAnimation TENDRILS_CLICK_LOOPING = RawAnimation.begin().thenLoop("mask.tendrils.click");
-                        Entity entity = state.getData(DataTickets.ENTITY);
-                        if (entity instanceof ArmorStand) return state.setAndContinue(TENDRILS_CLICK_LOOPING);
-                    }
-                    return PlayState.STOP;
-                })
+                state ->  PlayState.STOP)
                 .triggerableAnim("tendrils_click", TENDRILS_CLICK));
     }
 
