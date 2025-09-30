@@ -65,32 +65,36 @@ public class WTLootTableModifiersFabric {
 
     public static void addModifiers() {
         MODIFIERS.add(new AddItemModifier(new LootItemCondition[]{LootItemRandomChanceCondition.randomChance(.1f).build()},
-                Set.of(ANCIENT_CITY_LOOT_LOCATION),ItemRegistry.WARDEN_UPGRADE_SMITHING_TEMPLATE.get()));
+                Set.of(ANCIENT_CITY_LOOT_LOCATION), ItemRegistry.WARDEN_UPGRADE_SMITHING_TEMPLATE.get()));
 
         MODIFIERS.add(new AddItemModifier(new LootItemCondition[]{LootItemRandomChanceCondition.randomChance(.25f).build()},
-                Set.of(ANCIENT_CITY_LOOT_LOCATION),ItemRegistry.SCULK_SHELL.get()));
+                Set.of(ANCIENT_CITY_LOOT_LOCATION), ItemRegistry.SCULK_SHELL.get()));
 
         MODIFIERS.add(new AddItemModifierWithRandomAmount(new LootItemCondition[]{LootItemRandomChanceCondition.randomChance(.5f).build()},
-                Set.of(ANCIENT_CITY_LOOT_LOCATION),ItemRegistry.ECHO_APPLE.get(),1,3));
+                Set.of(ANCIENT_CITY_LOOT_LOCATION), ItemRegistry.ECHO_APPLE.get(), 1, 3));
 
         MODIFIERS.add(new AddItemModifierWithRandomAmount(new LootItemCondition[]{LootItemRandomChanceCondition.randomChance(.5f).build()},
-                Set.of(ANCIENT_CITY_LOOT_LOCATION),Items.ECHO_SHARD,1,3));
+                Set.of(ANCIENT_CITY_LOOT_LOCATION), Items.ECHO_SHARD, 1, 3));
 
 
         MODIFIERS.add(new AddItemToWardenLootModifier(new LootItemCondition[0],
-                Set.of(WARDEN_LOOT_LOCATION),ItemRegistry.WARDEN_SOUL.get(),0.3f, 0.1f, 1, 2));
+                Set.of(WARDEN_LOOT_LOCATION), ItemRegistry.WARDEN_SOUL.get(), 0.3f, 0.1f, 1, 2));
+
+        MODIFIERS.add(new AddItemToWardenLootModifier(new LootItemCondition[0],
+                Set.of(WARDEN_LOOT_LOCATION), ItemRegistry.WARDEN_TENDRIL.get(), 0.4f, 0.1f, 1, 2));
+
 
         MODIFIERS.add(new AddItemToShriekerLootModifier(new LootItemCondition[0],
-                Set.of(SCULK_SHRIEKER_LOOT_LOCATION),ItemRegistry.WARDEN_SOUL.get(), 0.05f, 0.05f, 1, 2));
+                Set.of(SCULK_SHRIEKER_LOOT_LOCATION), ItemRegistry.WARDEN_SOUL.get(), 0.05f, 0.05f, 1, 2));
 
         MODIFIERS.add(new AddItemToShriekerLootModifier(new LootItemCondition[0],
-                Set.of(SCULK_SHRIEKER_LOOT_LOCATION),ItemRegistry.SHRIEKER_FANG.get(),  0.3f, 0.1f, 1, 4));
+                Set.of(SCULK_SHRIEKER_LOOT_LOCATION), ItemRegistry.SHRIEKER_FANG.get(), 0.3f, 0.1f, 1, 4));
     }
 
     public static void modifyLootTables() {
         // TODO: Implement loot table modification similar to NeoForge
         LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
-            if(ANCIENT_CITY_LOOT_LOCATION.equals(key.location())) {
+            if (ANCIENT_CITY_LOOT_LOCATION.equals(key.location())) {
                 LootPool.Builder TemplatePoolBuilder = LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(ItemRegistry.WARDEN_UPGRADE_SMITHING_TEMPLATE.get())
@@ -120,7 +124,6 @@ public class WTLootTableModifiersFabric {
             }
 
 
-
             if (SCULK_SHRIEKER_LOOT_LOCATION.equals(key.location())) {
                 Holder<Enchantment> FORTUNE = registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE);
                 LootPool.Builder poolBuilder = LootPool.lootPool()
@@ -129,7 +132,7 @@ public class WTLootTableModifiersFabric {
                 tableBuilder.withPool(poolBuilder);
             }
 
-            if(WARDEN_LOOT_LOCATION.equals(key.location())) {
+            if (WARDEN_LOOT_LOCATION.equals(key.location())) {
                 Holder<Enchantment> LOOTING = registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.LOOTING);
                 LootPool.Builder WardenSoulPoolBuilder = LootPool.lootPool()
                         .when(LootItemRandomChanceCondition.randomChance(0.25f))
@@ -141,14 +144,14 @@ public class WTLootTableModifiersFabric {
     }
 
     public static void modifyLoot(LootTable lootTable, LootContext context, ObjectArrayList<ItemStack> loot) {
-        ResourceLocation id = ((LootTableDuck)lootTable).warden_tools$getId();
-        MODIFIERS.forEach(fabricLootModifier -> fabricLootModifier.doApply(loot,context,id));
+        ResourceLocation id = ((LootTableDuck) lootTable).warden_tools$getId();
+        MODIFIERS.forEach(fabricLootModifier -> fabricLootModifier.doApply(loot, context, id));
     }
 
     public static <T> void injectID(Optional<T> returnValue, ResourceLocation resourceLocation) {
-        returnValue.ifPresent(value ->{
+        returnValue.ifPresent(value -> {
             if (value instanceof LootTable lootTable) {
-                ((LootTableDuck)lootTable).warden_tools$setId(resourceLocation);
+                ((LootTableDuck) lootTable).warden_tools$setId(resourceLocation);
             }
         });
     }
