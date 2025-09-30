@@ -132,7 +132,7 @@ public class WardenCurseUser implements VibrationSystem {
                     ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
                     if (head.getItem() instanceof WardenMaskItem mask) {
                         Constants.LOGGER.info("should trigger animation");
-                        mask.triggerAnim(player, GeoItem.getOrAssignId(head, player.serverLevel()),
+                        mask.triggerArmorAnim(player, GeoItem.getOrAssignId(head, player.serverLevel()),
                                 "warden_mask", "tendrils_click");
                     }
                 }
