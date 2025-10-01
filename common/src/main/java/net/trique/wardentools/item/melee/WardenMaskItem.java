@@ -3,11 +3,14 @@ package net.trique.wardentools.item.melee;
 import me.cybersteve.equiplib.armorset.base.EffectArmorSet;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.core.Holder;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.trique.wardentools.client.renderer.WardenMaskRenderer;
+import net.trique.wardentools.platform.Services;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -18,6 +21,7 @@ import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
 import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
@@ -51,7 +55,16 @@ public class WardenMaskItem extends WardenArmorItem implements GeoItem {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<GeoAnimatable>(this,
                 "warden_mask",
-                state ->  PlayState.STOP)
+                state -> {
+                    if (Services.PLATFORM.isDevelopmentEnvironment()) {
+                        RawAnimation tendrilsClick_looping = RawAnimation.begin().thenLoop("mask.tendrils.click");
+                        Entity entity = state.getData(DataTickets.ENTITY);
+                        // We'll just have ArmorStands always animate, so we can return here
+                        if (entity instanceof ArmorStand || !(entity instanceof LivingEntity))
+                            return state.setAndContinue(tendrilsClick_looping);
+                    }
+                    return PlayState.STOP;
+                })
                 .triggerableAnim("tendrils_click", TENDRILS_CLICK));
     }
 
