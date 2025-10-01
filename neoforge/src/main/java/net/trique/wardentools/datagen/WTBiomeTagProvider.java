@@ -22,5 +22,7 @@ public class WTBiomeTagProvider extends BiomeTagsProvider {
         tag(WTBiomeTags.SCULKHYST_GEODE_CAN_GENERATE_IN)
                 .addTags(Tags.Biomes.IS_MOUNTAIN)
                 .add(Biomes.DEEP_DARK);
+        tag(WTBiomeTags.WARDEN_CURSE_RECEIVE_BONUS_IN)
+                .add(Biomes.DEEP_DARK);
     }
 }
