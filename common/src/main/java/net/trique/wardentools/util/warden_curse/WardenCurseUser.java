@@ -26,7 +26,7 @@ public class WardenCurseUser implements VibrationSystem {
     protected LivingEntity holder;
     protected int amplifier;
     protected int extraBonus;
-    private final VibrationSystem.Data vibrationData = new VibrationSystem.Data();
+    private VibrationSystem.Data vibrationData = new VibrationSystem.Data();
     private final VibrationSystem.User vibrationUser;
 
     public WardenCurseUser(LivingEntity livingEntity, int amplifier, int extraBonus) {
@@ -43,6 +43,10 @@ public class WardenCurseUser implements VibrationSystem {
     @Override
     public Data getVibrationData() {
         return vibrationData;
+    }
+
+    public void setVibrationData(Data vibrationData) {
+        this.vibrationData = vibrationData;
     }
 
     @Override
@@ -109,14 +113,15 @@ public class WardenCurseUser implements VibrationSystem {
         @Override
         public void onReceiveVibration(ServerLevel serverLevel, BlockPos blockPos, Holder<GameEvent> gameEventHolder, @Nullable Entity entity, @Nullable Entity possibleShooter, float distance) {
             if (!holder.isDeadOrDying()) {
-                ItemStack head = holder.getItemBySlot(EquipmentSlot.HEAD);
-                if (head.getItem() instanceof WardenMaskItem mask) {
-                    mask.triggerArmorAnim(holder, GeoItem.getOrAssignId(head, serverLevel),
-                            "warden_mask", "tendrils_click");
+                if ((entity != null && !holder.is(entity)) || (possibleShooter != null && !holder.is(possibleShooter))) {
+                    ItemStack head = holder.getItemBySlot(EquipmentSlot.HEAD);
+                    if (head.getItem() instanceof WardenMaskItem mask) {
+                        mask.triggerArmorAnim(holder, GeoItem.getOrAssignId(head, serverLevel),
+                                "warden_mask", "tendrils_click");
+                    }
+                    serverLevel.playSound(null, holder.getX(), holder.getY(), holder.getZ(),
+                            SoundEvents.WARDEN_TENDRIL_CLICKS, holder.getSoundSource(), 1.0F, holder.getVoicePitch());
                 }
-                serverLevel.playSound(null, holder.getX(), holder.getY(), holder.getZ(),
-                        SoundEvents.WARDEN_TENDRIL_CLICKS, holder.getSoundSource(), 1.0F, holder.getVoicePitch());
-//                holder.playSound(SoundEvents.WARDEN_TENDRIL_CLICKS, 5.0F, holder.getVoicePitch());
                 if (holder instanceof ServerPlayer player) {
                     int entity_glow_seconds = (int)(WTConfigServer.CONFIG.seconds_to_glow_entity.get() * 20);
                     int block_outline_seconds = (int)(WTConfigServer.CONFIG.seconds_to_outline_block.get() * 20);
