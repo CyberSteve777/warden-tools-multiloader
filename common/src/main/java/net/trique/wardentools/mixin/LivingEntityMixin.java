@@ -22,6 +22,7 @@ import net.minecraft.world.level.gameevent.DynamicGameEventListener;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.registry.EffectRegistry;
+import net.trique.wardentools.util.WTBiomeTags;
 import net.trique.wardentools.util.warden_curse.WardenCurseUser;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
@@ -118,9 +119,9 @@ public abstract class LivingEntityMixin extends Entity {
                 if (wardentools$wardenCurseUser == null || wardentools$wardenCurseUser.getAmplifier() != amplifier) {
                     wardentools$wardenCurseUser = new WardenCurseUser(self, amplifier);
                 }
-                if (currentBiome.is(Biomes.DEEP_DARK) && wardentools$wardenCurseUser.getExtraBonus() == 0) {
+                if (currentBiome.is(WTBiomeTags.WARDEN_CURSE_RECEIVE_BONUS_IN) && wardentools$wardenCurseUser.getExtraBonus() == 0) {
                     wardentools$wardenCurseUser.setExtraBonus(16);
-                } else if (wardentools$wardenCurseUser.getExtraBonus() != 0) {
+                } else if (!currentBiome.is(WTBiomeTags.WARDEN_CURSE_RECEIVE_BONUS_IN) && wardentools$wardenCurseUser.getExtraBonus() != 0) {
                     wardentools$wardenCurseUser.setExtraBonus(0);
                 }
                 wardentools$dynamicGameEventListener = new DynamicGameEventListener<>
