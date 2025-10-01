@@ -87,7 +87,7 @@
 				{
 					"name": "HOrn",
 					"parent": "armorHead",
-					"pivot": [0, 25, 2],
+					"pivot": [5, 29.5, 0],
 					"cubes": [
 						{
 							"origin": [5, 28, 0],
@@ -106,7 +106,7 @@
 				{
 					"name": "HOrn2",
 					"parent": "armorHead",
-					"pivot": [0, 25, 2],
+					"pivot": [-5, 29.5, 0],
 					"cubes": [
 						{
 							"origin": [-15, 28, 0],
