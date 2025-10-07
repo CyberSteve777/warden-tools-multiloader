@@ -9,6 +9,7 @@ import net.trique.wardentools.config.WTConfigServer;
 import net.trique.wardentools.networking.packet.AddBlockOutlinePacket;
 import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.util.WTLootTableModifiersFabric;
+import net.trique.wardentools.util.WTPotionRecipeHelper;
 import net.trique.wardentools.worldgen.WardenWorldGeneration;
 
 public class WardenToolsFabric implements ModInitializer {
@@ -23,6 +24,7 @@ public class WardenToolsFabric implements ModInitializer {
         // Use Fabric to bootstrap the Common mod.
         Constants.LOGGER.info("Hello Fabric world!");
         WardenToolsCommon.init();
+        WTPotionRecipeHelper.addPotionRecipes();
         WTLootTableModifiersFabric.addModifiers();
         //WTLootTableModifiersFabric.modifyLootTables();
         WardenWorldGeneration.generateWardenWorldGen();
