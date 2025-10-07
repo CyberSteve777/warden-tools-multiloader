@@ -16,7 +16,7 @@ public class PotionRegistry {
             BuiltInRegistries.POTION, Constants.MOD_ID
     );
     public static final Holder<Potion> SCULK_ADAPTION_POTION = registerPotion("sculk_adaption", () -> new Potion(
-            new MobEffectInstance(EffectRegistry.SCULK_ADAPTION, 2400, 0)
+            new MobEffectInstance(EffectRegistry.SCULK_ADAPTION, 2400, 2)
     ));
 
     public static void init() {
