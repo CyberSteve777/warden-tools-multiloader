@@ -6,8 +6,7 @@
   "compatibilityLevel": "JAVA_18",
   "mixins": [
     "EntityMixin",
-    "LivingEntityMixin",
-    "WardenMixin"
+    "LivingEntityMixin"
   ],
   "client": [
     "MixinMinecraft"
