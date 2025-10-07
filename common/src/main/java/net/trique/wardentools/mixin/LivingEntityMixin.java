@@ -17,12 +17,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.gameevent.DynamicGameEventListener;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.registry.EffectRegistry;
 import net.trique.wardentools.util.WTBiomeTags;
+import net.trique.wardentools.util.WTEntityTypeTags;
 import net.trique.wardentools.util.warden_curse.WardenCurseUser;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
@@ -56,6 +56,10 @@ public abstract class LivingEntityMixin extends Entity {
     @Shadow
     public abstract boolean removeEffect(Holder<MobEffect> effect);
 
+    @Shadow
+    @Nullable
+    public abstract MobEffectInstance getEffect(Holder<MobEffect> effect);
+
     @WrapMethod(method = "canBeAffected")
     private boolean preventDarknessIfSculkAdapted(MobEffectInstance effectInstance, Operation<Boolean> original) {
         if (effectInstance.is(MobEffects.DARKNESS) && this.hasEffect(EffectRegistry.SCULK_ADAPTION)) {
@@ -78,7 +82,8 @@ public abstract class LivingEntityMixin extends Entity {
     @WrapMethod(method = "hurt")
     private boolean reduceSonicBoomDamage(DamageSource source, float amount, Operation<Boolean> original) {
         if (hasEffect(EffectRegistry.SCULK_ADAPTION) && source.is(DamageTypes.SONIC_BOOM)) {
-            return original.call(source, amount * 0.4f);
+            int amplifier = getEffect(EffectRegistry.SCULK_ADAPTION).getAmplifier();
+            return original.call(source, amount * 0.1f * (amplifier + 1));
         }
         return original.call(source, amount);
     }
@@ -147,6 +152,16 @@ public abstract class LivingEntityMixin extends Entity {
         if (wardentools$dynamicGameEventListener != null && this.level() instanceof ServerLevel level) {
             listenerConsumer.accept(wardentools$dynamicGameEventListener, level);
         }
+    }
+
+    @WrapMethod(method = "hurt")
+    public boolean applyExtraDamageFromSculkAdaptation(DamageSource source, float amount, Operation<Boolean> original) {
+        if (source.getEntity() instanceof LivingEntity attacker && attacker.hasEffect(EffectRegistry.SCULK_ADAPTION) &&
+        getType().is(WTEntityTypeTags.SCULK_ADAPTATION_DEALS_EXTRA_DAMAGE_TO)) {
+            int amplifier = attacker.getEffect(EffectRegistry.SCULK_ADAPTION).getAmplifier();
+            return original.call(source, amount * (1 + 0.5f * (1 + amplifier)));
+        }
+        return original.call(source, amount);
     }
 
 }
