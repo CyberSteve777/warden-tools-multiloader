@@ -34,6 +34,7 @@ public class WTDataGenerator {
         generator.addProvider(event.includeServer(), new WTBiomeTagProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new WTItemTagProvider(packOutput, lookupProvider,
                 blockTagsProvider.contentsGetter(), existingFileHelper));
+        generator.addProvider(event.includeServer(), new WTEntityTypeTagProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new WTGameEventTagProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new WTRecipeProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeClient(), new WTBlockStateProvider(packOutput, existingFileHelper));
