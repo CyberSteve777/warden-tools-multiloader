@@ -3,7 +3,7 @@ package net.trique.wardentools.config;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.trique.wardentools.util.ModHelper;
 
-public final class WTConfigClient {
+public class WTConfigClient {
     public static final ModConfigSpec SPEC;
     public static final WTConfigClient CONFIG;
 
