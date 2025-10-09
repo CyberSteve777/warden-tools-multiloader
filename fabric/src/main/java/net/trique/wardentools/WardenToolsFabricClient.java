@@ -15,6 +15,7 @@ import net.trique.wardentools.util.WTRegModelUtil;
 import net.trique.wardentools.client.renderer.SculkArrowRenderer;
 import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.particle.*;
+import net.trique.wardentools.particle.ShriekParticle.ShriekParticle;
 import net.trique.wardentools.registry.*;
 import net.trique.wardentools.util.warden_curse.WardenCurseClientHelper;
 

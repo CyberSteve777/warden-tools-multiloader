@@ -15,6 +15,7 @@ import net.trique.wardentools.particle.*;
 import net.trique.wardentools.registry.EntityRegistry;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.registry.ParticleRegistry;
+import net.trique.wardentools.particle.ShriekParticle.ShriekParticle;
 
 @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
 public class ClientRegistrationEventHandler {
