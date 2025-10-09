@@ -127,9 +127,7 @@ public abstract class LivingEntityMixin extends Entity {
 //            Constants.LOGGER.info("amplifier: {}", wardentools$echolocateUser.getAmplifier());
             VibrationSystem.Ticker.tick(serverLevel, wardentools$wardenCurseUser.getVibrationData(),
                     wardentools$wardenCurseUser.getVibrationUser());
-            if (wardentools$wardenCurseUser.hasCooldown()) {
-                wardentools$wardenCurseUser.tickCooldown();
-            }
+            wardentools$wardenCurseUser.tickCooldown();
         }
     }
 
