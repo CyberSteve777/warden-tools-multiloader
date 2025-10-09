@@ -99,13 +99,10 @@ public class EchoShrieker extends BowItem {
         Vec3 offsetToTarget = target.subtract(source);
         Vec3 normalized = offsetToTarget.normalize();
 
-
         Set<Entity> hit = new HashSet<>();
         for (int particleIndex = 1; particleIndex < Mth.floor(offsetToTarget.length()); ++particleIndex) {
             Vec3 particlePos = source.add(normalized.scale(particleIndex - 1));
             ((ServerLevel) world).sendParticles(new EchoParticleOption(particleIndex * 1.4f), particlePos.x, particlePos.y, particlePos.z, 1, 0, 0, 0, 0.0);
-            //world.addParticle(new ShriekParticleOptions(1),true, particlePos.x, particlePos.y, particlePos.z, 1, 0,0);
-
             hit.addAll(world.getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos((int) particlePos.x(),
                             (int) particlePos.y(), (int) particlePos.z())).inflate(0.1 * (particleIndex - 1)),
                     it -> !((it.isAlliedTo(user)) ||
@@ -118,7 +115,6 @@ public class EchoShrieker extends BowItem {
             if (hitTarget instanceof LivingEntity living) {
                 float distanceToTarget = user.distanceTo(living);
                 float damage = finalDamage(remainTicks, distanceToTarget, living);
-//                Constants.LOGGER.info("Damage {}\nDistance {}", damage, distanceToTarget);
                 living.hurt(world.damageSources().sonicBoom(user), damage);
                 living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
                 living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
