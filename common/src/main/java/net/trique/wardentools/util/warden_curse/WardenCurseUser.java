@@ -136,11 +136,8 @@ public class WardenCurseUser implements VibrationSystem {
 
         @Override
         public boolean canReceiveVibration(ServerLevel serverLevel, BlockPos blockPos, Holder<GameEvent> gameEventHolder, GameEvent.Context context) {
-            if (!holder.hasEffect(EffectRegistry.WARDEN_CURSE)) {
-                return false;
-            }
-            if (!holder.isDeadOrDying() && serverLevel.getWorldBorder().isWithinBounds(blockPos) &&
-                    !hasCooldown()) {
+            if (!holder.isDeadOrDying() && holder.hasEffect(EffectRegistry.WARDEN_CURSE)
+                    && serverLevel.getWorldBorder().isWithinBounds(blockPos) && !hasCooldown()) {
                 Entity source = context.sourceEntity();
                 if (source instanceof LivingEntity livingEntity) {
                     return this.canTargetEntity(livingEntity);
