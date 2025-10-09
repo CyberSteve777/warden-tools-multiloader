@@ -20,5 +20,10 @@ public class CommonRegistrationEventHelper {
                 ItemRegistry.WARDEN_SOUL.get(),
                 PotionRegistry.SCULK_ADAPTION_POTION
         );
+        builder.addMix(
+                Potions.AWKWARD,
+                ItemRegistry.WARDEN_TENDRIL.get(),
+                PotionRegistry.WARDEN_POTION
+        );
     }
 }

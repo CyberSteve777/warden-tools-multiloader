@@ -71,6 +71,10 @@ public class CreativeTabRegistry {
                         output.accept(PotionContents.createItemStack(Items.SPLASH_POTION, PotionRegistry.SCULK_ADAPTION_POTION));
                         output.accept(PotionContents.createItemStack(Items.LINGERING_POTION, PotionRegistry.SCULK_ADAPTION_POTION));
                         output.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, PotionRegistry.SCULK_ADAPTION_POTION));
+                        output.accept(PotionContents.createItemStack(Items.POTION, PotionRegistry.WARDEN_POTION));
+                        output.accept(PotionContents.createItemStack(Items.SPLASH_POTION, PotionRegistry.WARDEN_POTION));
+                        output.accept(PotionContents.createItemStack(Items.LINGERING_POTION, PotionRegistry.WARDEN_POTION));
+                        output.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, PotionRegistry.WARDEN_POTION));
                     }).title(Component.literal(Constants.MOD_NAME))
             .build());
 

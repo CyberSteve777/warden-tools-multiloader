@@ -18,6 +18,9 @@ public class PotionRegistry {
     public static final Holder<Potion> SCULK_ADAPTION_POTION = registerPotion("sculk_adaption", () -> new Potion(
             new MobEffectInstance(EffectRegistry.SCULK_ADAPTION, 2400, 2)
     ));
+    public static final Holder<Potion> WARDEN_POTION = registerPotion("warden", () -> new Potion(
+            new MobEffectInstance(EffectRegistry.WARDEN_CURSE, 2400, 1)
+    ));
 
     public static void init() {
         Constants.LOGGER.info("Adding Warden Tools potions to the game...");
