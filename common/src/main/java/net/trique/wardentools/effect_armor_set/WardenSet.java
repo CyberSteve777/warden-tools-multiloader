@@ -32,7 +32,7 @@ public class WardenSet extends EffectArmorSet {
                         .addInfiniteEffect(MobEffects.HEALTH_BOOST, 4, true, false, true);
             }
         } else {
-            int wardenCurseAmpl = 1;
+            int wardenCurseAmpl = 0;
             for (EquipmentSlot slot : List.of(EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET)) {
                 if (entity.getItemBySlot(slot).getItem() instanceof IEffectArmorItem effectArmorItem &&
                         effectArmorItem.getEffectArmorSet().equals(this)) {
