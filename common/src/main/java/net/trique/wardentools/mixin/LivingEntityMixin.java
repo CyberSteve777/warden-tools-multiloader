@@ -32,7 +32,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import javax.annotation.Nullable;
 import java.util.function.BiConsumer;
 
 
@@ -40,11 +39,11 @@ import java.util.function.BiConsumer;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
     @Unique
-    private WardenCurseUser wardentools$wardenCurseUser;
+    private WardenCurseUser wardentools$wardenCurseUser = new WardenCurseUser((LivingEntity) (Object) this);
 
     @Unique
-    private DynamicGameEventListener<VibrationSystem.Listener> wardentools$dynamicGameEventListener;
-
+    private DynamicGameEventListener<VibrationSystem.Listener> wardentools$dynamicGameEventListener =
+            new DynamicGameEventListener<>(new VibrationSystem.Listener(wardentools$wardenCurseUser));
 
     public LivingEntityMixin(EntityType<?> entityType, Level level) {
         super(entityType, level);
@@ -57,7 +56,6 @@ public abstract class LivingEntityMixin extends Entity {
     public abstract boolean removeEffect(Holder<MobEffect> effect);
 
     @Shadow
-    @Nullable
     public abstract MobEffectInstance getEffect(Holder<MobEffect> effect);
 
     @WrapMethod(method = "canBeAffected")
@@ -87,6 +85,7 @@ public abstract class LivingEntityMixin extends Entity {
         }
         return original.call(source, amount);
     }
+
     @Override
     public boolean dampensVibrations() {
         return hasEffect(EffectRegistry.SCULK_ADAPTION);
@@ -94,22 +93,16 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
     private void addVibrationDataFromWardenCurse(CompoundTag compound, CallbackInfo ci) {
-        if (hasEffect(EffectRegistry.WARDEN_CURSE) && wardentools$wardenCurseUser != null) {
-            VibrationSystem.Data.CODEC.encodeStart(NbtOps.INSTANCE, wardentools$wardenCurseUser.getVibrationData())
-                    .resultOrPartial(Constants.LOGGER::error)
-                    .ifPresent(tag -> compound.put("WTVibrationData", tag));
-        }
+        VibrationSystem.Data.CODEC.encodeStart(NbtOps.INSTANCE, wardentools$wardenCurseUser.getVibrationData())
+                .resultOrPartial(Constants.LOGGER::error)
+                .ifPresent(tag -> compound.put("WTWardenCurseVibrationData", tag));
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
     private void readVibrationDataForWardenCurse(CompoundTag compound, CallbackInfo ci) {
-        if (compound.contains("WTVibrationData", 10)) {
+        if (compound.contains("WTWardenCurseVibrationData", 10)) {
             VibrationSystem.Data.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, compound.getCompound("WTVibrationData")))
-                    .resultOrPartial(Constants.LOGGER::error).ifPresent(data -> {
-                        if (hasEffect(EffectRegistry.WARDEN_CURSE) && wardentools$wardenCurseUser != null) {
-                            wardentools$wardenCurseUser.setVibrationData(data);
-                        }
-                    });
+                    .resultOrPartial(Constants.LOGGER::error).ifPresent(data -> wardentools$wardenCurseUser.setVibrationData(data));
         }
     }
 
@@ -118,38 +111,28 @@ public abstract class LivingEntityMixin extends Entity {
         LivingEntity self = (LivingEntity) (Object) this;
         if (this.level() instanceof ServerLevel level) {
             if (self.hasEffect(EffectRegistry.WARDEN_CURSE)) {
-                MobEffectInstance echoLocateInstance = self.getEffect(EffectRegistry.WARDEN_CURSE);
-                int amplifier = echoLocateInstance.getAmplifier();
                 Holder<Biome> currentBiome = level.getBiome(self.getOnPos());
-                if (wardentools$wardenCurseUser == null || wardentools$wardenCurseUser.getAmplifier() != amplifier) {
-                    wardentools$wardenCurseUser = new WardenCurseUser(self, amplifier);
-                }
                 if (currentBiome.is(WTBiomeTags.WARDEN_CURSE_RECEIVE_BONUS_IN) && wardentools$wardenCurseUser.getExtraBonus() == 0) {
                     wardentools$wardenCurseUser.setExtraBonus(16);
                 } else if (!currentBiome.is(WTBiomeTags.WARDEN_CURSE_RECEIVE_BONUS_IN) && wardentools$wardenCurseUser.getExtraBonus() != 0) {
                     wardentools$wardenCurseUser.setExtraBonus(0);
                 }
-                wardentools$dynamicGameEventListener = new DynamicGameEventListener<>
-                        (new VibrationSystem.Listener(wardentools$wardenCurseUser));
-            } else if (wardentools$wardenCurseUser != null) {
-                wardentools$dynamicGameEventListener = null;
-                wardentools$wardenCurseUser = null;
             }
         }
     }
 
-    @Inject(method = "tick", at = @At("TAIL"))
+    @Inject(method = "tick", at = @At("HEAD"))
     private void tickWardenCurseIfPossible(CallbackInfo ci) {
-        if (wardentools$wardenCurseUser != null && !this.level().isClientSide()) {
+        if (level() instanceof ServerLevel serverLevel) {
 //            Constants.LOGGER.info("amplifier: {}", wardentools$echolocateUser.getAmplifier());
-            VibrationSystem.Ticker.tick(this.level(), wardentools$wardenCurseUser.getVibrationData(),
+            VibrationSystem.Ticker.tick(serverLevel, wardentools$wardenCurseUser.getVibrationData(),
                     wardentools$wardenCurseUser.getVibrationUser());
         }
     }
 
     @Override
     public void updateDynamicGameEventListener(BiConsumer<DynamicGameEventListener<?>, ServerLevel> listenerConsumer) {
-        if (wardentools$dynamicGameEventListener != null && this.level() instanceof ServerLevel level) {
+        if (level() instanceof ServerLevel level) {
             listenerConsumer.accept(wardentools$dynamicGameEventListener, level);
         }
     }
@@ -157,7 +140,7 @@ public abstract class LivingEntityMixin extends Entity {
     @WrapMethod(method = "hurt")
     public boolean applyExtraDamageFromSculkAdaptation(DamageSource source, float amount, Operation<Boolean> original) {
         if (source.getEntity() instanceof LivingEntity attacker && attacker.hasEffect(EffectRegistry.SCULK_ADAPTION) &&
-        getType().is(WTEntityTypeTags.SCULK_ADAPTATION_DEALS_EXTRA_DAMAGE_TO)) {
+                getType().is(WTEntityTypeTags.SCULK_ADAPTATION_DEALS_EXTRA_DAMAGE_TO)) {
             int amplifier = attacker.getEffect(EffectRegistry.SCULK_ADAPTION).getAmplifier();
             return original.call(source, amount * (1 + 0.5f * (1 + amplifier)));
         }
