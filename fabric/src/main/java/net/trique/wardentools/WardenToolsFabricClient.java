@@ -15,7 +15,7 @@ import net.trique.wardentools.util.WTRegModelUtil;
 import net.trique.wardentools.client.renderer.SculkArrowRenderer;
 import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.particle.*;
-import net.trique.wardentools.particle.ShriekParticle.ShriekParticle;
+import net.trique.wardentools.particle.echo_particle.EchoParticle;
 import net.trique.wardentools.registry.*;
 import net.trique.wardentools.util.warden_curse.WardenCurseClientHelper;
 
@@ -29,7 +29,7 @@ public class WardenToolsFabricClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.MEDIUM_SCULKHYST_BUD.get(), RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.SMALL_SCULKHYST_BUD.get(), RenderType.cutout());
         WTRegModelUtil.registerModModels();
-        ParticleFactoryRegistry.getInstance().register(ParticleRegistry.SHRIEK_PARTICLE.get(), ShriekParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ParticleRegistry.ECHO_PARTICLE.get(), EchoParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ParticleRegistry.ROSE_GOLD_SONIC_BOOM.get(), RoseGoldSonicBoomParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ParticleRegistry.AMETHYST_SONIC_BOOM.get(), AmethystSonicBoomParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ParticleRegistry.ENDER_SONIC_BOOM.get(), EnderSonicBoomParticle.Factory::new);

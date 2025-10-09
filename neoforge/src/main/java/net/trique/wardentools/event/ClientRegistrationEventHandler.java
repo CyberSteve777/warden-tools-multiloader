@@ -15,13 +15,13 @@ import net.trique.wardentools.particle.*;
 import net.trique.wardentools.registry.EntityRegistry;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.registry.ParticleRegistry;
-import net.trique.wardentools.particle.ShriekParticle.ShriekParticle;
+import net.trique.wardentools.particle.echo_particle.EchoParticle;
 
 @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
 public class ClientRegistrationEventHandler {
     @SubscribeEvent
     public static void registerParticleProviders(final RegisterParticleProvidersEvent event) {
-        event.registerSpriteSet(ParticleRegistry.SHRIEK_PARTICLE.get(), ShriekParticle.Factory::new);
+        event.registerSpriteSet(ParticleRegistry.ECHO_PARTICLE.get(), EchoParticle.Factory::new);
         event.registerSpriteSet(ParticleRegistry.ROSE_GOLD_SONIC_BOOM.get(), RoseGoldSonicBoomParticle.Factory::new);
         event.registerSpriteSet(ParticleRegistry.AMETHYST_SONIC_BOOM.get(), AmethystSonicBoomParticle.Factory::new);
         event.registerSpriteSet(ParticleRegistry.ENDER_SONIC_BOOM.get(), EnderSonicBoomParticle.Factory::new);

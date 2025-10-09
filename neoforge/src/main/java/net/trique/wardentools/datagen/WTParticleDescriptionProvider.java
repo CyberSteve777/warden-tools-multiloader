@@ -13,7 +13,7 @@ public class WTParticleDescriptionProvider extends ParticleDescriptionProvider {
 
     @Override
     protected void addDescriptions() {
-        sprite(SHRIEK_PARTICLE.get(), SHRIEK_PARTICLE.getId());
+        sprite(ECHO_PARTICLE.get(), ECHO_PARTICLE.getId());
         spriteSet(ENDER_SONIC_BOOM.get(), ENDER_SONIC_BOOM.getId(), 16, false);
         spriteSet(AMETHYST_SONIC_BOOM.get(), AMETHYST_SONIC_BOOM.getId(), 16, false);
         spriteSet(ROSE_GOLD_SONIC_BOOM.get(), ROSE_GOLD_SONIC_BOOM.getId(), 16, false);
