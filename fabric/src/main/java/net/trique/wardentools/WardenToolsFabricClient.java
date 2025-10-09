@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.trique.wardentools.networking.packet.AddBlockOutlinePacket;
 import net.trique.wardentools.util.WTRegModelUtil;
-import net.trique.wardentools.entity.SculkArrowRenderer;
+import net.trique.wardentools.client.renderer.SculkArrowRenderer;
 import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.particle.*;
 import net.trique.wardentools.registry.*;

@@ -10,7 +10,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.trique.wardentools.Constants;
-import net.trique.wardentools.entity.SculkArrowRenderer;
+import net.trique.wardentools.client.renderer.SculkArrowRenderer;
 import net.trique.wardentools.particle.*;
 import net.trique.wardentools.registry.EntityRegistry;
 import net.trique.wardentools.registry.ItemRegistry;
