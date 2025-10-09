@@ -9,7 +9,6 @@
     "LootTableMixinFabric"
   ],
   "client": [
-    "MixinTitleScreen"
   ],
   "server": [],
   "injectors": {
