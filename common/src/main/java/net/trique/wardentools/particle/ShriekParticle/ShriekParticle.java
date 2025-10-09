@@ -1,8 +1,8 @@
-package net.trique.wardentools.particle;
+package net.trique.wardentools.particle.ShriekParticle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.core.particles.SimpleParticleType;
+import org.jetbrains.annotations.Nullable;
 
 public class ShriekParticle extends TextureSheetParticle {
     public ShriekParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, SpriteSet spriteSet, double xd, double yd, double zd) {
@@ -12,9 +12,10 @@ public class ShriekParticle extends TextureSheetParticle {
         this.x = xd;
         this.y = yd;
         this.z = zd;
-        this.quadSize *= 2f;
+        this.quadSize *= 1f;
         this.lifetime = 20;
         this.setSpriteFromAge(spriteSet);
+
 
         this.rCol = 1f;
         this.gCol = 1f;
@@ -35,15 +36,18 @@ public class ShriekParticle extends TextureSheetParticle {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public void setScale(){
-        this.quadSize = 2;
+    public void setScale(float scale){
+        this.scale(scale);
     }
 
-    public record Factory(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
+    public record Factory(SpriteSet sprites) implements ParticleProvider<ShriekParticleOptions> {
 
-        public Particle createParticle(SimpleParticleType particleType, ClientLevel level, double x, double y, double z,
-                                           double dx, double dy, double dz) {
-                return new ShriekParticle(level, x, y, z, this.sprites, dx, dy, dz);
-            }
+        @Override
+        public @Nullable Particle createParticle(ShriekParticleOptions shriekParticleOptions, ClientLevel clientLevel, double v, double v1, double v2, double v3, double v4, double v5) {
+            float scale = shriekParticleOptions.getScale();
+            ShriekParticle particle = new ShriekParticle(clientLevel,v,v1,v2,sprites,v3, v4,v5);
+            particle.setScale(scale);
+            return particle;
         }
+    }
 }

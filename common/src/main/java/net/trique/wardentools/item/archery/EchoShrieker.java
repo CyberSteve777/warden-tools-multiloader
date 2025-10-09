@@ -1,6 +1,8 @@
 package net.trique.wardentools.item.archery;
 
+import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -25,6 +27,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.trique.wardentools.Constants;
+import net.trique.wardentools.particle.ShriekParticle.ShriekParticleOptions;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.registry.ParticleRegistry;
 
@@ -96,18 +99,20 @@ public class EchoShrieker extends BowItem {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.SCULK_SHRIEKER_SHRIEK, SoundSource.BLOCKS, 5.0f, 1.0f);
 
         float heightOffset = 1.6f;
-        int distance = 30;
-        Vec3 target = user.position().add(user.getLookAngle().scale(distance));
+        float base_distance = 30f;
+        float final_distance = base_distance*remainTicks;
+        Vec3 target = user.position().add(user.getLookAngle().scale(final_distance));
         Vec3 source = user.position().add(0.0, heightOffset, 0.0);
         Vec3 offsetToTarget = target.subtract(source);
         Vec3 normalized = offsetToTarget.normalize();
+
 
         Set<Entity> hit = new HashSet<>();
         double expansion = 0.5;
         for (int particleIndex = 1; particleIndex < Mth.floor(offsetToTarget.length()); ++particleIndex) {
             Vec3 particlePos = source.add(normalized.scale(particleIndex));
-
-            ((ServerLevel) world).sendParticles(ParticleRegistry.SHRIEK_PARTICLE.get(), particlePos.x, particlePos.y, particlePos.z, 1, 0, 0, 0, 0.0);
+            ((ServerLevel) world).sendParticles(new ShriekParticleOptions(particleIndex*1.4f), particlePos.x, particlePos.y, particlePos.z, 1, 0, 0, 0, 0.0);
+            //world.addParticle(new ShriekParticleOptions(1),true, particlePos.x, particlePos.y, particlePos.z, 1, 0,0);
 
             hit.addAll(world.getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos((int) particlePos.x(),
                             (int) particlePos.y(), (int) particlePos.z())).inflate(expansion),
