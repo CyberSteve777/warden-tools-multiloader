@@ -1,10 +1,13 @@
 package net.trique.wardentools.util.warden_curse;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.GameEventTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.ItemStack;
@@ -17,6 +20,7 @@ import net.trique.wardentools.item.melee.WardenMaskItem;
 import net.trique.wardentools.networking.packet.AddBlockOutlinePacket;
 import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.platform.Services;
+import net.trique.wardentools.registry.EffectRegistry;
 import net.trique.wardentools.util.WTGameEventTags;
 import software.bernie.geckolib.animatable.GeoItem;
 import org.jetbrains.annotations.Contract;
@@ -24,20 +28,18 @@ import org.jetbrains.annotations.Nullable;
 
 public class WardenCurseUser implements VibrationSystem {
     protected LivingEntity holder;
-    protected int amplifier;
-    protected int extraBonus;
+    protected int extraBonus = 0;
     private VibrationSystem.Data vibrationData = new VibrationSystem.Data();
     private final VibrationSystem.User vibrationUser;
 
-    public WardenCurseUser(LivingEntity livingEntity, int amplifier, int extraBonus) {
+    public WardenCurseUser(LivingEntity livingEntity) {
         holder = livingEntity;
-        this.amplifier = amplifier;
-        this.extraBonus = extraBonus;
-        vibrationUser = new VibrationUser(livingEntity);
+        vibrationUser = new VibrationUser();
     }
 
-    public WardenCurseUser(LivingEntity livingEntity, int amplifier) {
-        this(livingEntity, amplifier, 0);
+    public WardenCurseUser(LivingEntity livingEntity, int extraBonus) {
+        this(livingEntity);
+        this.extraBonus = extraBonus;
     }
 
     @Override
@@ -62,24 +64,20 @@ public class WardenCurseUser implements VibrationSystem {
         this.extraBonus = extraBonus;
     }
 
-    public LivingEntity getHolder() {
-        return holder;
-    }
-
-    public int getAmplifier() {
-        return amplifier;
-    }
-
     class VibrationUser implements VibrationSystem.User {
         private final PositionSource positionSource;
 
-        public VibrationUser(LivingEntity parent) {
-            positionSource = new EntityPositionSource(parent, parent.getEyeHeight());
+        public VibrationUser() {
+            positionSource = new EntityPositionSource(holder, holder.getEyeHeight());
         }
 
         @Override
         public int getListenerRadius() {
-            return 8 * (amplifier + 1) + extraBonus;
+            if (holder.hasEffect(EffectRegistry.WARDEN_CURSE)) {
+                int amplifier = holder.getEffect(EffectRegistry.WARDEN_CURSE).getAmplifier();
+                return 8 * (amplifier + 1) + extraBonus;
+            }
+            return 0;
         }
 
         @Override
@@ -98,7 +96,35 @@ public class WardenCurseUser implements VibrationSystem {
         }
 
         @Override
+        public boolean isValidVibration(Holder<GameEvent> gameEvent, GameEvent.Context context) {
+            if (!gameEvent.is(this.getListenableEvents())) {
+                return false;
+            } else {
+                Entity entity = context.sourceEntity();
+                if (entity != null) {
+                    if (entity.isSpectator()) {
+                        return false;
+                    }
+                    if (entity.isSteppingCarefully() && gameEvent.is(GameEventTags.IGNORE_VIBRATIONS_SNEAKING)) {
+                        if (this.canTriggerAvoidVibration() && entity instanceof ServerPlayer serverplayer &&
+                                !serverplayer.is(holder)) {
+                            CriteriaTriggers.AVOID_VIBRATION.trigger(serverplayer);
+                        }
+                        return false;
+                    }
+                    if (entity.dampensVibrations()) {
+                        return false;
+                    }
+                }
+                return context.affectedState() == null || !context.affectedState().is(BlockTags.DAMPENS_VIBRATIONS);
+            }
+        }
+
+        @Override
         public boolean canReceiveVibration(ServerLevel serverLevel, BlockPos blockPos, Holder<GameEvent> gameEventHolder, GameEvent.Context context) {
+            if (!holder.hasEffect(EffectRegistry.WARDEN_CURSE)) {
+                return false;
+            }
             if (!holder.isDeadOrDying() && serverLevel.getWorldBorder().isWithinBounds(blockPos)) {
                 Entity source = context.sourceEntity();
                 if (source instanceof LivingEntity livingEntity) {
@@ -123,8 +149,8 @@ public class WardenCurseUser implements VibrationSystem {
                             SoundEvents.WARDEN_TENDRIL_CLICKS, holder.getSoundSource(), 1.0F, holder.getVoicePitch());
                 }
                 if (holder instanceof ServerPlayer player) {
-                    int entity_glow_seconds = (int)(WTConfigServer.CONFIG.seconds_to_glow_entity.get() * 20);
-                    int block_outline_seconds = (int)(WTConfigServer.CONFIG.seconds_to_outline_block.get() * 20);
+                    int entity_glow_seconds = (int) (WTConfigServer.CONFIG.seconds_to_glow_entity.get() * 20);
+                    int block_outline_seconds = (int) (WTConfigServer.CONFIG.seconds_to_outline_block.get() * 20);
                     if (entity != null) {
                         Services.PACKET_HELPER.sendPacket(player, new AddEntityGlowPacket(entity.getId(),
                                 entity_glow_seconds));
