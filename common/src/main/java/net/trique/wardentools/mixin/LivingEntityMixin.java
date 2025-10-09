@@ -107,7 +107,7 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
-    private void updateWardenCurseStatus(CallbackInfo ci) {
+    private void updateWardenCurseBonus(CallbackInfo ci) {
         LivingEntity self = (LivingEntity) (Object) this;
         if (this.level() instanceof ServerLevel level) {
             if (self.hasEffect(EffectRegistry.WARDEN_CURSE)) {
@@ -122,7 +122,7 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
-    private void tickWardenCurseIfPossible(CallbackInfo ci) {
+    private void tickWardenCurse(CallbackInfo ci) {
         if (level() instanceof ServerLevel serverLevel) {
 //            Constants.LOGGER.info("amplifier: {}", wardentools$echolocateUser.getAmplifier());
             VibrationSystem.Ticker.tick(serverLevel, wardentools$wardenCurseUser.getVibrationData(),
