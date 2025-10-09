@@ -1,8 +1,6 @@
 package net.trique.wardentools.item.archery;
 
-import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -26,10 +24,8 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.trique.wardentools.Constants;
-import net.trique.wardentools.particle.ShriekParticle.ShriekParticleOptions;
+import net.trique.wardentools.particle.echo_particle.EchoParticleOption;
 import net.trique.wardentools.registry.ItemRegistry;
-import net.trique.wardentools.registry.ParticleRegistry;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -68,14 +64,11 @@ public class EchoShrieker extends BowItem {
             remainTicks = loadAmount;
             ItemStack ammo = findEchoShard(player);
             if (!((double) loadAmount < 0.1f)) {
+                spawnSonicBoom(world, user);
                 if (!player.isCreative()) {
-                    spawnSonicBoom(world, user);
                     player.getCooldowns().addCooldown(this, 120);
                     stack.hurtAndBreak(1, user, EquipmentSlot.MAINHAND);
                     ammo.shrink(1);
-                } else {
-//                    Constants.LOGGER.info(loadAmount);
-                    spawnSonicBoom(world, user);
                 }
             }
         }
@@ -98,9 +91,9 @@ public class EchoShrieker extends BowItem {
     private void spawnSonicBoom(Level world, LivingEntity user) {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.SCULK_SHRIEKER_SHRIEK, SoundSource.BLOCKS, 5.0f, 1.0f);
 
-        float heightOffset = 1.6f;
+        float heightOffset = user.getEyeHeight();
         float base_distance = 30f;
-        float final_distance = base_distance*remainTicks;
+        float final_distance = base_distance * remainTicks;
         Vec3 target = user.position().add(user.getLookAngle().scale(final_distance));
         Vec3 source = user.position().add(0.0, heightOffset, 0.0);
         Vec3 offsetToTarget = target.subtract(source);
@@ -108,16 +101,15 @@ public class EchoShrieker extends BowItem {
 
 
         Set<Entity> hit = new HashSet<>();
-        double expansion = 0.5;
         for (int particleIndex = 1; particleIndex < Mth.floor(offsetToTarget.length()); ++particleIndex) {
-            Vec3 particlePos = source.add(normalized.scale(particleIndex));
-            ((ServerLevel) world).sendParticles(new ShriekParticleOptions(particleIndex*1.4f), particlePos.x, particlePos.y, particlePos.z, 1, 0, 0, 0, 0.0);
+            Vec3 particlePos = source.add(normalized.scale(particleIndex - 1));
+            ((ServerLevel) world).sendParticles(new EchoParticleOption(particleIndex * 1.4f), particlePos.x, particlePos.y, particlePos.z, 1, 0, 0, 0, 0.0);
             //world.addParticle(new ShriekParticleOptions(1),true, particlePos.x, particlePos.y, particlePos.z, 1, 0,0);
 
             hit.addAll(world.getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos((int) particlePos.x(),
-                            (int) particlePos.y(), (int) particlePos.z())).inflate(expansion),
-                    it -> !(it instanceof TamableAnimal helper && helper.isOwnedBy(user))));
-            expansion += 0.1;
+                            (int) particlePos.y(), (int) particlePos.z())).inflate(0.1 * (particleIndex - 1)),
+                    it -> !((it.isAlliedTo(user)) ||
+                            (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
         }
 
         hit.remove(user);
@@ -129,9 +121,9 @@ public class EchoShrieker extends BowItem {
 //                Constants.LOGGER.info("Damage {}\nDistance {}", damage, distanceToTarget);
                 living.hurt(world.damageSources().sonicBoom(user), damage);
                 living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
-                living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,100,2));
-                living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,160,2));
-                living.addEffect(new MobEffectInstance(MobEffects.BLINDNESS,60));
+                living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
+                living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 160, 2));
+                living.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60));
                 double vertical = 0.5 * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 double horizontal = 2.5 * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
