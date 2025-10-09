@@ -9,7 +9,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.GameEventTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Unit;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.gameevent.EntityPositionSource;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -31,6 +33,8 @@ public class WardenCurseUser implements VibrationSystem {
     protected int extraBonus = 0;
     private VibrationSystem.Data vibrationData = new VibrationSystem.Data();
     private final VibrationSystem.User vibrationUser;
+    private final net.trique.wardentools.util.warden_curse.Ticker COOLDOWN_TICKER =
+            new net.trique.wardentools.util.warden_curse.Ticker();
 
     public WardenCurseUser(LivingEntity livingEntity) {
         holder = livingEntity;
@@ -62,6 +66,16 @@ public class WardenCurseUser implements VibrationSystem {
 
     public void setExtraBonus(int extraBonus) {
         this.extraBonus = extraBonus;
+    }
+
+    public boolean hasCooldown() {
+        return COOLDOWN_TICKER.hasRemainingDuration();
+    }
+
+    public void tickCooldown() {
+        if (hasCooldown()) {
+            COOLDOWN_TICKER.tick();
+        }
     }
 
     class VibrationUser implements VibrationSystem.User {
@@ -125,7 +139,8 @@ public class WardenCurseUser implements VibrationSystem {
             if (!holder.hasEffect(EffectRegistry.WARDEN_CURSE)) {
                 return false;
             }
-            if (!holder.isDeadOrDying() && serverLevel.getWorldBorder().isWithinBounds(blockPos)) {
+            if (!holder.isDeadOrDying() && serverLevel.getWorldBorder().isWithinBounds(blockPos) &&
+                    !hasCooldown()) {
                 Entity source = context.sourceEntity();
                 if (source instanceof LivingEntity livingEntity) {
                     return this.canTargetEntity(livingEntity);
@@ -139,6 +154,7 @@ public class WardenCurseUser implements VibrationSystem {
         @Override
         public void onReceiveVibration(ServerLevel serverLevel, BlockPos blockPos, Holder<GameEvent> gameEventHolder, @Nullable Entity entity, @Nullable Entity possibleShooter, float distance) {
             if (!holder.isDeadOrDying()) {
+                COOLDOWN_TICKER.setDuration(40);
                 if ((entity != null && !holder.is(entity)) || (possibleShooter != null && !holder.is(possibleShooter))) {
                     ItemStack head = holder.getItemBySlot(EquipmentSlot.HEAD);
                     if (head.getItem() instanceof WardenMaskItem mask) {

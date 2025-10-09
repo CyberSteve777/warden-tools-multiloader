@@ -10,6 +10,18 @@ public class Ticker {
         this.duration = duration;
     }
 
+    public Ticker() {
+        this(0);
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
     public boolean tick() {
         if (hasRemainingDuration()) {
             tickDownDuration();
