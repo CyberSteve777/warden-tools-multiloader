@@ -36,18 +36,13 @@ public class EchoParticle extends TextureSheetParticle {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public void setScale(float scale) {
-        this.scale(scale);
-    }
-
     public record Factory(SpriteSet sprites) implements ParticleProvider<EchoParticleOption> {
 
         @Override
         public Particle createParticle(EchoParticleOption echoParticleOption, ClientLevel clientLevel, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             float scale = echoParticleOption.scale();
             EchoParticle particle = new EchoParticle(clientLevel, x, y, z, sprites, xSpeed, ySpeed, zSpeed);
-            particle.setScale(scale);
-            return particle;
+            return particle.scale(scale);
         }
     }
 }
