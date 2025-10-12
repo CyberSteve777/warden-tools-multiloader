@@ -7,8 +7,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import net.trique.wardentools.Constants;
 
@@ -125,11 +125,11 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
     private static void offerWardenMaskRecipe(RecipeOutput exporter) {
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, WARDEN_MASK.get())
                 .define('t', WARDEN_TENDRIL.get())
-                .define('e', Items.ECHO_SHARD)
+                .define('s', Blocks.SCULK_SENSOR)
                 .define('h', SCULKIFIED_HELMET.get())
-                .define('s', SCULK_SHELL.get())
-                .pattern("tet")
-                .pattern("shs")
+                .define('b', Blocks.SCULK)
+                .pattern("tst")
+                .pattern("bhb")
                 .unlockedBy(RecipeProvider.getHasName(WARDEN_TENDRIL::get), RecipeProvider.has(WARDEN_TENDRIL::get))
                 .save(exporter);
     }
