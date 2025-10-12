@@ -1,0 +1,14 @@
+{
+  "type": "wardentools:add_item_to_warden_loot_modifier",
+  "baseChance": 0.4,
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:entities/warden"
+    }
+  ],
+  "item": "wardentools:warden_tendril",
+  "max": 2,
+  "min": 1,
+  "perLevel": 0.1
+}

@@ -1,0 +1,15 @@
+{
+  "type": "wardentools:add_item",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/ancient_city"
+    },
+    {
+      "chance": 0.25,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "count": 1,
+  "item": "wardentools:sculk_shell"
+}

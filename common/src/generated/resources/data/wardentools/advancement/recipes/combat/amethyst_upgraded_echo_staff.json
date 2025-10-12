@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_amethyst_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "wardentools:amethyst_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_echo_staff": {
+      "conditions": {
+        "items": [
+          {
+            "items": "wardentools:echo_staff"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "wardentools:amethyst_upgraded_echo_staff"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_echo_staff",
+      "has_amethyst_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "wardentools:amethyst_upgraded_echo_staff"
+    ]
+  }
+}

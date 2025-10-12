@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "b": {
+      "item": "minecraft:sculk"
+    },
+    "h": {
+      "item": "wardentools:sculkified_helmet"
+    },
+    "s": {
+      "item": "minecraft:sculk_sensor"
+    },
+    "t": {
+      "item": "wardentools:warden_tendril"
+    }
+  },
+  "pattern": [
+    "tst",
+    "bhb"
+  ],
+  "result": {
+    "count": 1,
+    "id": "wardentools:warden_mask"
+  }
+}

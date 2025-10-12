@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "m": {
+      "item": "wardentools:amethyst_ingot"
+    },
+    "s": {
+      "item": "wardentools:echo_staff"
+    }
+  },
+  "pattern": [
+    "mmm",
+    "msm"
+  ],
+  "result": {
+    "count": 1,
+    "id": "wardentools:amethyst_upgraded_echo_staff"
+  }
+}

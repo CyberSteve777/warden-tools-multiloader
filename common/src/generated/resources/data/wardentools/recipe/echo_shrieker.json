@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "e": {
+      "item": "wardentools:echo_staff"
+    },
+    "f": {
+      "item": "wardentools:shrieker_fang"
+    },
+    "h": {
+      "item": "minecraft:echo_shard"
+    },
+    "r": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "fhr",
+    "e r",
+    "fhr"
+  ],
+  "result": {
+    "count": 1,
+    "id": "wardentools:echo_shrieker"
+  }
+}

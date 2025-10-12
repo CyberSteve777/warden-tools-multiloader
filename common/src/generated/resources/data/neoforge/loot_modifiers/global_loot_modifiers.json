@@ -1,0 +1,13 @@
+{
+  "entries": [
+    "wardentools:add_warden_upgrade_smithing_template",
+    "wardentools:add_sculk_shell",
+    "wardentools:add_echo_apple",
+    "wardentools:add_extra_echo_shards",
+    "wardentools:add_warden_soul_to_warden_loot",
+    "wardentools:add_warden_tendril_to_warden_loot",
+    "wardentools:add_warden_soul_to_shrieker_loot",
+    "wardentools:add_shrieker_fang_to_shrieker_loot"
+  ],
+  "replace": false
+}
