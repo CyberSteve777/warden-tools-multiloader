@@ -84,6 +84,7 @@ public class WTItemModelProvider extends ItemModelProvider {
         basicItem(SCULK_ARROW.get());
         basicItem(SHRIEKER_FANG.get());
         bowItem(ECHO_SHRIEKER);
+        basicItem(WARDEN_TENDRIL.get());
     }
 
     private <T extends ArmorItem> void trimmedArmorItem(RegistryObject<Item, T> itemDeferredItem) {
