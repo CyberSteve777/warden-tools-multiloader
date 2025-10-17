@@ -43,5 +43,18 @@ public class ClientRegistrationEventHandler {
                 (stack, world, entity, seed) -> entity != null && entity.isUsingItem()
                         && entity.getUseItem() == stack ? 1.0f : 0.0f);
         EntityRenderers.register(EntityRegistry.SCULK_ARROW.get(), SculkArrowRenderer::new);
+        ItemProperties.register(ItemRegistry.SCULKIFIED_BOW.get(), ResourceLocation.parse("pull"),
+                (stack, world, entity, seed) -> {
+                    if (entity == null) {
+                        return 0.0f;
+                    }
+                    if (entity.getUseItem() != stack) {
+                        return 0.0f;
+                    }
+                    return (float) (stack.getUseDuration(entity) - entity.getUseItemRemainingTicks()) / 20.0f;
+                });
+        ItemProperties.register(ItemRegistry.SCULKIFIED_BOW.get(), ResourceLocation.parse("pulling"),
+                (stack, world, entity, seed) -> entity != null && entity.isUsingItem()
+                        && entity.getUseItem() == stack ? 1.0f : 0.0f);
     }
 }

@@ -62,6 +62,7 @@ public class CreativeTabRegistry {
                         output.accept(AMETHYST_INGOT.get());
                         output.accept(WARDEN_UPGRADE_SMITHING_TEMPLATE.get());
                         output.accept(ECHO_SHRIEKER.get());
+                        output.accept(SCULKIFIED_BOW.get());
                         output.accept(WARDEN_SOUL.get());
                         output.accept(SCULK_SHELL.get());
                         output.accept(SHRIEKER_FANG.get());

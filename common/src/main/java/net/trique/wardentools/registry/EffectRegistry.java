@@ -28,7 +28,7 @@ public class EffectRegistry {
     }
 
     static {
-        SCULK_ADAPTION = registerEffect("sculk_adaptation", () -> new SculkAdaptionEffect(MobEffectCategory.BENEFICIAL, 37525));
+        SCULK_ADAPTION = registerEffect("sculk_adaption", () -> new SculkAdaptionEffect(MobEffectCategory.BENEFICIAL, 37525));
         WARDEN_CURSE = registerEffect("warden_curse", () -> new WardenCurseEffect(MobEffectCategory.BENEFICIAL, 213328));
     }
 }
