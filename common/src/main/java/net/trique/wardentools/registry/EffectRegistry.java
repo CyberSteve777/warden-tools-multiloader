@@ -31,6 +31,6 @@ public class EffectRegistry {
     static {
         SCULK_ADAPTION = registerEffect("sculk_adaption", () -> new SculkAdaptionEffect(MobEffectCategory.BENEFICIAL, 0x009295));
         SCULK_BLESS = registerEffect("sculk_bless", () -> new SculkBlessEffect(MobEffectCategory.BENEFICIAL, 0x0A5060));
-        WARDEN_CURSE = registerEffect("warden_curse", () -> new WardenCurseEffect(MobEffectCategory.BENEFICIAL, 0x034150));
+        WARDEN_CURSE = registerEffect("warden_curse", () -> new WardenCurseEffect(MobEffectCategory.NEUTRAL, 0x034150));
     }
 }
