@@ -4,7 +4,7 @@
     "item": "wardentools:echo_ingot"
   },
   "base": {
-    "item": "minecraft:netherite_shovel"
+    "item": "minecraft:diamond_shovel"
   },
   "result": {
     "count": 1,

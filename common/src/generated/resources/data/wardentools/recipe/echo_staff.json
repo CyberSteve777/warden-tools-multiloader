@@ -5,17 +5,17 @@
     "e": {
       "item": "minecraft:echo_shard"
     },
-    "s": {
-      "item": "wardentools:warden_soul"
+    "i": {
+      "item": "wardentools:echo_ingot"
     },
-    "w": {
-      "item": "wardentools:sculk_shell"
+    "s": {
+      "item": "minecraft:stick"
     }
   },
   "pattern": [
-    "s",
-    "w",
-    "e"
+    "e",
+    "i",
+    "s"
   ],
   "result": {
     "count": 1,

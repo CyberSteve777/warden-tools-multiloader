@@ -3,22 +3,25 @@
   "category": "equipment",
   "key": {
     "e": {
-      "item": "wardentools:echo_staff"
+      "item": "wardentools:echo_ingot"
     },
     "f": {
       "item": "wardentools:shrieker_fang"
     },
-    "h": {
-      "item": "minecraft:echo_shard"
-    },
     "r": {
       "item": "minecraft:string"
+    },
+    "s": {
+      "item": "wardentools:warden_soul"
+    },
+    "w": {
+      "item": "wardentools:warden_ingot"
     }
   },
   "pattern": [
-    "fhr",
-    "e r",
-    "fhr"
+    "fer",
+    "wsr",
+    "fer"
   ],
   "result": {
     "count": 1,
