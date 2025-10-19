@@ -78,9 +78,11 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @WrapMethod(method = "hurt")
-    private boolean reduceSonicBoomDamage(DamageSource source, float amount, Operation<Boolean> original) {
-        if (hasEffect(EffectRegistry.SCULK_ADAPTION) && source.is(DamageTypes.SONIC_BOOM)) {
-            int amplifier = getEffect(EffectRegistry.SCULK_ADAPTION).getAmplifier();
+    private boolean reduceDamageWithSculkBless(DamageSource source, float amount, Operation<Boolean> original) {
+        if (hasEffect(EffectRegistry.SCULK_BLESS) && (source.is(DamageTypes.SONIC_BOOM) ||
+                (source.getEntity() instanceof LivingEntity livingEntity &&
+                        livingEntity.getType().is(WTEntityTypeTags.SCULK_BLESS_REDUCES_DAMAGE_FROM)))) {
+            int amplifier = getEffect(EffectRegistry.SCULK_BLESS).getAmplifier();
             return original.call(source, amount * 0.1f * (amplifier + 1));
         }
         return original.call(source, amount);
@@ -139,10 +141,11 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @WrapMethod(method = "hurt")
-    public boolean applyExtraDamageFromSculkAdaptation(DamageSource source, float amount, Operation<Boolean> original) {
-        if (source.getEntity() instanceof LivingEntity attacker && attacker.hasEffect(EffectRegistry.SCULK_ADAPTION) &&
-                getType().is(WTEntityTypeTags.SCULK_ADAPTATION_DEALS_EXTRA_DAMAGE_TO)) {
-            int amplifier = attacker.getEffect(EffectRegistry.SCULK_ADAPTION).getAmplifier();
+    public boolean applyExtraDamageFromSculkBless(DamageSource source, float amount, Operation<Boolean> original) {
+        if (source.getEntity() instanceof LivingEntity attacker && attacker.hasEffect(EffectRegistry.SCULK_BLESS) &&
+                (getType().is(WTEntityTypeTags.SCULK_BLESS_DEALS_EXTRA_DAMAGE_TO) ||
+                        hasEffect(EffectRegistry.SCULK_ADAPTION))) {
+            int amplifier = attacker.getEffect(EffectRegistry.SCULK_BLESS).getAmplifier();
             return original.call(source, amount * (1 + 0.5f * (1 + amplifier)));
         }
         return original.call(source, amount);

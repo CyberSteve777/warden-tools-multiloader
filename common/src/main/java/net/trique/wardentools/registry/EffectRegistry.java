@@ -16,6 +16,7 @@ public class EffectRegistry {
 
     public static Holder<MobEffect> SCULK_ADAPTION;
     public static Holder<MobEffect> WARDEN_CURSE;
+    public static Holder<MobEffect> SCULK_BLESS;
 
     private static <T extends MobEffect> Holder<MobEffect> registerEffect(String name, Supplier<T> effectSupplier) {
         RegistryObject<MobEffect, T> effectObject = EFFECTS.register(name, effectSupplier);
@@ -28,7 +29,8 @@ public class EffectRegistry {
     }
 
     static {
-        SCULK_ADAPTION = registerEffect("sculk_adaptation", () -> new SculkAdaptionEffect(MobEffectCategory.BENEFICIAL, 37525));
-        WARDEN_CURSE = registerEffect("warden_curse", () -> new WardenCurseEffect(MobEffectCategory.BENEFICIAL, 213328));
+        SCULK_ADAPTION = registerEffect("sculk_adaption", () -> new SculkAdaptionEffect(MobEffectCategory.BENEFICIAL, 0x009295));
+        SCULK_BLESS = registerEffect("sculk_bless", () -> new SculkBlessEffect(MobEffectCategory.BENEFICIAL, 0x0A5060));
+        WARDEN_CURSE = registerEffect("warden_curse", () -> new WardenCurseEffect(MobEffectCategory.BENEFICIAL, 0x034150));
     }
 }
