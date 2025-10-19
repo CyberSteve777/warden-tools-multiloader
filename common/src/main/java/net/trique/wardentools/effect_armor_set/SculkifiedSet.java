@@ -19,7 +19,7 @@ public class SculkifiedSet extends FullEffectArmorSet {
 
     private static EffectList getWearingEffects(LivingEntity entity) {
         return new EffectList.Builder()
-                .addInfiniteEffect(EffectRegistry.SCULK_ADAPTION, 1,
+                .addInfiniteEffect(EffectRegistry.SCULK_ADAPTION, 0,
                         true, false, true)
                 .build();
     }
