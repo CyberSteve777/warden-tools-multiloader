@@ -1,14 +1,19 @@
 package net.trique.wardentools.registry;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.registration.RegistrationProvider;
 import net.trique.wardentools.registration.RegistryObject;
+
+import java.util.List;
 
 import static net.trique.wardentools.registry.BlockRegistry.*;
 import static net.trique.wardentools.registry.ItemRegistry.*;
@@ -58,6 +63,7 @@ public class CreativeTabRegistry {
                         output.accept(ENDER_UPGRADED_ECHO_STAFF.get());
                         output.accept(ECHO_APPLE.get());
                         output.accept(ECHO_INGOT.get());
+                        output.accept(WARDEN_INGOT.get());
                         output.accept(ROSE_GOLD_INGOT.get());
                         output.accept(AMETHYST_INGOT.get());
                         output.accept(WARDEN_UPGRADE_SMITHING_TEMPLATE.get());
@@ -67,14 +73,12 @@ public class CreativeTabRegistry {
                         output.accept(SHRIEKER_FANG.get());
                         output.accept(WARDEN_TENDRIL.get());
                         output.accept(SCULK_ARROW.get());
-                        output.accept(PotionContents.createItemStack(Items.POTION, PotionRegistry.SCULK_ADAPTION_POTION));
-                        output.accept(PotionContents.createItemStack(Items.SPLASH_POTION, PotionRegistry.SCULK_ADAPTION_POTION));
-                        output.accept(PotionContents.createItemStack(Items.LINGERING_POTION, PotionRegistry.SCULK_ADAPTION_POTION));
-                        output.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, PotionRegistry.SCULK_ADAPTION_POTION));
-                        output.accept(PotionContents.createItemStack(Items.POTION, PotionRegistry.WARDEN_POTION));
-                        output.accept(PotionContents.createItemStack(Items.SPLASH_POTION, PotionRegistry.WARDEN_POTION));
-                        output.accept(PotionContents.createItemStack(Items.LINGERING_POTION, PotionRegistry.WARDEN_POTION));
-                        output.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, PotionRegistry.WARDEN_POTION));
+                        for (Holder<Potion> potionHolder: PotionRegistry.getEntries()) {
+                            for (Item base: List.of(Items.POTION, Items.SPLASH_POTION,
+                                    Items.LINGERING_POTION, Items.TIPPED_ARROW)) {
+                                output.accept(PotionContents.createItemStack(base, potionHolder));
+                            }
+                        }
                     }).title(Component.literal(Constants.MOD_NAME))
             .build());
 
