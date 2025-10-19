@@ -18,7 +18,9 @@ public class WTEntityTypeTagProvider extends EntityTypeTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        tag(WTEntityTypeTags.SCULK_ADAPTATION_DEALS_EXTRA_DAMAGE_TO)
+        tag(WTEntityTypeTags.SCULK_BLESS_DEALS_EXTRA_DAMAGE_TO)
+                .add(EntityType.WARDEN);
+        tag(WTEntityTypeTags.SCULK_BLESS_REDUCES_DAMAGE_FROM)
                 .add(EntityType.WARDEN);
     }
 }
