@@ -9,6 +9,7 @@
     "LivingEntityMixin"
   ],
   "client": [
+    "LevelRendererMixin",
     "MixinMinecraft"
   ],
   "server": [],
