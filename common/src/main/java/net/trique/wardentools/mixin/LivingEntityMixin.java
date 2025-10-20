@@ -24,7 +24,6 @@ import net.trique.wardentools.registry.EffectRegistry;
 import net.trique.wardentools.util.WTBiomeTags;
 import net.trique.wardentools.util.WTEntityTypeTags;
 import net.trique.wardentools.util.warden_curse.WardenCurseUser;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -35,7 +34,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.function.BiConsumer;
 
 
-@Debug(export = true)
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
     @Unique
