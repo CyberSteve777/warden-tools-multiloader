@@ -81,7 +81,8 @@ public abstract class LivingEntityMixin extends Entity {
     private boolean reduceDamageWithSculkBless(DamageSource source, float amount, Operation<Boolean> original) {
         if (hasEffect(EffectRegistry.SCULK_BLESS) && (source.is(DamageTypes.SONIC_BOOM) ||
                 (source.getEntity() instanceof LivingEntity livingEntity &&
-                        livingEntity.getType().is(WTEntityTypeTags.SCULK_BLESS_REDUCES_DAMAGE_FROM)))) {
+                        (livingEntity.getType().is(WTEntityTypeTags.SCULK_BLESS_REDUCES_DAMAGE_FROM) ||
+                                livingEntity.hasEffect(EffectRegistry.SCULK_ADAPTION))))) {
             int amplifier = getEffect(EffectRegistry.SCULK_BLESS).getAmplifier();
             return original.call(source, amount * 0.1f * (amplifier + 1));
         }
