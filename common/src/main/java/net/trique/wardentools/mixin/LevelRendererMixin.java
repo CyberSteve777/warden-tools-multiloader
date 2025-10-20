@@ -5,9 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.util.FastColor;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.scores.Team;
 import net.trique.wardentools.registry.EffectRegistry;
 import net.trique.wardentools.util.ClientFunctions;
@@ -20,8 +18,7 @@ public class LevelRendererMixin {
     @WrapOperation(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getTeamColor()I"))
     private int setOutlineColor(Entity entity, Operation<Integer> original) {
         int color = original.call(entity);
-        if ((entity.getTeam() instanceof Team team && team.getColor().getColor() != null)
-            || (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(MobEffects.GLOWING))) {
+        if ((entity.getTeam() instanceof Team team && team.getColor().getColor() != null)) {
             return color;
         }
         LocalPlayer player = ClientFunctions.getLocalPlayer();
