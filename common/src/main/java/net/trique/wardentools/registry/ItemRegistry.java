@@ -3,7 +3,7 @@ package net.trique.wardentools.registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.*;
 import net.trique.wardentools.Constants;
-import net.trique.wardentools.item.archery.EchoShrieker;
+import net.trique.wardentools.item.archery.EchoShriekerItem;
 import net.trique.wardentools.item.archery.SculkArrowItem;
 import net.trique.wardentools.item.material.WardenArmorMaterials;
 import net.trique.wardentools.item.material.WardenToolMaterials;
@@ -39,8 +39,8 @@ public class ItemRegistry {
             () -> new RoseGoldEchoStaff(getItemProperties().rarity(Rarity.EPIC).durability(76),
                     80, 20, 40, 7, 20.0f, 2.5, 0.5));
 
-    public static final RegistryObject<Item, EchoShrieker> ECHO_SHRIEKER = ITEMS.register("echo_shrieker",
-            () -> new EchoShrieker(getFireResistantProperties().rarity(Rarity.EPIC).durability(50)));
+    public static final RegistryObject<Item, EchoShriekerItem> ECHO_SHRIEKER = ITEMS.register("echo_shrieker",
+            () -> new EchoShriekerItem(getFireResistantProperties().rarity(Rarity.EPIC).durability(50)));
 
     public static final RegistryObject<Item, ShovelItem> SCULKIFIED_SHOVEL = ITEMS.register("sculkified_shovel", () ->
             new ShovelItem(WardenToolMaterials.SCULKIFIED, getItemProperties().attributes(ShovelItem.createAttributes(WardenToolMaterials.SCULKIFIED, 1.5f, -3.0f))));
