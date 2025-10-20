@@ -148,7 +148,7 @@ public class WardenCurseUser implements VibrationSystem {
 
         @Override
         public void onReceiveVibration(ServerLevel serverLevel, BlockPos blockPos, Holder<GameEvent> gameEventHolder, @Nullable Entity entity, @Nullable Entity possibleShooter, float distance) {
-            if (!holder.isDeadOrDying()) {
+            if (!holder.isDeadOrDying() && holder.hasEffect(EffectRegistry.WARDEN_CURSE)) {
                 int amplifier = holder.getEffect(EffectRegistry.WARDEN_CURSE).getAmplifier();
                 COOLDOWN_TICKER.setDuration(Math.max(10, 40 - amplifier * 10));
                 if ((entity != null && !holder.is(entity)) || (possibleShooter != null && !holder.is(possibleShooter))) {
