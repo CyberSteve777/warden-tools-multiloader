@@ -17,15 +17,11 @@ import org.spongepowered.asm.mixin.injection.At;
 public class LevelRendererMixin {
     @WrapOperation(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getTeamColor()I"))
     private int setOutlineColor(Entity entity, Operation<Integer> original) {
-        int color = original.call(entity);
-        if ((entity.getTeam() instanceof Team team && team.getColor().getColor() != null)) {
-            return color;
-        }
         LocalPlayer player = ClientFunctions.getLocalPlayer();
         if ((player.hasEffect(EffectRegistry.WARDEN_CURSE) && !entity.is(player) &&
                 WardenCurseClientHelper.getEntitiesToRenderGlowing().contains(entity.getId()))) {
             return FastColor.ARGB32.color(255, 41, 223, 235);
         }
-        return color;
+        return original.call(entity);
     }
 }
