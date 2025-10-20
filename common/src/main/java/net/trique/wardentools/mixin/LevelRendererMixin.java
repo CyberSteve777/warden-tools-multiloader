@@ -6,7 +6,6 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.scores.Team;
 import net.trique.wardentools.registry.EffectRegistry;
 import net.trique.wardentools.util.ClientFunctions;
 import net.trique.wardentools.util.warden_curse.WardenCurseClientHelper;
