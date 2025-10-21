@@ -55,7 +55,7 @@ public class WTItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(SCULKIFIED_BOOTS);
 
         basicItem(SCULK_SHELL.get());
-//        basicItem(WARDEN_TENDRIL.get());
+        basicItem(WARDEN_TENDRIL.get());
 //        basicItem(WARDEN_INGOT.get());
         handheldItem(WARDEN_AXE.get());
         handheldItem(WARDEN_PICKAXE.get());
