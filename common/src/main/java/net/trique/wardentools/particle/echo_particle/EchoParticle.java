@@ -32,20 +32,11 @@ public class EchoParticle extends TextureSheetParticle {
     public void render(VertexConsumer buffer, Camera camera, float partialTicks) {
        // this.alpha = 1.0F - Mth.clamp(((float) this.age + partialTicks) / (float) this.lifetime, 0.0F, 1.0F);
         Quaternionf quaternionf = new Quaternionf();
-
-        quaternionf.rotateY((float) (Math.PI- yRot * Math.PI/180));
-        quaternionf.rotateX(-(float) (xRot * Math.PI/180));
-
+        float rotX = -(float) (xRot * Math.PI/180);
+        float rotY = (float) (Math.PI- yRot * Math.PI/180);
+        quaternionf.rotateYXZ(rotY, rotX, 0.0f);
         this.renderRotatedQuad(buffer, camera, quaternionf, partialTicks);
-
-        //fixme backside problem
-        Quaternionf quaternionf1 = new Quaternionf();
-
-        quaternionf1.rotateY((float) (Math.PI-yRot * Math.PI/180));
-        quaternionf1.rotateX(-(float) (xRot * Math.PI/180));
-
-
-        this.renderRotatedQuad(buffer, camera, quaternionf1, partialTicks);
+        this.renderRotatedQuad(buffer, camera, new Quaternionf(quaternionf).rotateY((float) Math.PI), partialTicks);
     }
 
     private void fadeOut() {
