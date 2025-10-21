@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#wardentools:sculkhyst_geode_can_generate_in",
+  "features": "wardentools:sculkhyst_geode_placed",
+  "step": "underground_ores"
+}

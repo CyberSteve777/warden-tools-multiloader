@@ -30,13 +30,10 @@ import net.trique.wardentools.registry.ItemRegistry;
 import java.util.HashSet;
 import java.util.Set;
 
-public class EchoShrieker extends BowItem {
-    public EchoShrieker(Properties settings) {
+public class EchoShriekerItem extends BowItem {
+    public EchoShriekerItem(Properties settings) {
         super(settings.attributes(createAttributeModifiers()));
     }
-
-    private float remainTicks;
-
 
     public static ItemAttributeModifiers createAttributeModifiers() {
         return ItemAttributeModifiers.builder()
@@ -61,10 +58,10 @@ public class EchoShrieker extends BowItem {
         if (!world.isClientSide() && user instanceof Player player) {
             int i = this.getUseDuration(stack, user) - remainingUseTicks;
             float loadAmount = getPowerForTime(i);
-            remainTicks = loadAmount;
+            float remainTicks = loadAmount;
             ItemStack ammo = findEchoShard(player);
             if (!((double) loadAmount < 0.1f)) {
-                spawnSonicBoom(world, user);
+                spawnSonicBoom(world, user,remainTicks);
                 if (!player.isCreative()) {
                     player.getCooldowns().addCooldown(this, 120);
                     stack.hurtAndBreak(1, user, EquipmentSlot.MAINHAND);
@@ -88,7 +85,7 @@ public class EchoShrieker extends BowItem {
         return ingredient.is(ItemRegistry.SHRIEKER_FANG.get());
     }
 
-    private void spawnSonicBoom(Level world, LivingEntity user) {
+    private void spawnSonicBoom(Level world, LivingEntity user, float remainTicks) {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.SCULK_SHRIEKER_SHRIEK, SoundSource.BLOCKS, 5.0f, 1.0f);
 
         float heightOffset = user.getEyeHeight();
@@ -102,7 +99,8 @@ public class EchoShrieker extends BowItem {
         Set<Entity> hit = new HashSet<>();
         for (int particleIndex = 1; particleIndex < Mth.floor(offsetToTarget.length()); ++particleIndex) {
             Vec3 particlePos = source.add(normalized.scale(particleIndex - 1));
-            ((ServerLevel) world).sendParticles(new EchoParticleOption(particleIndex * 1.4f), particlePos.x, particlePos.y, particlePos.z, 1, 0, 0, 0, 0.0);
+            ((ServerLevel) world).sendParticles(new EchoParticleOption(particleIndex * 1.4f,user.getXRot(),user.getYRot()), particlePos.x, particlePos.y, particlePos.z,
+                    1, 0, 0, 0, 0);
             hit.addAll(world.getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos((int) particlePos.x(),
                             (int) particlePos.y(), (int) particlePos.z())).inflate(0.1 * (particleIndex - 1)),
                     it -> !((it.isAlliedTo(user)) ||

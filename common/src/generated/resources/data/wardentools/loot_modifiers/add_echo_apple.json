@@ -1,0 +1,16 @@
+{
+  "type": "wardentools:add_item_with_random_amount",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/ancient_city"
+    },
+    {
+      "chance": 0.5,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": "wardentools:echo_apple",
+  "max": 3,
+  "min": 1
+}

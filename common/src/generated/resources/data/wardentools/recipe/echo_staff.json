@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "e": {
+      "item": "minecraft:echo_shard"
+    },
+    "i": {
+      "item": "wardentools:echo_ingot"
+    },
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "e",
+    "i",
+    "s"
+  ],
+  "result": {
+    "count": 1,
+    "id": "wardentools:echo_staff"
+  }
+}

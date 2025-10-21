@@ -27,8 +27,9 @@ public class WardenSet extends EffectArmorSet {
         EffectList.Builder builder = new EffectList.Builder();
         if (!entity.getItemBySlot(EquipmentSlot.HEAD).is(ItemRegistry.WARDEN_MASK.get())) {
             if (ArmorSetHelper.hasFullEffectSetArmorOn(entity, this)) {
-                builder = builder.addInfiniteEffect(EffectRegistry.SCULK_ADAPTION, 3, true, false, true)
+                builder = builder.addInfiniteEffect(EffectRegistry.SCULK_ADAPTION, 0, true, false, true)
                         .addInfiniteEffect(MobEffects.FIRE_RESISTANCE, 0, true, false, true)
+                        .addInfiniteEffect(MobEffects.DAMAGE_BOOST, 3, true, false, true)
                         .addInfiniteEffect(MobEffects.HEALTH_BOOST, 4, true, false, true);
             }
         } else {
@@ -41,8 +42,9 @@ public class WardenSet extends EffectArmorSet {
             }
             builder = builder.addInfiniteEffect(EffectRegistry.WARDEN_CURSE, wardenCurseAmpl, true, false, true);
             if (ArmorSetHelper.hasFullEffectSetArmorOn(entity, this)) {
-                builder = builder.addInfiniteEffect(EffectRegistry.SCULK_ADAPTION, 5, true, false, true)
+                builder = builder.addInfiniteEffect(EffectRegistry.SCULK_ADAPTION, 0, true, false, true)
                         .addInfiniteEffect(MobEffects.FIRE_RESISTANCE, 0, true, false, true)
+                        .addInfiniteEffect(MobEffects.DAMAGE_BOOST, 9, true, false, true)
                         .addInfiniteEffect(MobEffects.HEALTH_BOOST, 14, true, false, true);
             }
         }

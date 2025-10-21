@@ -1,6 +1,7 @@
 package net.trique.wardentools.event;
 
 
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -17,13 +18,43 @@ public class CommonRegistrationEventHelper {
         PotionBrewing.Builder builder = event.getBuilder();
         builder.addMix(
                 Potions.AWKWARD,
+                Items.ECHO_SHARD,
+                PotionRegistry.SCULK_ADAPTION
+        );
+        builder.addMix(
+                Potions.AWKWARD,
                 ItemRegistry.WARDEN_SOUL.get(),
-                PotionRegistry.SCULK_ADAPTION_POTION
+                PotionRegistry.SCULK_BLESS
         );
         builder.addMix(
                 Potions.AWKWARD,
                 ItemRegistry.WARDEN_TENDRIL.get(),
-                PotionRegistry.WARDEN_POTION
+                PotionRegistry.WARDEN
+        );
+        builder.addMix(
+                PotionRegistry.SCULK_ADAPTION,
+                Items.REDSTONE,
+                PotionRegistry.LONG_SCULK_ADAPTION
+        );
+        builder.addMix(
+                PotionRegistry.SCULK_BLESS,
+                Items.REDSTONE,
+                PotionRegistry.LONG_SCULK_BLESS
+        );
+        builder.addMix(
+                PotionRegistry.SCULK_BLESS,
+                Items.GLOWSTONE_DUST,
+                PotionRegistry.STRONG_SCULK_BLESS
+        );
+        builder.addMix(
+                PotionRegistry.WARDEN,
+                Items.REDSTONE,
+                PotionRegistry.LONG_WARDEN
+        );
+        builder.addMix(
+                PotionRegistry.WARDEN,
+                Items.GLOWSTONE_DUST,
+                PotionRegistry.STRONG_WARDEN
         );
     }
 }

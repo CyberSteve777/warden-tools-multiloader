@@ -49,7 +49,7 @@ public class AddItemToWardenLootModifier extends LootModifier {
                 return generatedLoot;
             }
         }
-        if (lootContext.getParam(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity entity) {
+        if (lootContext.getParamOrNull(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity entity) {
             var registryLookup = lootContext.getLevel().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
             int level = EnchantmentHelper.getEnchantmentLevel(registryLookup.getOrThrow(Enchantments.LOOTING), entity);
             float lootingMultiplier = baseChance + perLevel * level;

@@ -1,0 +1,14 @@
+{
+  "type": "wardentools:add_item_to_shrieker_loot_modifier",
+  "baseChance": 0.05,
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:blocks/sculk_shrieker"
+    }
+  ],
+  "item": "wardentools:warden_soul",
+  "max": 2,
+  "min": 1,
+  "perLevel": 0.05
+}

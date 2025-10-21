@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "wardentools:echo_ingot"
+  },
+  "base": {
+    "item": "minecraft:diamond_pickaxe"
+  },
+  "result": {
+    "count": 1,
+    "id": "wardentools:sculkified_pickaxe"
+  },
+  "template": {
+    "item": "wardentools:warden_upgrade_smithing_template"
+  }
+}
