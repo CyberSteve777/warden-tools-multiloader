@@ -58,10 +58,9 @@ public class EchoShriekerItem extends BowItem {
         if (!world.isClientSide() && user instanceof Player player) {
             int i = this.getUseDuration(stack, user) - remainingUseTicks;
             float loadAmount = getPowerForTime(i);
-            float remainTicks = loadAmount;
             ItemStack ammo = findEchoShard(player);
             if (!((double) loadAmount < 0.1f)) {
-                spawnSonicBoom(world, user,remainTicks);
+                spawnSonicBoom(world, user, loadAmount);
                 if (!player.isCreative()) {
                     player.getCooldowns().addCooldown(this, 120);
                     stack.hurtAndBreak(1, user, EquipmentSlot.MAINHAND);
@@ -97,14 +96,19 @@ public class EchoShriekerItem extends BowItem {
         Vec3 normalized = offsetToTarget.normalize();
 
         Set<Entity> hit = new HashSet<>();
+        AABB cube = new AABB(new BlockPos((int) source.x(),
+                (int) source.y(), (int) source.z())).inflate(final_distance);
+        hit.addAll(world.getEntitiesOfClass(LivingEntity.class, cube, it -> isInCone(it.position().add(0.0, it.getEyeHeight(),0.0), source,offsetToTarget) && !((it.isAlliedTo(user)) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
+
         for (int particleIndex = 1; particleIndex < Mth.floor(offsetToTarget.length()); ++particleIndex) {
             Vec3 particlePos = source.add(normalized.scale(particleIndex - 1));
             ((ServerLevel) world).sendParticles(new EchoParticleOption(particleIndex * 1.4f,user.getXRot(),user.getYRot()), particlePos.x, particlePos.y, particlePos.z,
                     1, 0, 0, 0, 0);
-            hit.addAll(world.getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos((int) particlePos.x(),
-                            (int) particlePos.y(), (int) particlePos.z())).inflate(0.1 * (particleIndex - 1)),
-                    it -> !((it.isAlliedTo(user)) ||
-                            (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
+
+//            hit.addAll(world.getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos((int) particlePos.x(),
+//                            (int) particlePos.y(), (int) particlePos.z())).inflate(0.1 * (particleIndex - 1)),
+//                    it -> !((it.isAlliedTo(user)) ||
+//                            (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
         }
 
         hit.remove(user);
@@ -123,6 +127,38 @@ public class EchoShriekerItem extends BowItem {
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
             }
         }
+    }
+
+    private boolean isInCone(Vec3 target, Vec3 source ,Vec3 distance){
+        float angle = (float) Math.toRadians(15);
+
+        // Вычисляем единичный вектор оси
+        float axisLength = (float) distance.length();
+        if (axisLength == 0) return false; // Вырожденный случай
+
+        Vec3 axisUnit = distance.scale(1.0f / axisLength);
+
+        // Вектор от вершины к точке
+        Vec3 toPoint = target.subtract(source);
+
+        // Высота точки над вершиной (проекция на ось)
+        float height = (float) toPoint.dot(axisUnit);
+
+        // Проверка по высоте
+        if (height < 0 || height > axisLength) {
+            return false;
+        }
+
+        // Расстояние от точки до оси
+        Vec3 projection = axisUnit.scale(height);
+        Vec3 perpendicular = toPoint.subtract(projection);
+        float distanceToAxis = (float) perpendicular.length();
+
+        // Проверка через тангенс угла
+        float tanAngle = (float) Math.tan(angle);
+        float maxAllowedDistance = height * tanAngle;
+
+        return distanceToAxis <= maxAllowedDistance;
     }
 
     private float finalDamage(float chargingAmount, float distanceToTarget, LivingEntity target) {

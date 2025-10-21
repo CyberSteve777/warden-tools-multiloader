@@ -68,6 +68,7 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         offerWardenMaskRecipe(recipeOutput);
         offerShapedEchoShriekerRecipe(recipeOutput);
+        offerShapedSckulifiedBowrRecipe(recipeOutput);
         offerCrossShapedRecipe(recipeOutput, RecipeCategory.MISC, Items.COPPER_INGOT, Items.ECHO_SHARD,
                 ECHO_INGOT.get(), 1);
         offerCrossShapedRecipe(recipeOutput, RecipeCategory.MISC, ECHO_INGOT.get(), Items.AMETHYST_SHARD,
@@ -159,6 +160,18 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .pattern("wsr")
                 .pattern("fer")
                 .unlockedBy(RecipeProvider.getHasName(WARDEN_INGOT.get()), RecipeProvider.has(WARDEN_INGOT.get()))
+                .save(exporter);
+    }
+
+    private static void offerShapedSckulifiedBowrRecipe(RecipeOutput exporter) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, SCULKIFIED_BOW.get(), 1)
+                .define('f', SHRIEKER_FANG::get)
+                .define('i', ECHO_INGOT::get)
+                .define('r', Items.STRING)
+                .pattern(" fr")
+                .pattern("i r")
+                .pattern(" fr")
+                .unlockedBy("has_shrieker_fang", RecipeProvider.has(SHRIEKER_FANG.get()))
                 .save(exporter);
     }
 

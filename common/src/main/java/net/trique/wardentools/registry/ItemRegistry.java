@@ -5,6 +5,7 @@ import net.minecraft.world.item.*;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.item.archery.EchoShriekerItem;
 import net.trique.wardentools.item.archery.SculkArrowItem;
+import net.trique.wardentools.item.archery.SculkifiedBow;
 import net.trique.wardentools.item.material.WardenArmorMaterials;
 import net.trique.wardentools.item.material.WardenToolMaterials;
 import net.trique.wardentools.item.melee.DarknessAxeItem;
@@ -41,6 +42,9 @@ public class ItemRegistry {
 
     public static final RegistryObject<Item, EchoShriekerItem> ECHO_SHRIEKER = ITEMS.register("echo_shrieker",
             () -> new EchoShriekerItem(getFireResistantProperties().rarity(Rarity.EPIC).durability(50)));
+
+    public static final RegistryObject<Item, SculkifiedBow> SCULKIFIED_BOW = ITEMS.register("sculkified_bow", () ->
+            new SculkifiedBow(getFireResistantProperties().rarity(Rarity.RARE)));
 
     public static final RegistryObject<Item, ShovelItem> SCULKIFIED_SHOVEL = ITEMS.register("sculkified_shovel", () ->
             new ShovelItem(WardenToolMaterials.SCULKIFIED, getItemProperties().attributes(ShovelItem.createAttributes(WardenToolMaterials.SCULKIFIED, 1.5f, -3.0f))));
