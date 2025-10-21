@@ -145,7 +145,7 @@ public abstract class LivingEntityMixin extends Entity {
                 (getType().is(WTEntityTypeTags.SCULK_BLESS_DEALS_EXTRA_DAMAGE_TO) ||
                         hasEffect(EffectRegistry.SCULK_ADAPTION))) {
             int amplifier = attacker.getEffect(EffectRegistry.SCULK_BLESS).getAmplifier();
-            return original.call(source, amount * (1 + 0.5f * (1 + amplifier)));
+            return original.call(source, amount * (1 + 0.25f * (1 + amplifier)));
         }
         return original.call(source, amount);
     }
