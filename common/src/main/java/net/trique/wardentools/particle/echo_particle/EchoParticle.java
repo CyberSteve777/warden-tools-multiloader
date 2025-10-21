@@ -18,7 +18,7 @@ public class EchoParticle extends TextureSheetParticle {
         this.yRot = yRot;
         xd = yd = zd = 0;
         this.quadSize *= 1f;
-        this.lifetime = 20;
+        this.lifetime = 40;
         this.setSpriteFromAge(spriteSet);
     }
 
