@@ -26,11 +26,14 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.trique.wardentools.particle.echo_particle.EchoParticleOption;
 import net.trique.wardentools.registry.ItemRegistry;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public class EchoShriekerItem extends BowItem {
+
     public EchoShriekerItem(Properties settings) {
         super(settings.attributes(createAttributeModifiers()));
     }
@@ -94,21 +97,16 @@ public class EchoShriekerItem extends BowItem {
         Vec3 source = user.position().add(0.0, heightOffset, 0.0);
         Vec3 offsetToTarget = target.subtract(source);
         Vec3 normalized = offsetToTarget.normalize();
-
         Set<Entity> hit = new HashSet<>();
+
         AABB cube = new AABB(new BlockPos((int) source.x(),
                 (int) source.y(), (int) source.z())).inflate(final_distance);
-        hit.addAll(world.getEntitiesOfClass(LivingEntity.class, cube, it -> isInCone(it.position().add(0.0, it.getEyeHeight(),0.0), source,offsetToTarget) && !((it.isAlliedTo(user)) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
+        hit.addAll(world.getEntitiesOfClass(LivingEntity.class, cube, it -> isAABBInConeSimple(source,offsetToTarget, it.getBoundingBox()) && !((it.isAlliedTo(user)) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
 
         for (int particleIndex = 1; particleIndex < Mth.floor(offsetToTarget.length()); ++particleIndex) {
             Vec3 particlePos = source.add(normalized.scale(particleIndex - 1));
             ((ServerLevel) world).sendParticles(new EchoParticleOption(particleIndex * 1.4f,user.getXRot(),user.getYRot()), particlePos.x, particlePos.y, particlePos.z,
                     1, 0, 0, 0, 0);
-
-//            hit.addAll(world.getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos((int) particlePos.x(),
-//                            (int) particlePos.y(), (int) particlePos.z())).inflate(0.1 * (particleIndex - 1)),
-//                    it -> !((it.isAlliedTo(user)) ||
-//                            (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
         }
 
         hit.remove(user);
@@ -116,7 +114,7 @@ public class EchoShriekerItem extends BowItem {
         for (Entity hitTarget : hit) {
             if (hitTarget instanceof LivingEntity living) {
                 float distanceToTarget = user.distanceTo(living);
-                float damage = finalDamage(remainTicks, distanceToTarget, living);
+                float damage = finalDamage(remainTicks, distanceToTarget, base_distance);
                 living.hurt(world.damageSources().sonicBoom(user), damage);
                 living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
                 living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
@@ -129,50 +127,73 @@ public class EchoShriekerItem extends BowItem {
         }
     }
 
-    private boolean isInCone(Vec3 target, Vec3 source ,Vec3 distance){
-        float angle = (float) Math.toRadians(15);
+    public static boolean isAABBInConeSimple(Vec3 vertex, Vec3 axisVector, AABB aabb) {
+        double angleDegrees = (float) Math.toRadians(15);
+        float axisLength = (float) axisVector.length();
+        if (axisLength == 0) return false;
 
-        // Вычисляем единичный вектор оси
-        float axisLength = (float) distance.length();
-        if (axisLength == 0) return false; // Вырожденный случай
+        Vec3 axisUnit = new Vec3(axisVector.x / axisLength, axisVector.y / axisLength, axisVector.z / axisLength);
+        float tanAngle = (float) Math.tan(angleDegrees);
 
-        Vec3 axisUnit = distance.scale(1.0f / axisLength);
+        // Checking center of AABB
+        Vec3 center = aabb.getCenter();
 
-        // Вектор от вершины к точке
-        Vec3 toPoint = target.subtract(source);
+        Vec3 toCenter = center.subtract(vertex);
+        float centerHeight = (float) toCenter.dot(axisUnit);
 
-        // Высота точки над вершиной (проекция на ось)
-        float height = (float) toPoint.dot(axisUnit);
-
-        // Проверка по высоте
-        if (height < 0 || height > axisLength) {
+        // Если центр вне диапазона высот конуса
+        if (centerHeight < 0 || centerHeight > axisLength) {
             return false;
         }
 
-        // Расстояние от точки до оси
-        Vec3 projection = axisUnit.scale(height);
-        Vec3 perpendicular = toPoint.subtract(projection);
+        // Checking distance between center and axis
+        Vec3 projection = axisUnit.scale(centerHeight);
+        Vec3 perpendicular = toCenter.subtract(projection);
         float distanceToAxis = (float) perpendicular.length();
 
-        // Проверка через тангенс угла
-        float tanAngle = (float) Math.tan(angle);
-        float maxAllowedDistance = height * tanAngle;
-
-        return distanceToAxis <= maxAllowedDistance;
-    }
-
-    private float finalDamage(float chargingAmount, float distanceToTarget, LivingEntity target) {
-        float baseDamage = 15f; // Damage if % from target Max hp is very low
-        float amplifier = 20f;
-
-        float damage = target.getMaxHealth() * (amplifier / 100);
-        if (Math.floor(damage) < baseDamage) {
-            damage = baseDamage;
+        // Is center inside of the cone
+        if (distanceToAxis <= centerHeight * tanAngle) {
+            return true;
         }
 
-        if (Math.floor(distanceToTarget) > 1) {
-            damage *= (1 - (distanceToTarget * 0.03f));
-            if (damage < 1) damage = 1;
+        // If center isn't in the cone, checking closest point of the AABB to the cone
+        Vec3 closestPoint = getClosestPointOnAABB(aabb, vertex, axisUnit, centerHeight);
+        Vec3 toClosest = closestPoint.subtract(vertex);
+        double closestHeight = toClosest.dot(axisUnit);
+
+        if (closestHeight < 0 || closestHeight > axisLength) {
+            return false;
+        }
+
+        Vec3 closestProjection = axisUnit.scale(closestHeight);
+        Vec3 closestPerpendicular = toClosest.subtract(closestProjection);
+        double closestDistance = closestPerpendicular.length();
+
+        return closestDistance <= closestHeight * tanAngle;
+    }
+    private static Vec3 getClosestPointOnAABB(AABB aabb, Vec3 vertex, Vec3 axisUnit,
+                                               double centerHeight) {
+
+        Vec3 pointOnAxis = vertex.add(axisUnit.scale(centerHeight));
+        double closestX = Math.max(aabb.minX, Math.min(pointOnAxis.x, aabb.maxX));
+        double closestY = Math.max(aabb.minY, Math.min(pointOnAxis.y, aabb.maxY));
+        double closestZ = Math.max(aabb.minZ, Math.min(pointOnAxis.z, aabb.maxZ));
+
+        return new Vec3(closestX, closestY, closestZ);
+    }
+
+    private float finalDamage(float chargingAmount, float distanceToTarget, float range) {
+        float baseDamage = 40f; // Damage if % from target Max hp is very low
+        float amplifier = 2f; // multiplier for close-range
+        float maxMinDamage = baseDamage/3; // minimum possible damage after falloff
+        float damage = baseDamage;
+
+        if (Math.floor(distanceToTarget) >= 2) {
+            damage *= (1 - ((distanceToTarget-2) * ((baseDamage-maxMinDamage)/(range-2))));
+            if (damage < maxMinDamage) damage = maxMinDamage;
+        }
+        else{
+            damage += amplifier;
         }
 
         return damage * chargingAmount;
