@@ -5,7 +5,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import org.joml.Quaternionf;
-import org.joml.Vector3f;
+
 
 public class EchoParticle extends TextureSheetParticle {
     private final float xRot;
@@ -17,7 +17,6 @@ public class EchoParticle extends TextureSheetParticle {
         this.xRot = xRot;
         this.yRot = yRot;
         xd = yd = zd = 0;
-        this.quadSize *= 1f;
         this.lifetime = 40;
         this.setSpriteFromAge(spriteSet);
     }
