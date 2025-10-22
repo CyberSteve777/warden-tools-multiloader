@@ -94,7 +94,7 @@ public class EchoStaff extends Item {
         super.onUseTick(world, user, stack, remainingUseTicks);
 
         if (getUseDuration(stack, user) - remainingUseTicks == 1) {
-            world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.BLOCKS, 3.0f, 1.0f);
+            world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_CHARGE, user.getSoundSource(), 3.0f, 1.0f);
         }
     }
 
@@ -123,7 +123,7 @@ public class EchoStaff extends Item {
     }
 
     protected void spawnSonicBoom(Level world, LivingEntity user) {
-        world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_BOOM, SoundSource.BLOCKS, 5.0f, 1.0f);
+        world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_BOOM, user.getSoundSource(), 5.0f, 1.0f);
 
         float heightOffset = 1.6f;
         Vec3 target = user.position().add(user.getLookAngle().scale(distance));

@@ -26,11 +26,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.trique.wardentools.particle.echo_particle.EchoParticleOption;
 import net.trique.wardentools.registry.ItemRegistry;
-import org.apache.logging.log4j.LogManager;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
 
 public class EchoShriekerItem extends BowItem {
 
@@ -88,7 +86,7 @@ public class EchoShriekerItem extends BowItem {
     }
 
     private void spawnSonicBoom(Level world, LivingEntity user, float remainTicks) {
-        world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.SCULK_SHRIEKER_SHRIEK, SoundSource.BLOCKS, 5.0f, 1.0f);
+        world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.SCULK_SHRIEKER_SHRIEK, user.getSoundSource(), 5.0f, 1.0f);
 
         float heightOffset = user.getEyeHeight();
         float base_distance = 30f;
@@ -101,11 +99,11 @@ public class EchoShriekerItem extends BowItem {
 
         AABB cube = new AABB(new BlockPos((int) source.x(),
                 (int) source.y(), (int) source.z())).inflate(final_distance);
-        hit.addAll(world.getEntitiesOfClass(LivingEntity.class, cube, it -> isAABBInConeSimple(source,offsetToTarget, it.getBoundingBox()) && !((it.isAlliedTo(user)) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
+        hit.addAll(world.getEntitiesOfClass(LivingEntity.class, cube, it -> isAABBInConeSimple(source, offsetToTarget, it.getBoundingBox()) && !((it.isAlliedTo(user)) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
 
         for (int particleIndex = 1; particleIndex < Mth.floor(offsetToTarget.length()); ++particleIndex) {
             Vec3 particlePos = source.add(normalized.scale(particleIndex - 1));
-            ((ServerLevel) world).sendParticles(new EchoParticleOption(particleIndex * 1.4f,user.getXRot(),user.getYRot()), particlePos.x, particlePos.y, particlePos.z,
+            ((ServerLevel) world).sendParticles(new EchoParticleOption(particleIndex * 1.4f, user.getXRot(), user.getYRot()), particlePos.x, particlePos.y, particlePos.z,
                     1, 0, 0, 0, 0);
         }
 
@@ -171,8 +169,9 @@ public class EchoShriekerItem extends BowItem {
 
         return closestDistance <= closestHeight * tanAngle;
     }
+
     private static Vec3 getClosestPointOnAABB(AABB aabb, Vec3 vertex, Vec3 axisUnit,
-                                               double centerHeight) {
+                                              double centerHeight) {
 
         Vec3 pointOnAxis = vertex.add(axisUnit.scale(centerHeight));
         double closestX = Math.max(aabb.minX, Math.min(pointOnAxis.x, aabb.maxX));
@@ -185,14 +184,13 @@ public class EchoShriekerItem extends BowItem {
     private float finalDamage(float chargingAmount, float distanceToTarget, float range) {
         float baseDamage = 40f; // Damage if % from target Max hp is very low
         float amplifier = 2f; // multiplier for close-range
-        float maxMinDamage = baseDamage/3; // minimum possible damage after falloff
+        float maxMinDamage = baseDamage / 3; // minimum possible damage after falloff
         float damage = baseDamage;
 
         if (Math.floor(distanceToTarget) >= 2) {
-            damage *= (1 - ((distanceToTarget-2) * ((baseDamage-maxMinDamage)/(range-2))));
+            damage *= (1 - ((distanceToTarget - 2) * ((baseDamage - maxMinDamage) / (range - 2))));
             if (damage < maxMinDamage) damage = maxMinDamage;
-        }
-        else{
+        } else {
             damage += amplifier;
         }
 

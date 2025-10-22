@@ -29,7 +29,7 @@ public class EnderEchoStaff extends EchoStaff {
     @Override
     protected void spawnSonicBoom(Level level, LivingEntity user) {
         level.playSound(null, user.getX(), user.getY(), user.getZ(),
-                SoundEvents.WARDEN_SONIC_BOOM, SoundSource.BLOCKS, 5.0f, 1.0f);
+                SoundEvents.WARDEN_SONIC_BOOM, user.getSoundSource(), 5.0f, 1.0f);
 
         float heightOffset = 1.6f;
         Vec3 target = user.position().add(user.getLookAngle().scale(distance));

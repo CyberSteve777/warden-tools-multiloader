@@ -28,8 +28,8 @@ public class AmethystEchoStaff extends EchoStaff {
 
     @Override
     protected void spawnSonicBoom(Level world, LivingEntity user) {
-        world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_BOOM, SoundSource.BLOCKS, 2.0f, 1.0f);
-        world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.AMETHYST_BLOCK_PLACE, SoundSource.BLOCKS, 4.0f, 1.0f);
+        world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_BOOM, user.getSoundSource(), 2.0f, 1.0f);
+        world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.AMETHYST_BLOCK_PLACE, user.getSoundSource(), 4.0f, 1.0f);
 
         float heightOffset = 1.6f;
         Vec3 target = user.position().add(user.getLookAngle().scale(distance));
