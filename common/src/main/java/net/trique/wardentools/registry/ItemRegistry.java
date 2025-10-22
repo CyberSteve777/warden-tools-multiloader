@@ -44,7 +44,7 @@ public class ItemRegistry {
             () -> new EchoShriekerItem(getFireResistantProperties().rarity(Rarity.EPIC).durability(50)));
 
     public static final RegistryObject<Item, SculkifiedBow> SCULKIFIED_BOW = ITEMS.register("sculkified_bow", () ->
-            new SculkifiedBow(getFireResistantProperties().rarity(Rarity.RARE)));
+            new SculkifiedBow(getFireResistantProperties().rarity(Rarity.RARE).attributes(SculkifiedBow.createAttributeModifiers())));
 
     public static final RegistryObject<Item, ShovelItem> SCULKIFIED_SHOVEL = ITEMS.register("sculkified_shovel", () ->
             new ShovelItem(WardenToolMaterials.SCULKIFIED, getItemProperties().attributes(ShovelItem.createAttributes(WardenToolMaterials.SCULKIFIED, 1.5f, -3.0f))));
