@@ -19,6 +19,7 @@ public class EchoParticle extends TextureSheetParticle {
         this.x = xCoord;
         this.y = yCoord;
         this.z = zCoord;
+        this.gravity = 0.0f;
         xd = yd = zd = 0;
         this.quadSize = 0.2f;
         this.lifetime = 40;
