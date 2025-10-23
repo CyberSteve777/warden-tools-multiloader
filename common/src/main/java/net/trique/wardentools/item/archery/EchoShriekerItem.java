@@ -191,7 +191,7 @@ public class EchoShriekerItem extends BowItem {
             damage *= (1 - ((distanceToTarget - 2) * ((baseDamage - maxMinDamage) / (range - 2))));
             if (damage < maxMinDamage) damage = maxMinDamage;
         } else {
-            damage += amplifier;
+            damage *= amplifier;
         }
 
         return damage * chargingAmount;
