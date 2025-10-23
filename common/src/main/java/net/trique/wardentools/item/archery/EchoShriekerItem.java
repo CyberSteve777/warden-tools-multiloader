@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -31,6 +30,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class EchoShriekerItem extends BowItem {
+    private final float MAX_DISTANCE = 30f;
 
     public EchoShriekerItem(Properties settings) {
         super(settings.attributes(createAttributeModifiers()));
@@ -87,23 +87,18 @@ public class EchoShriekerItem extends BowItem {
 
     private void spawnSonicBoom(Level world, LivingEntity user, float remainTicks) {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.SCULK_SHRIEKER_SHRIEK, user.getSoundSource(), 5.0f, 1.0f);
-
-        float heightOffset = user.getEyeHeight();
-        float base_distance = 30f;
-        float final_distance = base_distance * remainTicks;
-        Vec3 target = user.position().add(user.getLookAngle().scale(final_distance));
-        Vec3 source = user.position().add(0.0, heightOffset, 0.0);
+        float distance = MAX_DISTANCE * remainTicks;
+        Vec3 source = user.position().add(0.0, user.getEyeHeight(), 0.0);
+        Vec3 target = source.add(user.getLookAngle().scale(distance));
         Vec3 offsetToTarget = target.subtract(source);
         Vec3 normalized = offsetToTarget.normalize();
         Set<Entity> hit = new HashSet<>();
-
         AABB cube = new AABB(new BlockPos((int) source.x(),
-                (int) source.y(), (int) source.z())).inflate(final_distance);
+                (int) source.y(), (int) source.z())).inflate(distance);
         hit.addAll(world.getEntitiesOfClass(LivingEntity.class, cube, it -> isAABBInConeSimple(source, offsetToTarget, it.getBoundingBox()) && !((it.isAlliedTo(user)) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
-
-        for (int particleIndex = 1; particleIndex < Mth.floor(offsetToTarget.length()); ++particleIndex) {
-            Vec3 particlePos = source.add(normalized.scale(particleIndex));
-            ((ServerLevel) world).sendParticles(new EchoParticleOption(particleIndex * 1.4f, user.getXRot(), user.getYRot()), particlePos.x, particlePos.y, particlePos.z,
+        for (float particleScale = 1; particleScale < offsetToTarget.length(); particleScale++) {
+            Vec3 particlePos = source.add(normalized.scale(particleScale));
+            ((ServerLevel) world).sendParticles(new EchoParticleOption(particleScale * 1.4f, user.getXRot(), user.getYRot()), particlePos.x, particlePos.y, particlePos.z,
                     1, 0, 0, 0, 0);
         }
 
@@ -112,7 +107,7 @@ public class EchoShriekerItem extends BowItem {
         for (Entity hitTarget : hit) {
             if (hitTarget instanceof LivingEntity living) {
                 float distanceToTarget = user.distanceTo(living);
-                float damage = finalDamage(remainTicks, distanceToTarget, base_distance);
+                float damage = calculateDamage(remainTicks, distanceToTarget);
                 living.hurt(world.damageSources().sonicBoom(user), damage);
                 living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
                 living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
@@ -181,19 +176,17 @@ public class EchoShriekerItem extends BowItem {
         return new Vec3(closestX, closestY, closestZ);
     }
 
-    private float finalDamage(float chargingAmount, float distanceToTarget, float range) {
-        float baseDamage = 40f; // Damage if % from target Max hp is very low
+    private float calculateDamage(float chargingAmount, float distanceToTarget) {
+        float baseDamage = 40f; // base damage
         float amplifier = 2f; // multiplier for close-range
         float maxMinDamage = baseDamage / 3; // minimum possible damage after falloff
         float damage = baseDamage;
-
         if (Math.floor(distanceToTarget) >= 2) {
-            damage *= (1 - ((distanceToTarget - 2) * ((baseDamage - maxMinDamage) / (range - 2))));
+            damage *= (1 - ((distanceToTarget - 2) * ((baseDamage - maxMinDamage) / (MAX_DISTANCE - 2))));
             if (damage < maxMinDamage) damage = maxMinDamage;
         } else {
-            damage += amplifier;
+            damage *= amplifier;
         }
-
         return damage * chargingAmount;
     }
 }
