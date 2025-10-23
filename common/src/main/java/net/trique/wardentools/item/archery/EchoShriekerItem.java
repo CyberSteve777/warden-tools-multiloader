@@ -101,7 +101,8 @@ public class EchoShriekerItem extends BowItem {
                 (int) source.y(), (int) source.z())).inflate(final_distance);
         hit.addAll(world.getEntitiesOfClass(LivingEntity.class, cube, it -> isAABBInConeSimple(source, offsetToTarget, it.getBoundingBox()) && !((it.isAlliedTo(user)) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
 
-        for (int particleIndex = 1; particleIndex < Mth.floor(offsetToTarget.length()); ++particleIndex) {
+        int particles = Mth.floor(offsetToTarget.length());
+        for (int particleIndex = 1; particleIndex < particles; ++particleIndex) {
             Vec3 particlePos = source.add(normalized.scale(particleIndex - 1));
             ((ServerLevel) world).sendParticles(new EchoParticleOption(particleIndex * 1.4f, user.getXRot(), user.getYRot()), particlePos.x, particlePos.y, particlePos.z,
                     1, 0, 0, 0, 0);
