@@ -8,14 +8,14 @@
     "i": {
       "item": "wardentools:echo_ingot"
     },
-    "r": {
+    "s": {
       "item": "minecraft:string"
     }
   },
   "pattern": [
-    " fr",
-    "i r",
-    " fr"
+    " fs",
+    "i s",
+    " fs"
   ],
   "result": {
     "count": 1,

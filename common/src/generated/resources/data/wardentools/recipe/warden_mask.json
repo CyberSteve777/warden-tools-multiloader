@@ -2,9 +2,6 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "b": {
-      "item": "minecraft:sculk"
-    },
     "h": {
       "item": "wardentools:sculkified_helmet"
     },
@@ -13,11 +10,14 @@
     },
     "t": {
       "item": "wardentools:warden_tendril"
+    },
+    "w": {
+      "item": "wardentools:warden_ingot"
     }
   },
   "pattern": [
     "tst",
-    "bhb"
+    "whw"
   ],
   "result": {
     "count": 1,
