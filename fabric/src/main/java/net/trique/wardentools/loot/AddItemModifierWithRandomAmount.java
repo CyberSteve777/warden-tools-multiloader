@@ -26,11 +26,6 @@ public class AddItemModifierWithRandomAmount extends ConditionalFabricLootModifi
         if (!checkConditions(lootContext, lootTable)) {
             return generatedLoot;
         }
-        for (LootItemCondition condition : this.conditions) {
-            if(!condition.test(lootContext)) {
-                return generatedLoot;
-            }
-        }
 
         int amount = lootContext.getRandom().nextIntBetweenInclusive(this.min, this.max);
         generatedLoot.add(new ItemStack(this.item, amount));

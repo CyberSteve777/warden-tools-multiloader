@@ -8,8 +8,8 @@ import java.util.Set;
 
 public abstract class ConditionalFabricLootModifier implements FabricLootModifier {
 
-    final LootItemCondition[] conditions;
-    final Set<ResourceLocation> allowedTables;
+    private final LootItemCondition[] conditions;
+    private final Set<ResourceLocation> allowedTables;
 
     protected ConditionalFabricLootModifier(LootItemCondition[] conditions,Set<ResourceLocation> allowedTables) {
         this.conditions = conditions;

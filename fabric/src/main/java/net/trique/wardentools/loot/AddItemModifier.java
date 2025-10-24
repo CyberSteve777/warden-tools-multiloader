@@ -26,10 +26,8 @@ public class AddItemModifier extends ConditionalFabricLootModifier {
 
     @Override
     public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext, ResourceLocation lootTable) {
-        for (LootItemCondition condition : this.conditions) {
-            if(!condition.test(lootContext)) {
-                return generatedLoot;
-            }
+        if (!checkConditions(lootContext, lootTable)) {
+            return generatedLoot;
         }
         generatedLoot.add(new ItemStack(this.item, this.count));
         return generatedLoot;
