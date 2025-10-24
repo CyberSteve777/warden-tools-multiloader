@@ -95,7 +95,7 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
     private void addVibrationDataFromWardenCurse(CompoundTag compound, CallbackInfo ci) {
         VibrationSystem.Data.CODEC.encodeStart(NbtOps.INSTANCE, wardentools$wardenCurseUser.getVibrationData())
-                .resultOrPartial(Constants.LOGGER::error)
+                .resultOrPartial(Constants.LOGGER::warn)
                 .ifPresent(tag -> compound.put("WTWardenCurseVibrationData", tag));
     }
 
@@ -103,7 +103,7 @@ public abstract class LivingEntityMixin extends Entity {
     private void readVibrationDataForWardenCurse(CompoundTag compound, CallbackInfo ci) {
         if (compound.contains("WTWardenCurseVibrationData", 10)) {
             VibrationSystem.Data.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, compound.getCompound("WTVibrationData")))
-                    .resultOrPartial(Constants.LOGGER::error).ifPresent(data -> wardentools$wardenCurseUser.setVibrationData(data));
+                    .resultOrPartial(Constants.LOGGER::warn).ifPresent(data -> wardentools$wardenCurseUser.setVibrationData(data));
         }
     }
 
