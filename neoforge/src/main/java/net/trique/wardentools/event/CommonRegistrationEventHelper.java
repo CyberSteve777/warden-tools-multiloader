@@ -22,12 +22,12 @@ public class CommonRegistrationEventHelper {
                 PotionRegistry.SCULK_ADAPTION
         );
         builder.addMix(
-                Potions.AWKWARD,
+                PotionRegistry.SCULK_ADAPTION,
                 ItemRegistry.WARDEN_SOUL.get(),
                 PotionRegistry.SCULK_BLESS
         );
         builder.addMix(
-                Potions.AWKWARD,
+                PotionRegistry.SCULK_ADAPTION,
                 ItemRegistry.WARDEN_TENDRIL.get(),
                 PotionRegistry.WARDEN
         );

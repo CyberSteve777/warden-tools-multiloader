@@ -114,12 +114,11 @@ public class WardenCurseUser implements VibrationSystem {
             } else {
                 Entity entity = context.sourceEntity();
                 if (entity != null) {
-                    if (entity.isSpectator()) {
+                    if (entity.isSpectator() || entity.is(holder)) {
                         return false;
                     }
                     if (entity.isSteppingCarefully() && gameEvent.is(GameEventTags.IGNORE_VIBRATIONS_SNEAKING)) {
-                        if (this.canTriggerAvoidVibration() && entity instanceof ServerPlayer serverplayer &&
-                                !serverplayer.is(holder)) {
+                        if (this.canTriggerAvoidVibration() && entity instanceof ServerPlayer serverplayer) {
                             CriteriaTriggers.AVOID_VIBRATION.trigger(serverplayer);
                         }
                         return false;

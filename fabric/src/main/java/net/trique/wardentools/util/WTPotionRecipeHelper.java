@@ -16,12 +16,12 @@ public class WTPotionRecipeHelper {
                             PotionRegistry.SCULK_ADAPTION
                     );
                     builder.registerPotionRecipe(
-                            Potions.AWKWARD,
+                            PotionRegistry.SCULK_ADAPTION,
                             Ingredient.of(ItemRegistry.WARDEN_SOUL.get()),
                             PotionRegistry.SCULK_BLESS
                     );
                     builder.registerPotionRecipe(
-                            Potions.AWKWARD,
+                            PotionRegistry.SCULK_ADAPTION,
                             Ingredient.of(ItemRegistry.WARDEN_TENDRIL.get()),
                             PotionRegistry.WARDEN
                     );
