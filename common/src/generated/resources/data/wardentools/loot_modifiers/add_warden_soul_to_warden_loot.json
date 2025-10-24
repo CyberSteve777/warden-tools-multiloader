@@ -1,12 +1,7 @@
 {
   "type": "wardentools:add_item_to_warden_loot_modifier",
   "baseChance": 0.3,
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:entities/warden"
-    }
-  ],
+  "conditions": [],
   "item": "wardentools:warden_soul",
   "max": 2,
   "min": 1,
