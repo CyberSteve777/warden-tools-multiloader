@@ -11,6 +11,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.trique.wardentools.Constants;
 
 import java.util.Set;
 
@@ -34,9 +35,11 @@ public class AddItemToWardenLootModifier extends ConditionalFabricLootModifier {
 
     @Override
     public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext, ResourceLocation lootTable) {
+        Constants.LOGGER.info("beginning to add loot");
         if (!checkConditions(lootContext, lootTable)) {
             return generatedLoot;
         }
+        Constants.LOGGER.info("trying to add loot");
         if (lootContext.getParamOrNull(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity entity) {
             var registryLookup = lootContext.getLevel().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
             int level = EnchantmentHelper.getEnchantmentLevel(registryLookup.getOrThrow(Enchantments.LOOTING), entity);
@@ -46,10 +49,12 @@ public class AddItemToWardenLootModifier extends ConditionalFabricLootModifier {
                 float chance = lootingMultiplier * countMultiplier;
                 if (lootContext.getRandom().nextFloat() < chance) {
                     generatedLoot.add(new ItemStack(item, count));
+                    Constants.LOGGER.info("loot was successfully added");
                     return generatedLoot;
                 }
             }
         }
+        Constants.LOGGER.info("failed to add loot");
         return generatedLoot;
     }
 }
