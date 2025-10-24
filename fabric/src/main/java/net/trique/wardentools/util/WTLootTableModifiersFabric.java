@@ -3,6 +3,7 @@ package net.trique.wardentools.util;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -10,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -19,6 +21,7 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithEnchantedBonusCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.trique.wardentools.LootTableDuck;
@@ -95,50 +98,53 @@ public class WTLootTableModifiersFabric {
         // TODO: Implement loot table modification similar to NeoForge
         LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
             if (ANCIENT_CITY_LOOT_LOCATION.equals(key.location())) {
-                LootPool.Builder TemplatePoolBuilder = LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(1))
+                LootPool.Builder templatePoolBuilder = LootPool.lootPool()
+                        .when(LootItemRandomChanceCondition.randomChance(0.1f))
                         .add(LootItem.lootTableItem(ItemRegistry.WARDEN_UPGRADE_SMITHING_TEMPLATE.get())
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f)))
-                                .when(LootItemRandomChanceCondition.randomChance(0.1f))
-                        );
-                LootPool.Builder SculkShellPoolBuilder = LootPool.lootPool()
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))));
+                LootPool.Builder sculkShellPoolBuilder = LootPool.lootPool()
+                        .when(LootItemRandomChanceCondition.randomChance(0.25f))
                         .add(LootItem.lootTableItem(ItemRegistry.SCULK_SHELL.get())
-                                .when(LootItemRandomChanceCondition.randomChance(0.25f))
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
-                        .setRolls(ConstantValue.exactly(1));
-                LootPool.Builder EchoShardPoolBuilder = LootPool.lootPool()
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))));
+                LootPool.Builder echoShardPoolBuilder = LootPool.lootPool()
+                        .when(LootItemRandomChanceCondition.randomChance(0.5f))
                         .add(LootItem.lootTableItem(Items.ECHO_SHARD)
-                                .when(LootItemRandomChanceCondition.randomChance(0.5f))
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
-                        .setRolls(ConstantValue.exactly(1));
-                LootPool.Builder EchoApplePoolBuilder = LootPool.lootPool()
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))));
+                LootPool.Builder echoApplePoolBuilder = LootPool.lootPool()
+                        .when(LootItemRandomChanceCondition.randomChance(0.5f))
                         .add(LootItem.lootTableItem(ItemRegistry.ECHO_APPLE.get())
-                                .when(LootItemRandomChanceCondition.randomChance(0.5f))
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
-                        .setRolls(ConstantValue.exactly(1));
-
-                tableBuilder.withPool(TemplatePoolBuilder);
-                tableBuilder.withPool(EchoShardPoolBuilder);
-                tableBuilder.withPool(EchoApplePoolBuilder);
-                tableBuilder.withPool(SculkShellPoolBuilder);
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))));
+                tableBuilder.withPool(templatePoolBuilder);
+                tableBuilder.withPool(echoShardPoolBuilder);
+                tableBuilder.withPool(echoApplePoolBuilder);
+                tableBuilder.withPool(sculkShellPoolBuilder);
             }
 
 
             if (SCULK_SHRIEKER_LOOT_LOCATION.equals(key.location())) {
-                Holder<Enchantment> FORTUNE = registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE);
-                LootPool.Builder poolBuilder = LootPool.lootPool()
-                        .add(LootItem.lootTableItem(ItemRegistry.SHRIEKER_FANG.get())
-                        );
-                tableBuilder.withPool(poolBuilder);
+                LootPool.Builder shriekerFangPoolBuilder = LootPool.lootPool()
+                        .when(getFortuneConditionBuilder(registries, 0.3f, 0.1f))
+                        .add(LootItem.lootTableItem(ItemRegistry.SHRIEKER_FANG.get()))
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 4f)));
+                LootPool.Builder wardenSoulPoolBuilder = LootPool.lootPool()
+                        .when(getFortuneConditionBuilder(registries, 0.05f, 0.05f))
+                        .add(LootItem.lootTableItem(ItemRegistry.WARDEN_SOUL.get()))
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 2f)));
+                tableBuilder.withPool(shriekerFangPoolBuilder);
+                tableBuilder.withPool(wardenSoulPoolBuilder);
             }
 
             if (WARDEN_LOOT_LOCATION.equals(key.location())) {
-                Holder<Enchantment> LOOTING = registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.LOOTING);
-                LootPool.Builder WardenSoulPoolBuilder = LootPool.lootPool()
-                        .when(LootItemRandomChanceCondition.randomChance(0.25f))
+                LootPool.Builder wardenSoulPoolBuilder = LootPool.lootPool()
+                        .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, 0.3f, 0.1f))
                         .add(LootItem.lootTableItem(ItemRegistry.WARDEN_SOUL.get()))
-                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f)));
-                tableBuilder.withPool(WardenSoulPoolBuilder);
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 2f)));
+                LootPool.Builder wardenTendrilPoolBuilder = LootPool.lootPool()
+                        .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, 0.4f, 0.1f))
+                        .add(LootItem.lootTableItem(ItemRegistry.WARDEN_TENDRIL.get()))
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 2f)));
+                tableBuilder.withPool(wardenSoulPoolBuilder);
+                tableBuilder.withPool(wardenTendrilPoolBuilder);
             }
         });
     }
@@ -154,5 +160,10 @@ public class WTLootTableModifiersFabric {
                 ((LootTableDuck) lootTable).warden_tools$setId(resourceLocation);
             }
         });
+    }
+
+    private static LootItemCondition.Builder getFortuneConditionBuilder(HolderLookup.Provider registries, float base, float perLevelAfterFirst) {
+        HolderLookup.RegistryLookup<Enchantment> registryLookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
+        return () -> new LootItemRandomChanceWithEnchantedBonusCondition(base, new LevelBasedValue.Linear(base + perLevelAfterFirst, perLevelAfterFirst), registryLookup.getOrThrow(Enchantments.FORTUNE));
     }
 }
