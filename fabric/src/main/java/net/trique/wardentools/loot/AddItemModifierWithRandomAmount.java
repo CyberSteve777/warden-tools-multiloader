@@ -15,7 +15,7 @@ public class AddItemModifierWithRandomAmount extends ConditionalFabricLootModifi
     private final int max;
 
     public AddItemModifierWithRandomAmount(LootItemCondition[] conditionsIn, Set<ResourceLocation> tables, Item item, int min, int max) {
-        super(conditionsIn,tables);
+        super(conditionsIn, tables);
         this.item = item;
         this.min = min;
         this.max = max;

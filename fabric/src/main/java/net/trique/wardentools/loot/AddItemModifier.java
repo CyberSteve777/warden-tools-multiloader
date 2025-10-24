@@ -15,13 +15,13 @@ public class AddItemModifier extends ConditionalFabricLootModifier {
     private final int count;
 
     public AddItemModifier(LootItemCondition[] conditionsIn, Set<ResourceLocation> tables, Item item, int count) {
-        super(conditionsIn,tables);
+        super(conditionsIn, tables);
         this.item = item;
         this.count = count;
     }
 
     public AddItemModifier(LootItemCondition[] conditionsIn, Set<ResourceLocation> tables, Item item) {
-        this(conditionsIn,tables, item, 1);
+        this(conditionsIn, tables, item, 1);
     }
 
     @Override
