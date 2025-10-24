@@ -24,8 +24,6 @@ import static net.trique.wardentools.registry.ItemRegistry.*;
 public class WTGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
     private static final ResourceLocation ANCIENT_CITY_LOOT_LOCATION = BuiltInLootTables.ANCIENT_CITY.location();
-    private static final ResourceLocation SCULK_SHRIEKER_LOOT_LOCATION = Blocks.SCULK_SHRIEKER.getLootTable().location();
-    private static final ResourceLocation WARDEN_LOOT_LOCATION = EntityType.WARDEN.getDefaultLootTable().location();
 
     public WTGlobalLootModifierProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, Constants.MOD_ID);
