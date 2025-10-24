@@ -11,6 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -43,6 +44,9 @@ public class AddItemToShriekerLootModifier extends LootModifier {
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext) {
+        if (lootContext.getQueriedLootTableId() != Blocks.SCULK_SHRIEKER.getLootTable().location()) {
+            return generatedLoot;
+        }
         for (LootItemCondition condition : this.conditions) {
             if(!condition.test(lootContext)) {
                 return generatedLoot;

@@ -49,17 +49,13 @@ public class WTGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
                 LootItemRandomChanceCondition.randomChance(0.5f).build()
         }, Items.ECHO_SHARD, 1, 3));
-        add("add_warden_soul_to_warden_loot", new AddItemToWardenLootModifier(new LootItemCondition[]{
-                LootTableIdCondition.builder(WARDEN_LOOT_LOCATION).build()
-        }, WARDEN_SOUL.get(), 0.3f, 0.1f, 1, 2));
-        add("add_warden_tendril_to_warden_loot", new AddItemToWardenLootModifier(new LootItemCondition[]{
-                LootTableIdCondition.builder(WARDEN_LOOT_LOCATION).build()
-        }, WARDEN_TENDRIL.get(), 0.4f, 0.1f, 1, 2));
-        add("add_warden_soul_to_shrieker_loot", new AddItemToShriekerLootModifier(new LootItemCondition[]{
-                LootTableIdCondition.builder(SCULK_SHRIEKER_LOOT_LOCATION).build()
-        }, WARDEN_SOUL.get(), 0.05f, 0.05f, 1, 2));
-        add("add_shrieker_fang_to_shrieker_loot", new AddItemToShriekerLootModifier(new LootItemCondition[]{
-                LootTableIdCondition.builder(SCULK_SHRIEKER_LOOT_LOCATION).build()
-        }, SHRIEKER_FANG.get(), 0.3f, 0.1f, 1, 4));
+        add("add_warden_soul_to_warden_loot", new AddItemToWardenLootModifier(new LootItemCondition[0],
+                WARDEN_SOUL.get(), 0.3f, 0.1f, 1, 2));
+        add("add_warden_tendril_to_warden_loot", new AddItemToWardenLootModifier(new LootItemCondition[0],
+                WARDEN_TENDRIL.get(), 0.4f, 0.1f, 1, 2));
+        add("add_warden_soul_to_shrieker_loot", new AddItemToShriekerLootModifier(new LootItemCondition[0],
+                WARDEN_SOUL.get(), 0.05f, 0.05f, 1, 2));
+        add("add_shrieker_fang_to_shrieker_loot", new AddItemToShriekerLootModifier(new LootItemCondition[0],
+                SHRIEKER_FANG.get(), 0.3f, 0.1f, 1, 4));
     }
 }
