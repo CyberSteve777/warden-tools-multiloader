@@ -1,6 +1,7 @@
 package net.trique.wardentools.util;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
@@ -11,14 +12,12 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
-import net.trique.wardentools.Constants;
 import net.trique.wardentools.LootTableDuck;
 import net.trique.wardentools.loot.*;
 import net.trique.wardentools.registry.ItemRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 public class WTGlobalLootTableUtils {
@@ -30,6 +29,7 @@ public class WTGlobalLootTableUtils {
     public static final List<FabricLootModifier> MODIFIERS = new ArrayList<>();
 
     public static void addModifiers() {
+        insertIDs();
         MODIFIERS.add(new AddItemModifier(new LootItemCondition[]{LootItemRandomChanceCondition.randomChance(.1f).build()},
                 Set.of(ANCIENT_CITY_LOOT_LOCATION), ItemRegistry.WARDEN_UPGRADE_SMITHING_TEMPLATE.get()));
 
@@ -55,6 +55,7 @@ public class WTGlobalLootTableUtils {
 
         MODIFIERS.add(new AddItemToShriekerLootModifier(new LootItemCondition[0],
                 Set.of(SCULK_SHRIEKER_LOOT_LOCATION), ItemRegistry.SHRIEKER_FANG.get(), 0.3f, 0.1f, 1, 4));
+
     }
 
     public static void modifyLoot(LootTable lootTable, LootContext context, ObjectArrayList<ItemStack> loot) {
@@ -62,12 +63,12 @@ public class WTGlobalLootTableUtils {
         MODIFIERS.forEach(fabricLootModifier -> fabricLootModifier.doApply(loot, context, id));
     }
 
-    public static <T> void injectID(Optional<T> returnValue, ResourceLocation resourceLocation) {
-        returnValue.ifPresent(value -> {
-            if (value instanceof LootTable lootTable) {
-                Constants.LOGGER.info("ResourceLocation: {}", resourceLocation);
-                ((LootTableDuck) lootTable).warden_tools$setId(resourceLocation);
-            }
-        });
+
+    private static void insertIDs() {
+        LootTableEvents.ALL_LOADED.register(((resourceManager, lootRegistry) -> {
+            lootRegistry.forEach(lootTable -> {
+                ((LootTableDuck) lootTable).warden_tools$setId(lootRegistry.getKey(lootTable));
+            });
+        }));
     }
 }
