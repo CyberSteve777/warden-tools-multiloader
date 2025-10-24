@@ -46,7 +46,7 @@ public class AddItemToWardenLootModifier extends LootModifier {
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext) {
-        if (lootContext.getQueriedLootTableId() != EntityType.WARDEN.getDefaultLootTable().location()) {
+        if (!lootContext.getQueriedLootTableId().equals(EntityType.WARDEN.getDefaultLootTable().location())) {
             return generatedLoot;
         }
         for (LootItemCondition condition : this.conditions) {
