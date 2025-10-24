@@ -96,6 +96,7 @@ public class EchoShriekerItem extends BowItem {
         AABB cube = new AABB(new BlockPos((int) source.x(),
                 (int) source.y(), (int) source.z())).inflate(distance);
         hit.addAll(world.getEntitiesOfClass(LivingEntity.class, cube, it -> isAABBInConeSimple(source, offsetToTarget, it.getBoundingBox()) && !((it.isAlliedTo(user)) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
+
         for (float particleScale = 1; particleScale < offsetToTarget.length(); particleScale++) {
             Vec3 particlePos = source.add(normalized.scale(particleScale));
             ((ServerLevel) world).sendParticles(new EchoParticleOption(particleScale * 1.4f, user.getXRot(), user.getYRot()), particlePos.x, particlePos.y, particlePos.z,
