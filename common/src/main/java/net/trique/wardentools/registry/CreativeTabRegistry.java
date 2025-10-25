@@ -3,12 +3,10 @@ package net.trique.wardentools.registry;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.registration.RegistrationProvider;
 import net.trique.wardentools.registration.RegistryObject;
@@ -82,9 +80,7 @@ public class CreativeTabRegistry {
                             }
                         }
                         var echo_concentration = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.ECHO_CONCENTRATION);
-                        ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
-                        stack.enchant(echo_concentration, 5);
-                        output.accept(stack);
+                        output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(echo_concentration, echo_concentration.value().getMaxLevel())));
                     }).title(Component.literal(Constants.MOD_NAME))
             .build());
 

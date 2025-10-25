@@ -6,10 +6,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
@@ -40,8 +42,7 @@ public class AddEnchantedBookToPoolModifier extends LootModifier {
                 return generatedLoot;
             }
         }
-        ItemStack bookStack = new ItemStack(Items.ENCHANTED_BOOK);
-        bookStack.enchant(enchantment, lootContext.getRandom().nextIntBetweenInclusive(minLevel, maxLevel));
+        ItemStack bookStack = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, lootContext.getRandom().nextIntBetweenInclusive(minLevel, maxLevel)));
         generatedLoot.add(bookStack);
         return generatedLoot;
     }

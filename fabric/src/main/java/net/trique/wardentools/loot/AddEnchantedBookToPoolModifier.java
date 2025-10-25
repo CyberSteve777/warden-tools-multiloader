@@ -4,9 +4,11 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
@@ -32,8 +34,7 @@ public class AddEnchantedBookToPoolModifier extends ConditionalFabricLootModifie
         }
         var enchantment = context.getLevel().registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolderOrThrow(this
                 .enchantment);
-        ItemStack bookStack = new ItemStack(Items.ENCHANTED_BOOK);
-        bookStack.enchant(enchantment, context.getRandom().nextIntBetweenInclusive(minLevel, maxLevel));
+        ItemStack bookStack = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, context.getRandom().nextIntBetweenInclusive(minLevel, maxLevel)));
         generatedLoot.add(bookStack);
         return generatedLoot;
     }
