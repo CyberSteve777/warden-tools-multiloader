@@ -16,7 +16,7 @@ public interface ISonicBoomItem {
     }
 
     default float calculateBonusDistance(ItemStack stack, Level world) {
-        Holder<Enchantment> echo_concentration = world.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(WTEnchantments.ECHO_CONCENTRATION).orElseThrow();
+        Holder<Enchantment> echo_concentration = world.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(WTEnchantments.RESONATION).orElseThrow();
         int level = EnchantmentHelper.getItemEnchantmentLevel(echo_concentration, stack);
         return 5f * level;
     }
