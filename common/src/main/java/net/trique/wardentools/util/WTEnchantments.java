@@ -7,6 +7,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.trique.wardentools.Constants;
 
 public class WTEnchantments {
+    public static final ResourceKey<Enchantment> ECHO_CONCENTRATION = key("echo_concentration");
+
     private static ResourceKey<Enchantment> key(String name) {
         return ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name));
     }
