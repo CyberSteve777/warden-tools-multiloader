@@ -12,6 +12,7 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.registration.RegistrationProvider;
 import net.trique.wardentools.registration.RegistryObject;
+import net.trique.wardentools.util.WTEnchantments;
 
 import java.util.List;
 
@@ -80,6 +81,10 @@ public class CreativeTabRegistry {
                                 output.accept(PotionContents.createItemStack(base, potionHolder));
                             }
                         }
+                        var echo_concentration = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.ECHO_CONCENTRATION);
+                        ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
+                        stack.enchant(echo_concentration, 5);
+                        output.accept(stack);
                     }).title(Component.literal(Constants.MOD_NAME))
             .build());
 
