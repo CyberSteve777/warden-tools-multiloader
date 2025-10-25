@@ -11,8 +11,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
-public class WTEntityTypeTagProvider extends EntityTypeTagsProvider {
-    public WTEntityTypeTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
+public class WTEntityTypeTagsProvider extends EntityTypeTagsProvider {
+    public WTEntityTypeTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
         super(output, provider, Constants.MOD_ID, existingFileHelper);
     }
 

@@ -29,15 +29,15 @@ public class WTDataGenerator {
         generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Set.of(),
                 List.of(new LootTableProvider.SubProviderEntry(WTBlockLootTableProvider::new, LootContextParamSets.BLOCK)),
                 lookupProvider));
-        BlockTagsProvider blockTagsProvider = new WTBlockTagProvider(packOutput, lookupProvider, existingFileHelper);
+        BlockTagsProvider blockTagsProvider = new WTBlockTagsProvider(packOutput, lookupProvider, existingFileHelper);
         generator.addProvider(event.includeServer(), blockTagsProvider);
         generator.addProvider(event.includeServer(), new WTWorldGenProvider(packOutput, lookupProvider));
-        generator.addProvider(event.includeServer(), new WTBiomeTagProvider(packOutput, lookupProvider, existingFileHelper));
-        generator.addProvider(event.includeServer(), new WTItemTagProvider(packOutput, lookupProvider,
+        generator.addProvider(event.includeServer(), new WTBiomeTagsProvider(packOutput, lookupProvider, existingFileHelper));
+        generator.addProvider(event.includeServer(), new WTItemTagsProvider(packOutput, lookupProvider,
                 blockTagsProvider.contentsGetter(), existingFileHelper));
-        generator.addProvider(event.includeServer(), new WTEntityTypeTagProvider(packOutput, lookupProvider, existingFileHelper));
+        generator.addProvider(event.includeServer(), new WTEntityTypeTagsProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new WTEnchantmentTagsProvider(packOutput, lookupProvider, existingFileHelper));
-        generator.addProvider(event.includeServer(), new WTGameEventTagProvider(packOutput, lookupProvider, existingFileHelper));
+        generator.addProvider(event.includeServer(), new WTGameEventTagsProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new WTRecipeProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeClient(), new WTBlockStateProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new WTItemModelProvider(packOutput, existingFileHelper));

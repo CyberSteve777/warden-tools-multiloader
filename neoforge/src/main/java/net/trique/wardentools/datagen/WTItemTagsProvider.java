@@ -14,8 +14,8 @@ import java.util.concurrent.CompletableFuture;
 
 import static net.trique.wardentools.registry.ItemRegistry.*;
 
-public class WTItemTagProvider extends ItemTagsProvider {
-    public WTItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper existingFileHelper) {
+public class WTItemTagsProvider extends ItemTagsProvider {
+    public WTItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, blockTags, Constants.MOD_ID, existingFileHelper);
     }
 

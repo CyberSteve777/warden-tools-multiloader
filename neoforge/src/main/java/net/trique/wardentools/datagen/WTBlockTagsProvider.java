@@ -14,8 +14,8 @@ import java.util.concurrent.CompletableFuture;
 
 import static net.trique.wardentools.registry.BlockRegistry.*;
 
-public class WTBlockTagProvider extends BlockTagsProvider {
-    public WTBlockTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
+public class WTBlockTagsProvider extends BlockTagsProvider {
+    public WTBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, Constants.MOD_ID, existingFileHelper);
     }
 

@@ -12,8 +12,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
-public class WTGameEventTagProvider extends GameEventTagsProvider {
-    public WTGameEventTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
+public class WTGameEventTagsProvider extends GameEventTagsProvider {
+    public WTGameEventTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
         super(output, provider, Constants.MOD_ID, existingFileHelper);
     }
 
