@@ -4,6 +4,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EnchantmentTagsProvider;
 import net.minecraft.tags.EnchantmentTags;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.util.WTEnchantments;
@@ -19,6 +20,8 @@ public class WTEnchantmentTagsProvider extends EnchantmentTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(EnchantmentTags.TREASURE)
+                .add(WTEnchantments.ECHO_CONCENTRATION);
+        tag(Tags.Enchantments.WEAPON_DAMAGE_ENHANCEMENTS)
                 .add(WTEnchantments.ECHO_CONCENTRATION);
     }
 }
