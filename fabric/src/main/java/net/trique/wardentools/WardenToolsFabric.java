@@ -8,8 +8,7 @@ import net.trique.wardentools.config.WTConfigClient;
 import net.trique.wardentools.config.WTConfigServer;
 import net.trique.wardentools.networking.packet.AddBlockOutlinePacket;
 import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
-import net.trique.wardentools.util.WTGlobalLootTableUtils;
-import net.trique.wardentools.util.WTLootTableModifiers;
+import net.trique.wardentools.util.WTGlobalLootTableModifierUtils;
 import net.trique.wardentools.util.WTPotionRecipeHelper;
 import net.trique.wardentools.worldgen.WardenWorldGeneration;
 
@@ -26,7 +25,7 @@ public class WardenToolsFabric implements ModInitializer {
         Constants.LOGGER.info("Hello Fabric world!");
         WardenToolsCommon.init();
         WTPotionRecipeHelper.addPotionRecipes();
-        WTGlobalLootTableUtils.addModifiers();
+        WTGlobalLootTableModifierUtils.addModifiers();
 //        WTLootTableModifiers.modifyLootTables();
         WardenWorldGeneration.generateWardenWorldGen();
         PayloadTypeRegistry.playS2C().register(AddEntityGlowPacket.TYPE, AddEntityGlowPacket.CODEC);
