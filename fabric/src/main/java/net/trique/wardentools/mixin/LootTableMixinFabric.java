@@ -7,7 +7,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.trique.wardentools.LootTableDuck;
-import net.trique.wardentools.util.WTGlobalLootTableUtils;
+import net.trique.wardentools.util.WTGlobalLootTableModifierUtils;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -40,7 +40,7 @@ public abstract class LootTableMixinFabric implements LootTableDuck {
     @Inject(method = "getRandomItems(Lnet/minecraft/world/level/storage/loot/LootContext;)Lit/unimi/dsi/fastutil/objects/ObjectArrayList;",
             at = @At("RETURN"))
     private void modifyLoot(LootContext context, CallbackInfoReturnable<ObjectArrayList<ItemStack>> cir) {
-        WTGlobalLootTableUtils.modifyLoot((LootTable) (Object) this, context, cir.getReturnValue());
+        WTGlobalLootTableModifierUtils.modifyLoot((LootTable) (Object) this, context, cir.getReturnValue());
     }
 
     /**

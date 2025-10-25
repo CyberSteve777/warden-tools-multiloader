@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class WTGlobalLootTableUtils {
+public class WTGlobalLootTableModifierUtils {
 
     private static final ResourceLocation ANCIENT_CITY_LOOT_LOCATION = BuiltInLootTables.ANCIENT_CITY.location();
     private static final ResourceLocation SCULK_SHRIEKER_LOOT_LOCATION = Blocks.SCULK_SHRIEKER.getLootTable().location();
@@ -41,6 +41,8 @@ public class WTGlobalLootTableUtils {
 
         MODIFIERS.add(new AddItemModifierWithRandomAmount(new LootItemCondition[]{LootItemRandomChanceCondition.randomChance(.5f).build()},
                 Set.of(ANCIENT_CITY_LOOT_LOCATION), Items.ECHO_SHARD, 1, 3));
+        MODIFIERS.add(new AddEnchantedBookToPoolModifier(new LootItemCondition[]{LootItemRandomChanceCondition.randomChance(0.3f).build()},
+                Set.of(ANCIENT_CITY_LOOT_LOCATION), WTEnchantments.ECHO_CONCENTRATION, 1, 5));
 
 
         MODIFIERS.add(new AddItemToWardenLootModifier(new LootItemCondition[0],

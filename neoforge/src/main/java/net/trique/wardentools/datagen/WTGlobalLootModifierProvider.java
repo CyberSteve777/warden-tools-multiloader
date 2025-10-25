@@ -1,7 +1,9 @@
 package net.trique.wardentools.datagen;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -10,10 +12,8 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCon
 import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
 import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 import net.trique.wardentools.Constants;
-import net.trique.wardentools.loot.AddItemModiferWithRandomAmount;
-import net.trique.wardentools.loot.AddItemModifier;
-import net.trique.wardentools.loot.AddItemToShriekerLootModifier;
-import net.trique.wardentools.loot.AddItemToWardenLootModifier;
+import net.trique.wardentools.loot.*;
+import net.trique.wardentools.util.WTEnchantments;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -29,6 +29,8 @@ public class WTGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
     @Override
     protected void start() {
+        var enchantments = registries.lookupOrThrow(Registries.ENCHANTMENT);
+        var echo_concentration = enchantments.getOrThrow(WTEnchantments.ECHO_CONCENTRATION);
         add("add_warden_upgrade_smithing_template", new AddItemModifier(new LootItemCondition[]{
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
                 LootItemRandomChanceCondition.randomChance(0.1f).build()
@@ -45,6 +47,10 @@ public class WTGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
                 LootItemRandomChanceCondition.randomChance(0.5f).build()
         }, Items.ECHO_SHARD, 1, 3));
+        add("add_echo_concentration_enchanted_book", new AddEnchantedBookToPoolModifier(new LootItemCondition[] {
+                LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
+                LootItemRandomChanceCondition.randomChance(0.3f).build()
+        }, echo_concentration, 1, 5));
         add("add_warden_soul_to_warden_loot", new AddItemToWardenLootModifier(new LootItemCondition[0],
                 WARDEN_SOUL.get(), 0.3f, 0.1f, 1, 2));
         add("add_warden_tendril_to_warden_loot", new AddItemToWardenLootModifier(new LootItemCondition[0],
