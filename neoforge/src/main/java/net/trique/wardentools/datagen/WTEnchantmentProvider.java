@@ -37,6 +37,15 @@ public class WTEnchantmentProvider extends DatapackBuiltinEntriesProvider {
                         8,
                         EquipmentSlotGroup.MAINHAND)
         ).build(WTEnchantments.ECHO_CONCENTRATION.location()));
+        context.register(WTEnchantments.RESONATION, Enchantment.enchantment(
+                Enchantment.definition(holdergetter.getOrThrow(WTItemTags.SONIC_BOOM_ITEM_ENCHANTABLE),
+                        1,
+                        3,
+                        Enchantment.dynamicCost(10, 10),
+                        Enchantment.dynamicCost(25, 10),
+                        8,
+                        EquipmentSlotGroup.MAINHAND)
+        ).build(WTEnchantments.RESONATION.location()));
     }
 
     @Override
