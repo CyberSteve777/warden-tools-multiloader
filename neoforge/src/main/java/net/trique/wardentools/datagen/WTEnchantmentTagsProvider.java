@@ -20,6 +20,7 @@ public class WTEnchantmentTagsProvider extends EnchantmentTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(EnchantmentTags.TREASURE)
+                .add(WTEnchantments.RESONATION)
                 .add(WTEnchantments.ECHO_CONCENTRATION);
         tag(Tags.Enchantments.WEAPON_DAMAGE_ENHANCEMENTS)
                 .add(WTEnchantments.ECHO_CONCENTRATION);
