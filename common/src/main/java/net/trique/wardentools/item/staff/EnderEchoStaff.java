@@ -9,6 +9,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.GameEvent.Context;
@@ -27,24 +28,24 @@ public class EnderEchoStaff extends EchoStaff {
     }
 
     @Override
-    protected void spawnSonicBoom(Level level, LivingEntity user) {
-        level.playSound(null, user.getX(), user.getY(), user.getZ(),
+    protected void spawnSonicBoom(ItemStack stack, Level world, LivingEntity user) {
+        world.playSound(null, user.getX(), user.getY(), user.getZ(),
                 SoundEvents.WARDEN_SONIC_BOOM, user.getSoundSource(), 5.0f, 1.0f);
 
         float heightOffset = 1.6f;
-        Vec3 target = user.position().add(user.getLookAngle().scale(distance));
         Vec3 source = user.position().add(0.0, heightOffset, 0.0);
+        Vec3 target = source.add(user.getLookAngle().scale(distance));
         Vec3 offsetToTarget = target.subtract(source);
         Vec3 normalized = offsetToTarget.normalize();
 
         Set<Entity> hit = new HashSet<>();
         for (int i = 1; i < Mth.floor(offsetToTarget.length()) + particleDelta; ++i) {
             Vec3 pos = source.add(normalized.scale(i));
-            if (level instanceof ServerLevel serverWorld) {
+            if (world instanceof ServerLevel serverWorld) {
                 serverWorld.sendParticles(ParticleRegistry.ENDER_SONIC_BOOM.get(),
                         pos.x, pos.y, pos.z, 1, 0.0, 0.0, 0.0, 0.0);
             }
-            hit.addAll(level.getEntitiesOfClass(LivingEntity.class,
+            hit.addAll(world.getEntitiesOfClass(LivingEntity.class,
                     new AABB(BlockPos.containing(pos)).inflate(1),
                     it -> !(it.isAlliedTo(user) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
         }
@@ -53,14 +54,14 @@ public class EnderEchoStaff extends EchoStaff {
 
         for (Entity entity : hit) {
             if (entity instanceof LivingEntity living) {
-                living.hurt(level.damageSources().sonicBoom(user), damage);
+                living.hurt(world.damageSources().sonicBoom(user), calculateEnchantedDamage(stack, world, damage));
                 Vec3 originalPos = living.position();
                 for (int j = 0; j < 16; ++j) {
                     double dx = living.getX() + (living.getRandom().nextDouble() - 0.5) * 32.0;
                     double dy = Mth.clamp(
                             living.getY() + (double)(living.getRandom().nextInt(16) - 8),
-                            level.getMinBuildHeight(),
-                            level.getMinBuildHeight() + ((ServerLevel) level).getLogicalHeight() - 1);
+                            world.getMinBuildHeight(),
+                            world.getMinBuildHeight() + ((ServerLevel) world).getLogicalHeight() - 1);
                     double dz = living.getZ() + (living.getRandom().nextDouble() - 0.5) * 32.0;
 
                     if (living.isPassenger()) {
@@ -68,12 +69,12 @@ public class EnderEchoStaff extends EchoStaff {
                     }
 
                     if (living.randomTeleport(dx, dy, dz, true)) {
-                        level.gameEvent(GameEvent.TELEPORT, originalPos, Context.of(living));
+                        world.gameEvent(GameEvent.TELEPORT, originalPos, Context.of(living));
 
-                        level.playSound(null, dx, dy, dz,
+                        world.playSound(null, dx, dy, dz,
                                 SoundEvents.PLAYER_TELEPORT, SoundSource.BLOCKS, 5.0F, 1.0F);
 
-                        if (level instanceof ServerLevel serverWorld) {
+                        if (world instanceof ServerLevel serverWorld) {
                             serverWorld.sendParticles(ParticleTypes.PORTAL, dx, dy, dz, 40, 0.5, 0.5, 0.5, 0.1);
                         }
 

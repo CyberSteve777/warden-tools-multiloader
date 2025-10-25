@@ -9,6 +9,7 @@
     import net.minecraft.world.entity.LivingEntity;
     import net.minecraft.world.entity.TamableAnimal;
     import net.minecraft.world.entity.ai.attributes.Attributes;
+    import net.minecraft.world.item.ItemStack;
     import net.minecraft.world.level.Level;
     import net.minecraft.world.phys.AABB;
     import net.minecraft.world.phys.Vec3;
@@ -25,13 +26,13 @@
         }
 
         @Override
-        protected void spawnSonicBoom(Level world, LivingEntity user) {
+        protected void spawnSonicBoom(ItemStack stack, Level world, LivingEntity user) {
             world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_BOOM, user.getSoundSource(), 5.0f, 1.0f);
             world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.TRIAL_SPAWNER_EJECT_ITEM, user.getSoundSource(), 4.0f, 1.0f);
 
             float heightOffset = 1.6f;
-            Vec3 target = user.position().add(user.getLookAngle().scale(distance));
             Vec3 source = user.position().add(0.0, heightOffset, 0.0);
+            Vec3 target = source.add(user.getLookAngle().scale(distance));
             Vec3 offsetToTarget = target.subtract(source);
             Vec3 normalized = offsetToTarget.normalize();
 
@@ -49,7 +50,7 @@
 
             for (Entity hitTarget : hit) {
                 if (hitTarget instanceof LivingEntity living) {
-                    living.hurt(world.damageSources().sonicBoom(user), damage);
+                    living.hurt(world.damageSources().sonicBoom(user), calculateEnchantedDamage(stack, world, damage));
                     double vertical = verticalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                     double horizontal = horizontalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                     living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);

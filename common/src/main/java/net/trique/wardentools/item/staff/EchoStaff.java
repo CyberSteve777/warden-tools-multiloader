@@ -1,7 +1,9 @@
 package net.trique.wardentools.item.staff;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -21,15 +23,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.trique.wardentools.item.util.ISonicBoomItem;
 import net.trique.wardentools.registry.ItemRegistry;
+import net.trique.wardentools.util.WTEnchantments;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class EchoStaff extends Item {
+public class EchoStaff extends Item implements ISonicBoomItem {
     protected int cooldown;
     protected int useDuration;
     protected int distance;
@@ -102,7 +108,7 @@ public class EchoStaff extends Item {
     public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
         if (!world.isClientSide() && user instanceof Player player) {
             ItemStack echoShardStack = findEchoShard(player);
-            spawnSonicBoom(world, player);
+            spawnSonicBoom(stack, world, player);
             if (!player.hasInfiniteMaterials()) {
                 echoShardStack.shrink(1);
                 player.getCooldowns().addCooldown(this, cooldown);
@@ -122,12 +128,12 @@ public class EchoStaff extends Item {
         return ItemStack.EMPTY;
     }
 
-    protected void spawnSonicBoom(Level world, LivingEntity user) {
+    protected void spawnSonicBoom(ItemStack stack, Level world, LivingEntity user) {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_BOOM, user.getSoundSource(), 5.0f, 1.0f);
 
         float heightOffset = 1.6f;
-        Vec3 target = user.position().add(user.getLookAngle().scale(distance));
         Vec3 source = user.position().add(0.0, heightOffset, 0.0);
+        Vec3 target = source.add(user.getLookAngle().scale(distance));
         Vec3 offsetToTarget = target.subtract(source);
         Vec3 normalized = offsetToTarget.normalize();
 
@@ -145,7 +151,7 @@ public class EchoStaff extends Item {
 
         for (Entity hitTarget : hit) {
             if (hitTarget instanceof LivingEntity living) {
-                living.hurt(world.damageSources().sonicBoom(user), damage);
+                living.hurt(world.damageSources().sonicBoom(user), calculateEnchantedDamage(stack, world, damage));
                 double vertical = verticalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 double horizontal = horizontalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);

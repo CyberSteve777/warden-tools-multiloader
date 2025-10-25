@@ -1,6 +1,8 @@
 package net.trique.wardentools.item.archery;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -20,17 +22,21 @@ import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.trique.wardentools.item.util.ISonicBoomItem;
 import net.trique.wardentools.particle.echo_particle.EchoParticleOption;
 import net.trique.wardentools.registry.ItemRegistry;
+import net.trique.wardentools.util.WTEnchantments;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class EchoShriekerItem extends BowItem {
-    private final float MAX_DISTANCE = 30f;
+public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
+    private final float DEFAULT_DISTANCE = 20f;
 
     public EchoShriekerItem(Properties settings) {
         super(settings.attributes(createAttributeModifiers()));
@@ -61,7 +67,7 @@ public class EchoShriekerItem extends BowItem {
             float loadAmount = getPowerForTime(i);
             ItemStack ammo = findEchoShard(player);
             if (!((double) loadAmount < 0.1f)) {
-                spawnSonicBoom(world, user, loadAmount);
+                spawnSonicBoom(stack, world, user, loadAmount);
                 if (!player.isCreative()) {
                     player.getCooldowns().addCooldown(this, 120);
                     stack.hurtAndBreak(1, user, EquipmentSlot.MAINHAND);
@@ -85,9 +91,9 @@ public class EchoShriekerItem extends BowItem {
         return ingredient.is(ItemRegistry.SHRIEKER_FANG.get());
     }
 
-    private void spawnSonicBoom(Level world, LivingEntity user, float remainTicks) {
+    private void spawnSonicBoom(ItemStack stack, Level world, LivingEntity user, float remainTicks) {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.SCULK_SHRIEKER_SHRIEK, user.getSoundSource(), 5.0f, 1.0f);
-        float distance = MAX_DISTANCE * remainTicks;
+        float distance = DEFAULT_DISTANCE * remainTicks;
         Vec3 source = user.position().add(0.0, user.getEyeHeight(), 0.0);
         Vec3 target = source.add(user.getLookAngle().scale(distance));
         Vec3 offsetToTarget = target.subtract(source);
@@ -108,8 +114,9 @@ public class EchoShriekerItem extends BowItem {
         for (Entity hitTarget : hit) {
             if (hitTarget instanceof LivingEntity living) {
                 float distanceToTarget = user.distanceTo(living);
-                float damage = calculateDamage(remainTicks, distanceToTarget);
-                living.hurt(world.damageSources().sonicBoom(user), damage);
+                float baseDamage = calculateBaseDamage(remainTicks, distanceToTarget);
+                float enchantedDamage = calculateEnchantedDamage(stack, world, baseDamage);
+                living.hurt(world.damageSources().sonicBoom(user), enchantedDamage);
                 living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
                 living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
                 living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 160, 2));
@@ -177,13 +184,13 @@ public class EchoShriekerItem extends BowItem {
         return new Vec3(closestX, closestY, closestZ);
     }
 
-    private float calculateDamage(float chargingAmount, float distanceToTarget) {
+    private float calculateBaseDamage(float chargingAmount, float distanceToTarget) {
         float baseDamage = 40f; // base damage
         float amplifier = 2f; // multiplier for close-range
         float maxMinDamage = baseDamage / 3; // minimum possible damage after falloff
         float damage = baseDamage;
         if (Math.floor(distanceToTarget) >= 2) {
-            damage *= (1 - ((distanceToTarget - 2) * ((baseDamage - maxMinDamage) / (MAX_DISTANCE - 2))));
+            damage *= (1 - ((distanceToTarget - 2) * ((baseDamage - maxMinDamage) / (DEFAULT_DISTANCE - 2))));
             if (damage < maxMinDamage) damage = maxMinDamage;
         } else {
             damage *= amplifier;
