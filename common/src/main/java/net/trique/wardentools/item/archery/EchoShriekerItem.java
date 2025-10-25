@@ -95,7 +95,8 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.SCULK_SHRIEKER_SHRIEK, user.getSoundSource(), 5.0f, 1.0f);
         float distance = DEFAULT_DISTANCE * remainTicks;
         Vec3 source = user.position().add(0.0, user.getEyeHeight(), 0.0);
-        Vec3 target = source.add(user.getLookAngle().scale(distance));
+        float enhanced_distance = distance + calculateBonusDistance(stack, world);
+        Vec3 target = source.add(user.getLookAngle().scale(enhanced_distance));
         Vec3 offsetToTarget = target.subtract(source);
         Vec3 normalized = offsetToTarget.normalize();
         Set<Entity> hit = new HashSet<>();
