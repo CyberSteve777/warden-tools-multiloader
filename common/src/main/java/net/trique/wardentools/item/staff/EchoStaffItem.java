@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -20,19 +21,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.trique.wardentools.item.util.ISonicBoomItem;
 import net.trique.wardentools.registry.ItemRegistry;
-import net.trique.wardentools.util.WTEnchantments;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class EchoStaff extends Item implements ISonicBoomItem {
+public class EchoStaffItem extends Item implements ISonicBoomItem {
     protected int cooldown;
     protected int useDuration;
     protected int distance;
@@ -41,9 +39,9 @@ public class EchoStaff extends Item implements ISonicBoomItem {
     protected double horizontalKnockbackCoefficient;
     protected double verticalKnockbackCoefficient;
 
-    public EchoStaff(Properties settings, int cooldown, int useDuration, int distance,
-                     int particleDelta, float damage, double horizontalKnockbackCoefficient,
-                     double verticalKnockbackCoefficient) {
+    public EchoStaffItem(Properties settings, int cooldown, int useDuration, int distance,
+                         int particleDelta, float damage, double horizontalKnockbackCoefficient,
+                         double verticalKnockbackCoefficient) {
         super(settings.attributes(createAttributeModifiers()));
         this.cooldown = cooldown;
         this.useDuration = useDuration;
@@ -103,9 +101,9 @@ public class EchoStaff extends Item implements ISonicBoomItem {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
-        if (!world.isClientSide() && user instanceof Player player) {
+        if (world instanceof ServerLevel serverLevel && user instanceof Player player) {
             ItemStack echoShardStack = findEchoShard(player);
-            spawnSonicBoom(stack, world, player);
+            spawnSonicBoom(stack, serverLevel, player);
             if (!player.hasInfiniteMaterials()) {
                 echoShardStack.shrink(1);
                 player.getCooldowns().addCooldown(this, cooldown);
@@ -125,7 +123,7 @@ public class EchoStaff extends Item implements ISonicBoomItem {
         return ItemStack.EMPTY;
     }
 
-    protected void spawnSonicBoom(ItemStack stack, Level world, LivingEntity user) {
+    protected void spawnSonicBoom(ItemStack stack, ServerLevel world, LivingEntity user) {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_BOOM, user.getSoundSource(), 5.0f, 1.0f);
 
         Vec3 source = user.position().add(0.0, user.getEyeHeight(), 0.0);
@@ -137,7 +135,7 @@ public class EchoStaff extends Item implements ISonicBoomItem {
         Set<Entity> hit = new HashSet<>();
         for (int particleIndex = 1; particleIndex < Mth.floor(offsetToTarget.length()) + particleDelta; ++particleIndex) {
             Vec3 particlePos = source.add(normalized.scale(particleIndex));
-            ((ServerLevel) world).sendParticles(ParticleTypes.SONIC_BOOM, particlePos.x, particlePos.y, particlePos.z, 1, 0.0, 0.0, 0.0, 0.0);
+            world.sendParticles(ParticleTypes.SONIC_BOOM, particlePos.x, particlePos.y, particlePos.z, 1, 0.0, 0.0, 0.0, 0.0);
 
             hit.addAll(world.getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos((int) particlePos.x(),
                             (int) particlePos.y(), (int) particlePos.z())).inflate(1),
@@ -147,8 +145,9 @@ public class EchoStaff extends Item implements ISonicBoomItem {
         hit.remove(user);
 
         for (Entity hitTarget : hit) {
+            DamageSource damageSource = world.damageSources().sonicBoom(user);
+            hitTarget.hurt(damageSource, calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
             if (hitTarget instanceof LivingEntity living) {
-                living.hurt(world.damageSources().sonicBoom(user), calculateEnchantedDamage(stack, world, damage));
                 double vertical = verticalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 double horizontal = horizontalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);

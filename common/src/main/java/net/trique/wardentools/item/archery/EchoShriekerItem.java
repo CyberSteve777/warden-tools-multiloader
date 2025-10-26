@@ -6,6 +6,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -60,12 +61,12 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
     }
 
     public void releaseUsing(ItemStack stack, Level world, LivingEntity user, int remainingUseTicks) {
-        if (!world.isClientSide() && user instanceof Player player) {
+        if (world instanceof ServerLevel serverLevel && user instanceof Player player) {
             int i = this.getUseDuration(stack, user) - remainingUseTicks;
             float loadAmount = getPowerForTime(i);
             ItemStack ammo = findEchoShard(player);
             if (!((double) loadAmount < 0.1f)) {
-                spawnSonicBoom(stack, world, user, loadAmount);
+                spawnSonicBoom(stack, serverLevel, user, loadAmount);
                 if (!player.isCreative()) {
                     player.getCooldowns().addCooldown(this, 120);
                     stack.hurtAndBreak(1, user, EquipmentSlot.MAINHAND);
@@ -89,7 +90,7 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
         return ingredient.is(ItemRegistry.SHRIEKER_FANG.get());
     }
 
-    private void spawnSonicBoom(ItemStack stack, Level world, LivingEntity user, float remainTicks) {
+    private void spawnSonicBoom(ItemStack stack, ServerLevel world, LivingEntity user, float remainTicks) {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.SCULK_SHRIEKER_SHRIEK, user.getSoundSource(), 5.0f, 1.0f);
         float distance = DEFAULT_DISTANCE * remainTicks;
         Vec3 source = user.position().add(0.0, user.getEyeHeight(), 0.0);
@@ -104,18 +105,19 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
 
         for (float particleScale = 1; particleScale < offsetToTarget.length(); particleScale++) {
             Vec3 particlePos = source.add(normalized.scale(particleScale));
-            ((ServerLevel) world).sendParticles(new EchoParticleOption(particleScale * 1.4f, user.getXRot(), user.getYRot()), particlePos.x, particlePos.y, particlePos.z,
+            world.sendParticles(new EchoParticleOption(particleScale * 1.4f, user.getXRot(), user.getYRot()), particlePos.x, particlePos.y, particlePos.z,
                     1, 0, 0, 0, 0);
         }
 
         hit.remove(user);
 
         for (Entity hitTarget : hit) {
+            float distanceToTarget = user.distanceTo(hitTarget);
+            float baseDamage = calculateBaseDamage(remainTicks, distanceToTarget);
+            DamageSource damageSource = world.damageSources().sonicBoom(user);
+            float enchantedDamage = calculateEnchantedDamage(world, stack, hitTarget, damageSource, baseDamage);
+            hitTarget.hurt(damageSource, enchantedDamage);
             if (hitTarget instanceof LivingEntity living) {
-                float distanceToTarget = user.distanceTo(living);
-                float baseDamage = calculateBaseDamage(remainTicks, distanceToTarget);
-                float enchantedDamage = calculateEnchantedDamage(stack, world, baseDamage);
-                living.hurt(world.damageSources().sonicBoom(user), enchantedDamage);
                 living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
                 living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
                 living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 160, 2));
