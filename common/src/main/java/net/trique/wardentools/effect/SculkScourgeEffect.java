@@ -3,8 +3,8 @@ package net.trique.wardentools.effect;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 
-public class SculkBlessEffect extends MobEffect {
-    public SculkBlessEffect(MobEffectCategory category, int color) {
+public class SculkScourgeEffect extends MobEffect {
+    public SculkScourgeEffect(MobEffectCategory category, int color) {
         super(category, color);
     }
 

@@ -9,7 +9,6 @@ import net.trique.wardentools.registration.RegistrationProvider;
 import net.trique.wardentools.registration.RegistryObject;
 
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 public class PotionRegistry {
 
@@ -22,14 +21,14 @@ public class PotionRegistry {
     public static final Holder<Potion> LONG_SCULK_ADAPTION = registerPotion("long_sculk_adaption", () -> new Potion(
             new MobEffectInstance(EffectRegistry.SCULK_ADAPTION, 4800)
     ));
-    public static final Holder<Potion> SCULK_BLESS = registerPotion("sculk_bless", () -> new Potion(
-            new MobEffectInstance(EffectRegistry.SCULK_BLESS, 1800)
+    public static final Holder<Potion> SCULK_SCOURGE = registerPotion("sculk_scourge", () -> new Potion(
+            new MobEffectInstance(EffectRegistry.SCULK_SCOURGE, 1800)
     ));
-    public static final Holder<Potion> LONG_SCULK_BLESS = registerPotion("long_sculk_bless", () -> new Potion(
-            new MobEffectInstance(EffectRegistry.SCULK_BLESS, 4800)
+    public static final Holder<Potion> LONG_SCULK_SCOURGE = registerPotion("long_sculk_scourge", () -> new Potion(
+            new MobEffectInstance(EffectRegistry.SCULK_SCOURGE, 4800)
     ));
-    public static final Holder<Potion> STRONG_SCULK_BLESS = registerPotion("strong_sculk_bless", () -> new Potion(
-            new MobEffectInstance(EffectRegistry.SCULK_BLESS, 1800, 3)
+    public static final Holder<Potion> STRONG_SCULK_SCOURGE = registerPotion("strong_sculk_scourge", () -> new Potion(
+            new MobEffectInstance(EffectRegistry.SCULK_SCOURGE, 1800, 3)
     ));
     public static final Holder<Potion> WARDEN = registerPotion("warden", () -> new Potion(
             new MobEffectInstance(EffectRegistry.WARDEN_CURSE, 1800)
