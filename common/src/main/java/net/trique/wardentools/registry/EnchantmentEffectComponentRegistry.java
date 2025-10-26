@@ -7,6 +7,7 @@ import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.registration.RegistrationProvider;
+import net.trique.wardentools.registration.RegistryObject;
 
 import java.util.List;
 import java.util.function.UnaryOperator;
@@ -16,7 +17,8 @@ public class EnchantmentEffectComponentRegistry {
             BuiltInRegistries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, Constants.MOD_ID
     );
 
-    public static DataComponentType<List<ConditionalEffect<EnchantmentValueEffect>>> INCREASE_RANGE = register("increase_value",
+    public static RegistryObject<DataComponentType<?>, DataComponentType<List<ConditionalEffect<EnchantmentValueEffect>>>>  INCREASE_RANGE =
+            register("increase_value",
             (builder -> builder.persistent(ConditionalEffect.codec(EnchantmentValueEffect.CODEC, LootContextParamSets.ENCHANTED_ITEM).listOf())));
 
 
@@ -24,8 +26,7 @@ public class EnchantmentEffectComponentRegistry {
         Constants.LOGGER.info("Registering warden enchantment effect components...");
     }
 
-    protected static <T> DataComponentType<T> register(String name, UnaryOperator<DataComponentType.Builder<T>> operator) {
-        var registry_object = ENCHANTMENT_EFFECT_COMPONENT_PROVIDER.register(name, () -> operator.apply(DataComponentType.builder()).cacheEncoding().build());
-        return registry_object.get();
+    protected static <T> RegistryObject<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> operator) {
+        return ENCHANTMENT_EFFECT_COMPONENT_PROVIDER.register(name, () -> operator.apply(DataComponentType.builder()).cacheEncoding().build());
     }
 }

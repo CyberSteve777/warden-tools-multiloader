@@ -53,7 +53,7 @@ public class WTEnchantmentProvider extends DatapackBuiltinEntriesProvider {
                         8,
                         EquipmentSlotGroup.MAINHAND)
         ).withEffect(
-                EnchantmentEffectComponentRegistry.INCREASE_RANGE,
+                EnchantmentEffectComponentRegistry.INCREASE_RANGE.get(),
                 new AddValue(LevelBasedValue.perLevel(5f))
         ).build(WTEnchantments.PROPAGATION.location()));
     }
