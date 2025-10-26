@@ -3,6 +3,20 @@
   "description": {
     "translate": "enchantment.wardentools.propagation"
   },
+  "effects": {
+    "wardentools:increase_value": [
+      {
+        "effect": {
+          "type": "minecraft:add",
+          "value": {
+            "type": "minecraft:linear",
+            "base": 5.0,
+            "per_level_above_first": 5.0
+          }
+        }
+      }
+    ]
+  },
   "max_cost": {
     "base": 25,
     "per_level_above_first": 10
