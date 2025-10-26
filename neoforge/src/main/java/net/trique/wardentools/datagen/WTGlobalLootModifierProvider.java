@@ -49,11 +49,11 @@ public class WTGlobalLootModifierProvider extends GlobalLootModifierProvider {
         }, Items.ECHO_SHARD, 1, 3));
         add("add_sonic_boost_enchanted_book", new AddEnchantedBookToPoolModifier(new LootItemCondition[] {
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
-                LootItemRandomChanceCondition.randomChance(0.3f).build()
+                LootItemRandomChanceCondition.randomChance(0.33f).build()
         }, echo_concentration, 1, 5));
         add("add_propagation_enchanted_book", new AddEnchantedBookToPoolModifier(new LootItemCondition[] {
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
-                LootItemRandomChanceCondition.randomChance(0.3f).build()
+                LootItemRandomChanceCondition.randomChance(0.25f).build()
         }, resonation, 1, 3));
         add("add_warden_soul_to_warden_loot", new AddItemToWardenLootModifier(new LootItemCondition[0],
                 WARDEN_SOUL.get(), 0.3f, 0.1f, 1, 2));

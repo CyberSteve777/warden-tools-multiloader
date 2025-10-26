@@ -41,9 +41,9 @@ public class WTGlobalLootTableModifierUtils {
 
         MODIFIERS.add(new AddItemModifierWithRandomAmount(new LootItemCondition[]{LootItemRandomChanceCondition.randomChance(.5f).build()},
                 Set.of(ANCIENT_CITY_LOOT_LOCATION), Items.ECHO_SHARD, 1, 3));
-        MODIFIERS.add(new AddEnchantedBookToPoolModifier(new LootItemCondition[]{LootItemRandomChanceCondition.randomChance(0.3f).build()},
+        MODIFIERS.add(new AddEnchantedBookToPoolModifier(new LootItemCondition[]{LootItemRandomChanceCondition.randomChance(0.33f).build()},
                 Set.of(ANCIENT_CITY_LOOT_LOCATION), WTEnchantments.SONIC_BOOST, 1, 5));
-        MODIFIERS.add(new AddEnchantedBookToPoolModifier(new LootItemCondition[]{LootItemRandomChanceCondition.randomChance(0.3f).build()},
+        MODIFIERS.add(new AddEnchantedBookToPoolModifier(new LootItemCondition[]{LootItemRandomChanceCondition.randomChance(0.25f).build()},
                 Set.of(ANCIENT_CITY_LOOT_LOCATION), WTEnchantments.PROPAGATION, 1, 3));
 
 
