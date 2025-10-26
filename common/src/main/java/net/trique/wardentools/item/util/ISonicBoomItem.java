@@ -7,18 +7,18 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.trique.wardentools.util.WTEnchantmentHelper;
 import net.trique.wardentools.util.WTEnchantments;
 
 public interface ISonicBoomItem {
     default float calculateEnchantedDamage(ServerLevel level, ItemStack tool, Entity entity, DamageSource damageSource, float damage) {
-        return EnchantmentHelper.modifyDamage(level, tool, entity, damageSource, damage);
+        return WTEnchantmentHelper.modifyDamage(level, tool, entity, damageSource, damage);
     }
 
     default float calculateBonusDistance(ItemStack stack, Level world) {
         Holder<Enchantment> echo_concentration = world.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(WTEnchantments.PROPAGATION).orElseThrow();
-        int level = EnchantmentHelper.getItemEnchantmentLevel(echo_concentration, stack);
+        int level = WTEnchantmentHelper.getItemEnchantmentLevel(echo_concentration, stack);
         return 5f * level;
     }
 

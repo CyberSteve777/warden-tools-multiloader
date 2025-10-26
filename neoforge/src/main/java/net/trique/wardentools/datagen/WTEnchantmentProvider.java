@@ -11,9 +11,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
+import net.minecraft.world.item.enchantment.effects.AddValue;
 import net.minecraft.world.item.enchantment.effects.MultiplyValue;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.trique.wardentools.Constants;
+import net.trique.wardentools.registry.EnchantmentEffectComponentRegistry;
 import net.trique.wardentools.util.WTEnchantments;
 import net.trique.wardentools.util.WTItemTags;
 
@@ -50,6 +52,9 @@ public class WTEnchantmentProvider extends DatapackBuiltinEntriesProvider {
                         Enchantment.dynamicCost(25, 10),
                         8,
                         EquipmentSlotGroup.MAINHAND)
+        ).withEffect(
+                EnchantmentEffectComponentRegistry.INCREASE_RANGE,
+                new AddValue(LevelBasedValue.perLevel(5f))
         ).build(WTEnchantments.PROPAGATION.location()));
     }
 
