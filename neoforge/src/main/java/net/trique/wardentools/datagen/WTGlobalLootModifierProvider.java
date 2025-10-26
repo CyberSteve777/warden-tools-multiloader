@@ -29,8 +29,8 @@ public class WTGlobalLootModifierProvider extends GlobalLootModifierProvider {
     @Override
     protected void start() {
         var enchantments = registries.lookupOrThrow(Registries.ENCHANTMENT);
-        var echo_concentration = enchantments.getOrThrow(WTEnchantments.ECHO_CONCENTRATION);
-        var resonation = enchantments.getOrThrow(WTEnchantments.RESONATION);
+        var echo_concentration = enchantments.getOrThrow(WTEnchantments.SONIC_BOOST);
+        var resonation = enchantments.getOrThrow(WTEnchantments.PROPAGATION);
         add("add_warden_upgrade_smithing_template", new AddItemModifier(new LootItemCondition[]{
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
                 LootItemRandomChanceCondition.randomChance(0.1f).build()
@@ -47,11 +47,11 @@ public class WTGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
                 LootItemRandomChanceCondition.randomChance(0.5f).build()
         }, Items.ECHO_SHARD, 1, 3));
-        add("add_echo_concentration_enchanted_book", new AddEnchantedBookToPoolModifier(new LootItemCondition[] {
+        add("add_sonic_boost_enchanted_book", new AddEnchantedBookToPoolModifier(new LootItemCondition[] {
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
                 LootItemRandomChanceCondition.randomChance(0.3f).build()
         }, echo_concentration, 1, 5));
-        add("add_resonation_enchanted_book", new AddEnchantedBookToPoolModifier(new LootItemCondition[] {
+        add("add_propagation_enchanted_book", new AddEnchantedBookToPoolModifier(new LootItemCondition[] {
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
                 LootItemRandomChanceCondition.randomChance(0.3f).build()
         }, resonation, 1, 3));

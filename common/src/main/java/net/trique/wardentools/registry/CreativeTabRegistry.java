@@ -79,8 +79,8 @@ public class CreativeTabRegistry {
                                 output.accept(PotionContents.createItemStack(base, potionHolder));
                             }
                         }
-                        var echo_concentration = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.ECHO_CONCENTRATION);
-                        var resonation = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.RESONATION);
+                        var echo_concentration = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.SONIC_BOOST);
+                        var resonation = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.PROPAGATION);
                         output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(echo_concentration, echo_concentration.value().getMaxLevel())));
                         output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(resonation, resonation.value().getMaxLevel())));
                     }).title(Component.literal(Constants.MOD_NAME))
