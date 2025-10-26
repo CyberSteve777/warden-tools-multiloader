@@ -34,7 +34,7 @@ public class WTEnchantmentProvider extends DatapackBuiltinEntriesProvider {
     private static void bootstrap(BootstrapContext<Enchantment> context) {
         HolderGetter<Item> holdergetter = context.lookup(Registries.ITEM);
         context.register(WTEnchantments.SONIC_BOOST, Enchantment.enchantment(
-                Enchantment.definition(holdergetter.getOrThrow(WTItemTags.SONIC_BOOM_ITEM_ENCHANTABLE),
+                Enchantment.definition(holdergetter.getOrThrow(WTItemTags.SONIC_BOOM_WEAPON_ENCHANTABLE),
                         1,
                         5,
                         Enchantment.dynamicCost(10, 10),
@@ -45,14 +45,14 @@ public class WTEnchantmentProvider extends DatapackBuiltinEntriesProvider {
                 EnchantmentEffectComponents.DAMAGE, new MultiplyValue(LevelBasedValue.perLevel(1.05f, 0.05f))
         ).build(WTEnchantments.SONIC_BOOST.location()));
         context.register(WTEnchantments.PROPAGATION, Enchantment.enchantment(
-                Enchantment.definition(holdergetter.getOrThrow(WTItemTags.SONIC_BOOM_ITEM_ENCHANTABLE),
+                Enchantment.definition(holdergetter.getOrThrow(WTItemTags.SONIC_BOOM_WEAPON_ENCHANTABLE),
                         1,
                         3,
                         Enchantment.dynamicCost(10, 10),
                         Enchantment.dynamicCost(25, 10),
                         8,
                         EquipmentSlotGroup.MAINHAND)
-        ).withEffect(
+        ).withSpecialEffect(
                 EnchantmentEffectComponentRegistry.INCREASE_RANGE.get(),
                 new AddValue(LevelBasedValue.perLevel(5f))
         ).build(WTEnchantments.PROPAGATION.location()));

@@ -2,14 +2,11 @@ package net.trique.wardentools.registry;
 
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.enchantment.ConditionalEffect;
 import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.registration.RegistrationProvider;
 import net.trique.wardentools.registration.RegistryObject;
 
-import java.util.List;
 import java.util.function.UnaryOperator;
 
 public class EnchantmentEffectComponentRegistry {
@@ -17,9 +14,9 @@ public class EnchantmentEffectComponentRegistry {
             BuiltInRegistries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, Constants.MOD_ID
     );
 
-    public static RegistryObject<DataComponentType<?>, DataComponentType<List<ConditionalEffect<EnchantmentValueEffect>>>>  INCREASE_RANGE =
-            register("increase_value",
-            (builder -> builder.persistent(ConditionalEffect.codec(EnchantmentValueEffect.CODEC, LootContextParamSets.ENCHANTED_ITEM).listOf())));
+    public static RegistryObject<DataComponentType<?>, DataComponentType<EnchantmentValueEffect>> INCREASE_RANGE =
+            register("increase_range",
+            (builder -> builder.persistent(EnchantmentValueEffect.CODEC)));
 
 
     public static void init() {
