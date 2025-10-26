@@ -5,7 +5,7 @@ import net.minecraft.world.item.*;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.item.archery.EchoShriekerItem;
 import net.trique.wardentools.item.archery.SculkArrowItem;
-import net.trique.wardentools.item.archery.SculkifiedBow;
+import net.trique.wardentools.item.archery.SculkifiedBowItem;
 import net.trique.wardentools.item.material.WardenArmorMaterials;
 import net.trique.wardentools.item.material.WardenToolMaterials;
 import net.trique.wardentools.item.melee.DarknessAxeItem;
@@ -14,37 +14,37 @@ import net.trique.wardentools.item.melee.WardenArmorItem;
 import net.trique.wardentools.item.melee.WardenMaskItem;
 import net.trique.wardentools.item.misc.WardenFoodItem;
 import net.trique.wardentools.item.misc.WardenTemplateItem;
-import net.trique.wardentools.item.staff.AmethystEchoStaff;
-import net.trique.wardentools.item.staff.EchoStaff;
-import net.trique.wardentools.item.staff.EnderEchoStaff;
-import net.trique.wardentools.item.staff.RoseGoldEchoStaff;
+import net.trique.wardentools.item.staff.AmethystEchoStaffItem;
+import net.trique.wardentools.item.staff.EchoStaffItem;
+import net.trique.wardentools.item.staff.EnderEchoStaffItem;
+import net.trique.wardentools.item.staff.RoseGoldEchoStaffItem;
 import net.trique.wardentools.registration.RegistrationProvider;
 import net.trique.wardentools.registration.RegistryObject;
 
 public class ItemRegistry {
     protected static final RegistrationProvider<Item> ITEMS = RegistrationProvider.get(Registries.ITEM, Constants.MOD_ID);
 
-    public static final RegistryObject<Item, EchoStaff> ECHO_STAFF = ITEMS.register("echo_staff",
-            () -> new EchoStaff(getItemProperties().rarity(Rarity.EPIC).durability(76),
+    public static final RegistryObject<Item, EchoStaffItem> ECHO_STAFF = ITEMS.register("echo_staff",
+            () -> new EchoStaffItem(getItemProperties().rarity(Rarity.EPIC).durability(76),
                     80, 20, 20, 7, 10.0f, 5.0, 1.0));
 
-    public static final RegistryObject<Item, AmethystEchoStaff> AMETHYST_UPGRADED_ECHO_STAFF = ITEMS.register("amethyst_upgraded_echo_staff",
-            () -> new AmethystEchoStaff(getItemProperties().rarity(Rarity.EPIC).durability(76),
+    public static final RegistryObject<Item, AmethystEchoStaffItem> AMETHYST_UPGRADED_ECHO_STAFF = ITEMS.register("amethyst_upgraded_echo_staff",
+            () -> new AmethystEchoStaffItem(getItemProperties().rarity(Rarity.EPIC).durability(76),
                     60, 15, 20, 7, 10.0f, 7.5, 1.5));
 
-    public static final RegistryObject<Item, EnderEchoStaff> ENDER_UPGRADED_ECHO_STAFF = ITEMS.register("ender_upgraded_echo_staff",
-            () -> new EnderEchoStaff(getItemProperties().rarity(Rarity.EPIC).durability(76),
+    public static final RegistryObject<Item, EnderEchoStaffItem> ENDER_UPGRADED_ECHO_STAFF = ITEMS.register("ender_upgraded_echo_staff",
+            () -> new EnderEchoStaffItem(getItemProperties().rarity(Rarity.EPIC).durability(76),
                     80, 20, 20, 7, 10.0f, 5.0, 1.0));
 
-    public static final RegistryObject<Item, RoseGoldEchoStaff> ROSE_GOLD_UPGRADED_ECHO_STAFF = ITEMS.register("rose_gold_upgraded_echo_staff",
-            () -> new RoseGoldEchoStaff(getItemProperties().rarity(Rarity.EPIC).durability(76),
+    public static final RegistryObject<Item, RoseGoldEchoStaffItem> ROSE_GOLD_UPGRADED_ECHO_STAFF = ITEMS.register("rose_gold_upgraded_echo_staff",
+            () -> new RoseGoldEchoStaffItem(getItemProperties().rarity(Rarity.EPIC).durability(76),
                     80, 20, 40, 7, 20.0f, 2.5, 0.5));
 
     public static final RegistryObject<Item, EchoShriekerItem> ECHO_SHRIEKER = ITEMS.register("echo_shrieker",
             () -> new EchoShriekerItem(getFireResistantProperties().rarity(Rarity.EPIC).durability(50)));
 
-    public static final RegistryObject<Item, SculkifiedBow> SCULKIFIED_BOW = ITEMS.register("sculkified_bow", () ->
-            new SculkifiedBow(getFireResistantProperties().rarity(Rarity.RARE).attributes(SculkifiedBow.createAttributeModifiers())));
+    public static final RegistryObject<Item, SculkifiedBowItem> SCULKIFIED_BOW = ITEMS.register("sculkified_bow", () ->
+            new SculkifiedBowItem(getFireResistantProperties().rarity(Rarity.RARE).attributes(SculkifiedBowItem.createAttributeModifiers())));
 
     public static final RegistryObject<Item, ShovelItem> SCULKIFIED_SHOVEL = ITEMS.register("sculkified_shovel", () ->
             new ShovelItem(WardenToolMaterials.SCULKIFIED, getItemProperties().attributes(ShovelItem.createAttributes(WardenToolMaterials.SCULKIFIED, 1.5f, -3.0f))));
