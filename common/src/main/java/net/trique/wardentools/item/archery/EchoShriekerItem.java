@@ -21,15 +21,13 @@ import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.trique.wardentools.Constants;
 import net.trique.wardentools.item.util.ISonicBoomItem;
 import net.trique.wardentools.particle.echo_particle.EchoParticleOption;
 import net.trique.wardentools.registry.ItemRegistry;
-import net.trique.wardentools.util.WTEnchantments;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -103,7 +101,7 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
                 (int) source.y(), (int) source.z())).inflate(distance);
         hit.addAll(world.getEntitiesOfClass(LivingEntity.class, cube, it -> isAABBInConeSimple(source, offsetToTarget, it.getBoundingBox()) && !((it.isAlliedTo(user)) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
 
-        for (float particleScale = 1; particleScale < offsetToTarget.length(); particleScale++) {
+        for (float particleScale = 1; particleScale <= offsetToTarget.length(); particleScale++) {
             Vec3 particlePos = source.add(normalized.scale(particleScale));
             world.sendParticles(new EchoParticleOption(particleScale * 1.4f, user.getXRot(), user.getYRot()), particlePos.x, particlePos.y, particlePos.z,
                     1, 0, 0, 0, 0);
