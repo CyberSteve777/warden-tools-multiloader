@@ -37,7 +37,7 @@ public class WTEnchantmentProvider extends DatapackBuiltinEntriesProvider {
                 Enchantment.definition(holdergetter.getOrThrow(WTItemTags.SONIC_BOOM_WEAPON_ENCHANTABLE),
                         1,
                         5,
-                        Enchantment.dynamicCost(10, 10),
+                        Enchantment.dynamicCost(5, 10),
                         Enchantment.dynamicCost(25, 10),
                         8,
                         EquipmentSlotGroup.MAINHAND)
