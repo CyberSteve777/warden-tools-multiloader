@@ -35,7 +35,7 @@
             Vec3 normalized = offsetToTarget.normalize();
 
             Set<Entity> hit = new HashSet<>();
-            for (int particleIndex = 1; particleIndex < Mth.floor(offsetToTarget.length()) + particleDelta; ++particleIndex) {
+            for (int particleIndex = 1; particleIndex <= Mth.floor(offsetToTarget.length()) + particleDelta; ++particleIndex) {
                 Vec3 particlePos = source.add(normalized.scale(particleIndex));
                 world.sendParticles(ParticleRegistry.ROSE_GOLD_SONIC_BOOM.get(), particlePos.x, particlePos.y, particlePos.z, 1, 0.0, 0.0, 0.0, 0.0);
 

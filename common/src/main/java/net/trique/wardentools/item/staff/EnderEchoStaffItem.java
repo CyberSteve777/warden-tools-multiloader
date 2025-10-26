@@ -37,7 +37,7 @@ public class EnderEchoStaffItem extends EchoStaffItem {
         Vec3 normalized = offsetToTarget.normalize();
 
         Set<Entity> hit = new HashSet<>();
-        for (int i = 1; i < Mth.floor(offsetToTarget.length()) + particleDelta; ++i) {
+        for (int i = 1; i <= Mth.floor(offsetToTarget.length()) + particleDelta; ++i) {
             Vec3 pos = source.add(normalized.scale(i));
             world.sendParticles(ParticleRegistry.ENDER_SONIC_BOOM.get(),
                     pos.x, pos.y, pos.z, 1, 0.0, 0.0, 0.0, 0.0);
