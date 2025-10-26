@@ -11,23 +11,17 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
-import net.trique.wardentools.Constants;
-import net.trique.wardentools.registry.EntityRegistry;
 import net.trique.wardentools.registry.ItemRegistry;
-import org.jetbrains.annotations.Debug;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Predicate;
 
-public class SculkifiedBow extends BowItem {
-    public SculkifiedBow(Properties properties) {
+public class SculkifiedBowItem extends BowItem {
+    public SculkifiedBowItem(Properties properties) {
         super(properties);
     }
 
