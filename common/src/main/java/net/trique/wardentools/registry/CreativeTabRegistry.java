@@ -124,26 +124,6 @@ public class CreativeTabRegistry {
                     )
                     .build());
 
-    public static final RegistryObject<CreativeModeTab, CreativeModeTab> WARDEN_TOOLS_ECHO_WEAPONS_TAB = CREATIVE_MODE_TABS.register("echo_weapon", () ->
-            CreativeModeTab.builder(CreativeModeTab.Row.TOP, 4)
-                    .title(Component.translatable(creativeTabKey("echo_weapons")))
-                    .icon(() -> new ItemStack(ECHO_STAFF.get()))
-                    .displayItems(
-                            (itemDisplayParameters, output) -> {
-                                output.accept(ECHO_STAFF.get());
-                                output.accept(ROSE_GOLD_UPGRADED_ECHO_STAFF.get());
-                                output.accept(AMETHYST_UPGRADED_ECHO_STAFF.get());
-                                output.accept(ENDER_UPGRADED_ECHO_STAFF.get());
-                                output.accept(ECHO_SHRIEKER.get());
-                                var echo_concentration = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.SONIC_BOOST);
-                                var resonation = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.PROPAGATION);
-                                output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(echo_concentration, echo_concentration.value().getMaxLevel())));
-                                output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(resonation, resonation.value().getMaxLevel())));
-                                output.accept(Items.ECHO_SHARD);
-                            }
-                    )
-                    .build());
-
 
     private static String creativeTabKey(String name) {
         return getTranslationKey("creative_tab." + name);
