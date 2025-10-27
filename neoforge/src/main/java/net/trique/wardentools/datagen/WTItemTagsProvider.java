@@ -62,13 +62,13 @@ public class WTItemTagsProvider extends ItemTagsProvider {
         tag(WTItemTags.SCULKHYST_CLUSTER_MAX_HARVESTABLES).addTag(
                 ItemTags.HOES
         );
-        tag(WTItemTags.SONIC_BOOM_WEAPON).add(
+        tag(WTItemTags.ECHO_WEAPON).add(
                 ECHO_STAFF.get(),
                 ROSE_GOLD_UPGRADED_ECHO_STAFF.get(),
                 AMETHYST_UPGRADED_ECHO_STAFF.get(),
                 ENDER_UPGRADED_ECHO_STAFF.get(),
                 ECHO_SHRIEKER.get()
         );
-        tag(WTItemTags.SONIC_BOOM_WEAPON_ENCHANTABLE).addTag(WTItemTags.SONIC_BOOM_WEAPON);
+        tag(WTItemTags.ECHO_WEAPON_ENCHANTABLE).addTag(WTItemTags.ECHO_WEAPON);
     }
 }
