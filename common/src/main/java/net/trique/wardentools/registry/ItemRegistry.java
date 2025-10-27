@@ -5,7 +5,7 @@ import net.minecraft.world.item.*;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.item.archery.EchoShriekerItem;
 import net.trique.wardentools.item.archery.SculkArrowItem;
-import net.trique.wardentools.item.archery.SculkifiedBowItem;
+import net.trique.wardentools.item.archery.EchoLocatorItem;
 import net.trique.wardentools.item.material.WardenArmorMaterials;
 import net.trique.wardentools.item.material.WardenToolMaterials;
 import net.trique.wardentools.item.melee.DarknessAxeItem;
@@ -43,8 +43,8 @@ public class ItemRegistry {
     public static final RegistryObject<Item, EchoShriekerItem> ECHO_SHRIEKER = ITEMS.register("echo_shrieker",
             () -> new EchoShriekerItem(getFireResistantProperties().rarity(Rarity.EPIC).durability(50)));
 
-    public static final RegistryObject<Item, SculkifiedBowItem> SCULKIFIED_BOW = ITEMS.register("sculkified_bow", () ->
-            new SculkifiedBowItem(getFireResistantProperties().rarity(Rarity.RARE).attributes(SculkifiedBowItem.createAttributeModifiers())));
+    public static final RegistryObject<Item, EchoLocatorItem> ECHO_LOCATOR = ITEMS.register("echo_locator", () ->
+            new EchoLocatorItem(getFireResistantProperties().rarity(Rarity.RARE).attributes(EchoLocatorItem.createAttributeModifiers())));
 
     public static final RegistryObject<Item, ShovelItem> SCULKIFIED_SHOVEL = ITEMS.register("sculkified_shovel", () ->
             new ShovelItem(WardenToolMaterials.SCULKIFIED, getItemProperties().attributes(ShovelItem.createAttributes(WardenToolMaterials.SCULKIFIED, 1.5f, -3.0f))));

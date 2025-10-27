@@ -76,7 +76,7 @@ public class CreativeTabRegistry {
                                 output.accept(AMETHYST_UPGRADED_ECHO_STAFF.get());
                                 output.accept(ENDER_UPGRADED_ECHO_STAFF.get());
                                 output.accept(ECHO_SHRIEKER.get());
-                                output.accept(SCULKIFIED_BOW.get());
+                                output.accept(ECHO_LOCATOR.get());
                                 output.accept(SCULK_ARROW.get());
                                 for (Holder<Potion> potionHolder : PotionRegistry.getEntries()) {
                                     output.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, potionHolder));

@@ -20,8 +20,8 @@ import net.trique.wardentools.registry.ItemRegistry;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class SculkifiedBowItem extends BowItem {
-    public SculkifiedBowItem(Properties properties) {
+public class EchoLocatorItem extends BowItem {
+    public EchoLocatorItem(Properties properties) {
         super(properties);
     }
 

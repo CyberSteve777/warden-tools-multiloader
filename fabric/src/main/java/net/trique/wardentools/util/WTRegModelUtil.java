@@ -8,7 +8,7 @@ import net.trique.wardentools.registry.ItemRegistry;
 public class WTRegModelUtil {
     public static void registerModModels() {
         registerBow(ItemRegistry.ECHO_SHRIEKER.get());
-        registerBow(ItemRegistry.SCULKIFIED_BOW.get());
+        registerBow(ItemRegistry.ECHO_LOCATOR.get());
     }
 
     private static void registerBow(BowItem bow) {

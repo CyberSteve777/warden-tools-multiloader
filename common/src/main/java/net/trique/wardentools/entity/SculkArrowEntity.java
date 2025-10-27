@@ -9,12 +9,9 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileDeflection;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -39,7 +36,7 @@ public class SculkArrowEntity extends Arrow {
     public SculkArrowEntity(Level world, LivingEntity owner) {
         super(EntityRegistry.SCULK_ARROW.get(), world);
         this.setOwner(owner);
-        if (owner.getMainHandItem().is(ItemRegistry.SCULKIFIED_BOW.get())){
+        if (owner.getMainHandItem().is(ItemRegistry.ECHO_LOCATOR.get())){
             this.setNoGravity(true);
             double multiplier = 3;
             base_radius *=  multiplier;

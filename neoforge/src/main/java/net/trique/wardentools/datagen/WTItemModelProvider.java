@@ -85,7 +85,7 @@ public class WTItemModelProvider extends ItemModelProvider {
         basicItem(SCULK_ARROW.get());
         basicItem(SHRIEKER_FANG.get());
         bowItem(ECHO_SHRIEKER);
-        bowItem(SCULKIFIED_BOW);
+        bowItem(ECHO_LOCATOR);
         basicItem(WARDEN_TENDRIL.get());
     }
 

@@ -166,7 +166,7 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
     }
 
     private static void offerShapedSckulifiedBowrRecipe(RecipeOutput exporter) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, SCULKIFIED_BOW.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ECHO_LOCATOR.get(), 1)
                 .define('f', SHRIEKER_FANG::get)
                 .define('i', ECHO_INGOT::get)
                 .define('s', Items.STRING)
