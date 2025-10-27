@@ -33,12 +33,28 @@ public class WTBlockTagsProvider extends BlockTagsProvider {
                 SMALL_SCULKHYST_BUD.get(),
                 MEDIUM_SCULKHYST_BUD.get(),
                 LARGE_SCULKHYST_BUD.get(),
-                SCULKHYST_CLUSTER.get()
+                SCULKHYST_CLUSTER.get(),
+                ROSE_GOLD_BLOCK.get(),
+                BLOCK_OF_AMETHYST_INGOTS.get(),
+                ECHO_BLOCK.get()
+        );
+        tag(BlockTags.NEEDS_DIAMOND_TOOL).add(
+                WARDEN_BLOCK.get()
         );
         tag(Tags.Blocks.CLUSTERS).add(
                 SCULKHYST_CLUSTER.get()
         );
         tag(WTBlockTags.INCORRECT_FOR_SCULKHYST_TOOLS);
         tag(WTBlockTags.INCORRECT_FOR_WARDEN_TOOLS);
+        tag(WTBlockTags.STORAGE_BLOCKS_AMETHYST_INGOT).add(BLOCK_OF_AMETHYST_INGOTS.get());
+        tag(WTBlockTags.STORAGE_BLOCKS_ECHO).add(ECHO_BLOCK.get());
+        tag(WTBlockTags.STORAGE_BLOCKS_WARDEN).add(WARDEN_BLOCK.get());
+        tag(WTBlockTags.STORAGE_BLOCKS_ROSE_GOLD).add(ROSE_GOLD_BLOCK.get());
+        tag(Tags.Blocks.STORAGE_BLOCKS).addTags(
+                WTBlockTags.STORAGE_BLOCKS_ROSE_GOLD,
+                WTBlockTags.STORAGE_BLOCKS_ECHO,
+                WTBlockTags.STORAGE_BLOCKS_AMETHYST_INGOT,
+                WTBlockTags.STORAGE_BLOCKS_WARDEN
+        );
     }
 }

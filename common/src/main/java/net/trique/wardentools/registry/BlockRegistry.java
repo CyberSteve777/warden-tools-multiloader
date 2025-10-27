@@ -38,6 +38,18 @@ public class BlockRegistry {
     public static final RegistryObject<Block, AmethystClusterBlock> SMALL_SCULKHYST_BUD = registerBlock("small_sculkhyst_bud", () ->
             new AmethystClusterBlock(3, 4, BlockBehaviour.Properties.ofFullCopy(SCULKHYST_CLUSTER.get()).sound(SoundType.SCULK).forceSolidOn().lightLevel(state -> 1).pushReaction(PushReaction.DESTROY)));
 
+    public static final RegistryObject<Block, Block> BLOCK_OF_AMETHYST_INGOTS = registerBlock("block_of_amethyst_ingots", () ->
+            new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK).mapColor(MapColor.COLOR_PURPLE).sound(SoundType.AMETHYST)));
+
+    public static final RegistryObject<Block, Block> ROSE_GOLD_BLOCK = registerBlock("rose_gold_block", () ->
+            new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).mapColor(MapColor.TERRACOTTA_PINK)));
+
+    public static final RegistryObject<Block, Block> ECHO_BLOCK = registerBlock("echo_block", () ->
+            new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK).mapColor(MapColor.COLOR_LIGHT_BLUE)));
+
+    public static final RegistryObject<Block, Block> WARDEN_BLOCK = registerBlock("warden_block", () ->
+            new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERITE_BLOCK).mapColor(MapColor.COLOR_CYAN).sound(SoundType.SCULK_CATALYST)));
+
 
 
     public static void init() {

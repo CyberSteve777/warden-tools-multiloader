@@ -15,6 +15,7 @@ import net.trique.wardentools.Constants;
 import java.util.concurrent.CompletableFuture;
 
 import static net.trique.wardentools.registry.ItemRegistry.*;
+import static net.trique.wardentools.registry.BlockRegistry.*;
 
 
 public class WTRecipeProvider extends RecipeProvider implements IConditionBuilder {
@@ -26,7 +27,6 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
     protected void buildRecipes(RecipeOutput recipeOutput) {
         offerCustomSmithingTemplateCopyingRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE::get,
                 Items.DIAMOND, Items.COBBLED_DEEPSLATE);
-
 
         offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(),
                 Items.DIAMOND_AXE, ECHO_INGOT.get(), RecipeCategory.COMBAT, SCULKIFIED_AXE.get());
@@ -82,6 +82,10 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
         offerShapelessRoseGoldIngotRecipe(recipeOutput);
         offerShapelessSculkArrowRecipe(recipeOutput);
         offerShapelessWardenIngotRecipe(recipeOutput);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, ROSE_GOLD_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, ROSE_GOLD_BLOCK.get());
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, AMETHYST_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, BLOCK_OF_AMETHYST_INGOTS.get());
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, ECHO_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, ECHO_BLOCK.get());
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, WARDEN_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, WARDEN_BLOCK.get());
     }
 
     protected static void offerCustomUpgradeRecipe(RecipeOutput exporter, Item template, Item input, Item itemMaterialUpgrade, RecipeCategory category, Item result) {
@@ -195,6 +199,7 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, WARDEN_INGOT.get(), 2)
                 .requires(SCULK_SHELL::get)
                 .requires(WARDEN_SOUL::get)
+                .requires(ECHO_INGOT::get, 2)
                 .requires(Items.NETHERITE_INGOT, 2)
                 .unlockedBy(RecipeProvider.getHasName(WARDEN_SOUL.get()), RecipeProvider.has(WARDEN_SOUL.get()))
                 .save(exporter);
