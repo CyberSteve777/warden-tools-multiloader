@@ -24,7 +24,6 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.trique.wardentools.Constants;
 import net.trique.wardentools.item.util.ISonicBoomItem;
 import net.trique.wardentools.particle.echo_particle.EchoParticleOption;
 import net.trique.wardentools.registry.ItemRegistry;
@@ -90,18 +89,16 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
 
     private void spawnSonicBoom(ItemStack stack, ServerLevel world, LivingEntity user, float remainTicks) {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.SCULK_SHRIEKER_SHRIEK, user.getSoundSource(), 5.0f, 1.0f);
-        float distance = DEFAULT_DISTANCE * remainTicks;
         Vec3 source = user.position().add(0.0, user.getEyeHeight(), 0.0);
-        float enhanced_distance = distance + calculateBonusDistance(stack, world);
+        float enhanced_distance = calculateFinalDistance(stack, world, DEFAULT_DISTANCE) * remainTicks * remainTicks;
         Vec3 target = source.add(user.getLookAngle().scale(enhanced_distance));
         Vec3 offsetToTarget = target.subtract(source);
         Vec3 normalized = offsetToTarget.normalize();
         Set<Entity> hit = new HashSet<>();
         AABB cube = new AABB(new BlockPos((int) source.x(),
-                (int) source.y(), (int) source.z())).inflate(distance);
+                (int) source.y(), (int) source.z())).inflate(enhanced_distance);
         hit.addAll(world.getEntitiesOfClass(LivingEntity.class, cube, it -> isAABBInConeSimple(source, offsetToTarget, it.getBoundingBox()) && !((it.isAlliedTo(user)) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
-
-        for (float particleScale = 1; particleScale <= offsetToTarget.length(); particleScale++) {
+        for (float particleScale = 1; particleScale <= offsetToTarget.length() + 3; particleScale++) {
             Vec3 particlePos = source.add(normalized.scale(particleScale));
             world.sendParticles(new EchoParticleOption(particleScale * 1.4f, user.getXRot(), user.getYRot()), particlePos.x, particlePos.y, particlePos.z,
                     1, 0, 0, 0, 0);

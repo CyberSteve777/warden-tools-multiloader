@@ -11,8 +11,8 @@ public interface ISonicBoomItem {
         return WTEnchantmentHelper.modifyDamage(level, tool, entity, damageSource, damage);
     }
 
-    default float calculateBonusDistance(ItemStack stack, ServerLevel world) {
-        return WTEnchantmentHelper.getRangeBonus(world, stack);
+    default float calculateFinalDistance(ItemStack stack, ServerLevel world, float base_distance) {
+        return WTEnchantmentHelper.getRangeBonus(world, stack, base_distance);
     }
 
     default float getChargePowerForTime(int charge) {

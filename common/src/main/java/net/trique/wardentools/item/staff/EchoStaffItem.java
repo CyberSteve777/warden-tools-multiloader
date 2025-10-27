@@ -127,7 +127,7 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_BOOM, user.getSoundSource(), 5.0f, 1.0f);
 
         Vec3 source = user.position().add(0.0, user.getEyeHeight(), 0.0);
-        float enhanced_distance = distance + calculateBonusDistance(stack, world);
+        float enhanced_distance = calculateFinalDistance(stack, world, distance);
         Vec3 target = source.add(user.getLookAngle().scale(enhanced_distance));
         Vec3 offsetToTarget = target.subtract(source);
         Vec3 normalized = offsetToTarget.normalize();
