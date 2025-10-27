@@ -29,6 +29,6 @@
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#wardentools:enchantable/sonic_boom_weapon",
+  "supported_items": "#wardentools:enchantable/echo_weapon",
   "weight": 1
 }

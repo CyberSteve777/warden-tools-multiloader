@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "wardentools:block_of_amethyst_ingots"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "wardentools:amethyst_ingot"
+  }
+}

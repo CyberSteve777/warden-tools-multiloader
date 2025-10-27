@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_amethyst_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "wardentools:amethyst_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:block_of_amethyst_ingots"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_amethyst_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:block_of_amethyst_ingots"
+    ]
+  }
+}
