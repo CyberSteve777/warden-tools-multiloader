@@ -125,7 +125,7 @@ public class CreativeTabRegistry {
                     .build());
 
     public static final RegistryObject<CreativeModeTab, CreativeModeTab> WARDEN_TOOLS_ECHO_WEAPONS_TAB = CREATIVE_MODE_TABS.register("echo_weapon", () ->
-            CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
+            CreativeModeTab.builder(CreativeModeTab.Row.TOP, 4)
                     .title(Component.translatable(creativeTabKey("echo_weapons")))
                     .icon(() -> new ItemStack(ECHO_STAFF.get()))
                     .displayItems(
