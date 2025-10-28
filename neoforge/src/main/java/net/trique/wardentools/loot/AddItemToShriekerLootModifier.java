@@ -18,6 +18,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 import net.trique.wardentools.Constants;
+import net.trique.wardentools.util.WTEnchantmentHelper;
 
 public class AddItemToShriekerLootModifier extends LootModifier {
     public static final MapCodec<AddItemToShriekerLootModifier> CODEC = RecordCodecBuilder.mapCodec(inst ->
@@ -48,29 +49,23 @@ public class AddItemToShriekerLootModifier extends LootModifier {
         if (!lootContext.getQueriedLootTableId().equals(Blocks.SCULK_SHRIEKER.getLootTable().location())) {
             return generatedLoot;
         }
-        Constants.LOGGER.info("checking other conditions");
         for (LootItemCondition condition : this.conditions) {
             if(!condition.test(lootContext)) {
-                Constants.LOGGER.info("Failed to bypass condition: {}", condition);
                 return generatedLoot;
             }
         }
-        Constants.LOGGER.info("Trying to add loot to shrieker");
         if (lootContext.getParam(LootContextParams.THIS_ENTITY) instanceof LivingEntity entity) {
-            var registryLookup = lootContext.getLevel().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
-            int level = EnchantmentHelper.getEnchantmentLevel(registryLookup.getOrThrow(Enchantments.FORTUNE), entity);
+            int level = WTEnchantmentHelper.getMaxLevelForIncreaseBlockDrop(entity.getMainHandItem(), lootContext);
             float lootingMultiplier = baseChance + perLevel * level;
             for (int count = max; count >= min; count--) {
                 float countMultiplier = 1.0f / count;
                 float chance = lootingMultiplier * countMultiplier;
                 if (lootContext.getRandom().nextFloat() < chance) {
                     generatedLoot.add(new ItemStack(item, count));
-                    Constants.LOGGER.info("Successfully added extra loot");
                     return generatedLoot;
                 }
             }
         }
-        Constants.LOGGER.info("Got unlucky");
         return generatedLoot;
     }
 

@@ -18,6 +18,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
+import net.trique.wardentools.util.WTEnchantmentHelper;
 
 
 public class AddItemToWardenLootModifier extends LootModifier {
@@ -55,8 +56,7 @@ public class AddItemToWardenLootModifier extends LootModifier {
             }
         }
         if (lootContext.getParamOrNull(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity entity) {
-            var registryLookup = lootContext.getLevel().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
-            int level = EnchantmentHelper.getEnchantmentLevel(registryLookup.getOrThrow(Enchantments.LOOTING), entity);
+            int level = WTEnchantmentHelper.getMaxLevelForIncreaseEntityDrop(entity.getMainHandItem(), lootContext);
             float lootingMultiplier = baseChance + perLevel * level;
             for (int count = max; count >= min; count--) {
                 float countMultiplier = 1.0f / count;
