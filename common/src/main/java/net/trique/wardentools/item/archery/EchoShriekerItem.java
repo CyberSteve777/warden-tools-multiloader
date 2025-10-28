@@ -125,11 +125,10 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
     }
 
     public static boolean isAABBInConeSimple(Vec3 vertex, Vec3 axisVector, AABB aabb) {
-        double angleDegrees = (float) Math.toRadians(15);
+        float angleDegrees = (float) Math.toRadians(15);
         float axisLength = (float) axisVector.length();
         if (axisLength == 0) return false;
-
-        Vec3 axisUnit = new Vec3(axisVector.x / axisLength, axisVector.y / axisLength, axisVector.z / axisLength);
+        Vec3 axisUnit = axisVector.normalize();
         float tanAngle = (float) Math.tan(angleDegrees);
 
         // Checking center of AABB
@@ -138,7 +137,7 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
         Vec3 toCenter = center.subtract(vertex);
         float centerHeight = (float) toCenter.dot(axisUnit);
 
-        // Если центр вне диапазона высот конуса
+        // if the center is outside "cone heights"
         if (centerHeight < 0 || centerHeight > axisLength) {
             return false;
         }
@@ -148,7 +147,7 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
         Vec3 perpendicular = toCenter.subtract(projection);
         float distanceToAxis = (float) perpendicular.length();
 
-        // Is center inside of the cone
+        // Check if center inside the cone
         if (distanceToAxis <= centerHeight * tanAngle) {
             return true;
         }
