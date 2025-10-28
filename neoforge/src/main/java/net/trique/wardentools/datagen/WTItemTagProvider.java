@@ -62,5 +62,6 @@ public class WTItemTagProvider extends ItemTagsProvider {
         tag(WTItemTags.SCULKHYST_CLUSTER_MAX_HARVESTABLES).addTag(
                 ItemTags.HOES
         );
+        tag(ItemTags.BOW_ENCHANTABLE).add(SCULKIFIED_BOW.get());
     }
 }
