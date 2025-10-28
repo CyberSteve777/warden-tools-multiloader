@@ -4,6 +4,9 @@
     "wardentools:small_sculkhyst_bud",
     "wardentools:medium_sculkhyst_bud",
     "wardentools:large_sculkhyst_bud",
-    "wardentools:sculkhyst_cluster"
+    "wardentools:sculkhyst_cluster",
+    "wardentools:rose_gold_block",
+    "wardentools:block_of_amethyst_ingots",
+    "wardentools:echo_block"
   ]
 }

@@ -15,7 +15,7 @@ public class AddItemModifierWithRandomAmount extends ConditionalFabricLootModifi
     private final int max;
 
     public AddItemModifierWithRandomAmount(LootItemCondition[] conditionsIn, Set<ResourceLocation> tables, Item item, int min, int max) {
-        super(conditionsIn,tables);
+        super(conditionsIn, tables);
         this.item = item;
         this.min = min;
         this.max = max;
@@ -25,11 +25,6 @@ public class AddItemModifierWithRandomAmount extends ConditionalFabricLootModifi
     public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext, ResourceLocation lootTable) {
         if (!checkConditions(lootContext, lootTable)) {
             return generatedLoot;
-        }
-        for (LootItemCondition condition : this.conditions) {
-            if(!condition.test(lootContext)) {
-                return generatedLoot;
-            }
         }
 
         int amount = lootContext.getRandom().nextIntBetweenInclusive(this.min, this.max);

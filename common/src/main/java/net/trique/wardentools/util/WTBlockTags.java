@@ -12,6 +12,11 @@ public class WTBlockTags {
     public static final TagKey<Block> INCORRECT_FOR_WARDEN_TOOLS =
             create("incorrect_for_warden_tools");
 
+    public static TagKey<Block> STORAGE_BLOCKS_AMETHYST_INGOT = create("storage_blocks/amethyst_ingot");
+    public static TagKey<Block> STORAGE_BLOCKS_ROSE_GOLD = create("storage_blocks/rose_gold");
+    public static TagKey<Block> STORAGE_BLOCKS_ECHO = create("storage_blocks/echo");
+    public static TagKey<Block> STORAGE_BLOCKS_WARDEN = create("storage_blocks/warden");
+
     private static TagKey<Block> create(String id) {
         return TagKey.create(Registries.BLOCK, getLoc(id));
     }

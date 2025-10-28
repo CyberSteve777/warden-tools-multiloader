@@ -35,7 +35,10 @@ public class WTBlockLootTableProvider extends BlockLootSubProvider {
         add(LARGE_SCULKHYST_BUD.get(), createSilkTouchOnlyTable(SMALL_SCULKHYST_BUD.get()));
         add(BUDDING_SCULKHYST.get(), noDrop());
         add(SCULKHYST_CLUSTER.get(), createSculkhystClusterDrops(SCULKHYST_CLUSTER.get(), Items.ECHO_SHARD));
-
+        dropSelf(ROSE_GOLD_BLOCK.get());
+        dropSelf(WARDEN_BLOCK.get());
+        dropSelf(ECHO_BLOCK.get());
+        dropSelf(BLOCK_OF_AMETHYST_INGOTS.get());
     }
 
 

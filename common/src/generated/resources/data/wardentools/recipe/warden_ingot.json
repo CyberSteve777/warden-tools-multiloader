@@ -6,10 +6,13 @@
       "item": "wardentools:sculk_shell"
     },
     {
-      "item": "minecraft:netherite_ingot"
+      "item": "wardentools:warden_soul"
     },
     {
-      "item": "minecraft:netherite_ingot"
+      "item": "wardentools:echo_ingot"
+    },
+    {
+      "item": "wardentools:echo_ingot"
     },
     {
       "item": "minecraft:netherite_ingot"
@@ -19,7 +22,7 @@
     }
   ],
   "result": {
-    "count": 4,
+    "count": 2,
     "id": "wardentools:warden_ingot"
   }
 }

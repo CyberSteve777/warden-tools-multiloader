@@ -2,3 +2,5 @@ accessWidener v2 named
 
 transitive-extendable class net/minecraft/client/renderer/FogRenderer$MobEffectFogFunction
 transitive-accessible class net/minecraft/client/renderer/FogRenderer$FogData
+transitive-accessible class net/minecraft/world/item/enchantment/EnchantmentHelper$EnchantmentVisitor
+transitive-accessible method net/minecraft/world/item/enchantment/EnchantmentHelper runIterationOnItem (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/enchantment/EnchantmentHelper$EnchantmentVisitor;)V

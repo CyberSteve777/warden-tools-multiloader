@@ -4,7 +4,7 @@
 		"mask.tendrils.click": {
 			"animation_length": 2.375,
 			"bones": {
-				"HOrn": {
+				"horn1": {
 					"rotation": {
 						"0.0": {
 							"post": {
@@ -98,7 +98,7 @@
 						}
 					}
 				},
-				"HOrn2": {
+				"horn2": {
 					"rotation": {
 						"0.0": {
 							"post": {

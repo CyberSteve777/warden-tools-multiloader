@@ -37,10 +37,10 @@ import java.util.function.BiConsumer;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
     @Unique
-    private WardenCurseUser wardentools$wardenCurseUser = new WardenCurseUser((LivingEntity) (Object) this);
+    private final WardenCurseUser wardentools$wardenCurseUser = new WardenCurseUser((LivingEntity) (Object) this);
 
     @Unique
-    private DynamicGameEventListener<VibrationSystem.Listener> wardentools$dynamicGameEventListener =
+    private final DynamicGameEventListener<VibrationSystem.Listener> wardentools$dynamicGameEventListener =
             new DynamicGameEventListener<>(new VibrationSystem.Listener(wardentools$wardenCurseUser));
 
     public LivingEntityMixin(EntityType<?> entityType, Level level) {
@@ -77,11 +77,11 @@ public abstract class LivingEntityMixin extends Entity {
 
     @WrapMethod(method = "hurt")
     private boolean reduceDamageWithSculkBless(DamageSource source, float amount, Operation<Boolean> original) {
-        if (hasEffect(EffectRegistry.SCULK_BLESS) && (source.is(DamageTypes.SONIC_BOOM) ||
+        if (hasEffect(EffectRegistry.SCULK_SCOURGE) && (source.is(DamageTypes.SONIC_BOOM) ||
                 (source.getEntity() instanceof LivingEntity livingEntity &&
                         (livingEntity.getType().is(WTEntityTypeTags.SCULK_BLESS_REDUCES_DAMAGE_FROM) ||
                                 livingEntity.hasEffect(EffectRegistry.SCULK_ADAPTION))))) {
-            int amplifier = getEffect(EffectRegistry.SCULK_BLESS).getAmplifier();
+            int amplifier = getEffect(EffectRegistry.SCULK_SCOURGE).getAmplifier();
             return original.call(source, amount * 0.1f * (amplifier + 1));
         }
         return original.call(source, amount);
@@ -95,7 +95,7 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
     private void addVibrationDataFromWardenCurse(CompoundTag compound, CallbackInfo ci) {
         VibrationSystem.Data.CODEC.encodeStart(NbtOps.INSTANCE, wardentools$wardenCurseUser.getVibrationData())
-                .resultOrPartial(Constants.LOGGER::error)
+                .resultOrPartial(Constants.LOGGER::warn)
                 .ifPresent(tag -> compound.put("WTWardenCurseVibrationData", tag));
     }
 
@@ -103,7 +103,7 @@ public abstract class LivingEntityMixin extends Entity {
     private void readVibrationDataForWardenCurse(CompoundTag compound, CallbackInfo ci) {
         if (compound.contains("WTWardenCurseVibrationData", 10)) {
             VibrationSystem.Data.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, compound.getCompound("WTVibrationData")))
-                    .resultOrPartial(Constants.LOGGER::error).ifPresent(data -> wardentools$wardenCurseUser.setVibrationData(data));
+                    .resultOrPartial(Constants.LOGGER::warn).ifPresent(data -> wardentools$wardenCurseUser.setVibrationData(data));
         }
     }
 
@@ -141,10 +141,10 @@ public abstract class LivingEntityMixin extends Entity {
 
     @WrapMethod(method = "hurt")
     public boolean applyExtraDamageFromSculkBless(DamageSource source, float amount, Operation<Boolean> original) {
-        if (source.getEntity() instanceof LivingEntity attacker && attacker.hasEffect(EffectRegistry.SCULK_BLESS) &&
+        if (source.getEntity() instanceof LivingEntity attacker && attacker.hasEffect(EffectRegistry.SCULK_SCOURGE) &&
                 (getType().is(WTEntityTypeTags.SCULK_BLESS_DEALS_EXTRA_DAMAGE_TO) ||
                         hasEffect(EffectRegistry.SCULK_ADAPTION))) {
-            int amplifier = attacker.getEffect(EffectRegistry.SCULK_BLESS).getAmplifier();
+            int amplifier = attacker.getEffect(EffectRegistry.SCULK_SCOURGE).getAmplifier();
             return original.call(source, amount * (1 + 0.25f * (1 + amplifier)));
         }
         return original.call(source, amount);

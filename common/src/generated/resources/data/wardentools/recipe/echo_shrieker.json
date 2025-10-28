@@ -2,26 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "e": {
-      "item": "wardentools:echo_ingot"
-    },
     "f": {
       "item": "wardentools:shrieker_fang"
     },
-    "r": {
-      "item": "minecraft:string"
-    },
     "s": {
-      "item": "wardentools:warden_soul"
+      "item": "minecraft:string"
     },
     "w": {
       "item": "wardentools:warden_ingot"
     }
   },
   "pattern": [
-    "fer",
-    "wsr",
-    "fer"
+    "fws",
+    "w s",
+    "fws"
   ],
   "result": {
     "count": 1,

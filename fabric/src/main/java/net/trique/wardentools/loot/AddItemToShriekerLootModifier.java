@@ -22,7 +22,7 @@ public class AddItemToShriekerLootModifier extends ConditionalFabricLootModifier
     private final int max;
 
     public AddItemToShriekerLootModifier(LootItemCondition[] conditionsIn, Set<ResourceLocation> tables, Item item, float baseChance, float perLevel, int min, int max) {
-        super(conditionsIn,tables);
+        super(conditionsIn, tables);
         this.item = item;
         this.baseChance = baseChance;
         this.perLevel = perLevel;
@@ -32,7 +32,7 @@ public class AddItemToShriekerLootModifier extends ConditionalFabricLootModifier
 
     @Override
     public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext, ResourceLocation lootTable) {
-        if(!checkConditions(lootContext,lootTable)) {
+        if (!checkConditions(lootContext, lootTable)) {
             return generatedLoot;
         }
         if (lootContext.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof LivingEntity entity) {

@@ -22,12 +22,12 @@ public class CommonRegistrationEventHelper {
                 PotionRegistry.SCULK_ADAPTION
         );
         builder.addMix(
-                Potions.AWKWARD,
+                PotionRegistry.SCULK_ADAPTION,
                 ItemRegistry.WARDEN_SOUL.get(),
-                PotionRegistry.SCULK_BLESS
+                PotionRegistry.SCULK_SCOURGE
         );
         builder.addMix(
-                Potions.AWKWARD,
+                PotionRegistry.SCULK_ADAPTION,
                 ItemRegistry.WARDEN_TENDRIL.get(),
                 PotionRegistry.WARDEN
         );
@@ -37,14 +37,14 @@ public class CommonRegistrationEventHelper {
                 PotionRegistry.LONG_SCULK_ADAPTION
         );
         builder.addMix(
-                PotionRegistry.SCULK_BLESS,
+                PotionRegistry.SCULK_SCOURGE,
                 Items.REDSTONE,
-                PotionRegistry.LONG_SCULK_BLESS
+                PotionRegistry.LONG_SCULK_SCOURGE
         );
         builder.addMix(
-                PotionRegistry.SCULK_BLESS,
+                PotionRegistry.SCULK_SCOURGE,
                 Items.GLOWSTONE_DUST,
-                PotionRegistry.STRONG_SCULK_BLESS
+                PotionRegistry.STRONG_SCULK_SCOURGE
         );
         builder.addMix(
                 PotionRegistry.WARDEN,

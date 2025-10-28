@@ -15,6 +15,7 @@ import net.trique.wardentools.Constants;
 import java.util.concurrent.CompletableFuture;
 
 import static net.trique.wardentools.registry.ItemRegistry.*;
+import static net.trique.wardentools.registry.BlockRegistry.*;
 
 
 public class WTRecipeProvider extends RecipeProvider implements IConditionBuilder {
@@ -26,7 +27,6 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
     protected void buildRecipes(RecipeOutput recipeOutput) {
         offerCustomSmithingTemplateCopyingRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE::get,
                 Items.DIAMOND, Items.COBBLED_DEEPSLATE);
-
 
         offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(),
                 Items.DIAMOND_AXE, ECHO_INGOT.get(), RecipeCategory.COMBAT, SCULKIFIED_AXE.get());
@@ -82,6 +82,10 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
         offerShapelessRoseGoldIngotRecipe(recipeOutput);
         offerShapelessSculkArrowRecipe(recipeOutput);
         offerShapelessWardenIngotRecipe(recipeOutput);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, ROSE_GOLD_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, ROSE_GOLD_BLOCK.get());
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, AMETHYST_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, BLOCK_OF_AMETHYST_INGOTS.get());
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, ECHO_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, ECHO_BLOCK.get());
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, WARDEN_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, WARDEN_BLOCK.get());
     }
 
     protected static void offerCustomUpgradeRecipe(RecipeOutput exporter, Item template, Item input, Item itemMaterialUpgrade, RecipeCategory category, Item result) {
@@ -130,9 +134,9 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('t', WARDEN_TENDRIL.get())
                 .define('s', Blocks.SCULK_SENSOR)
                 .define('h', SCULKIFIED_HELMET.get())
-                .define('b', Blocks.SCULK)
+                .define('w', WARDEN_INGOT.get())
                 .pattern("tst")
-                .pattern("bhb")
+                .pattern("whw")
                 .unlockedBy(RecipeProvider.getHasName(WARDEN_TENDRIL::get), RecipeProvider.has(WARDEN_TENDRIL::get))
                 .save(exporter);
     }
@@ -152,26 +156,24 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
     private static void offerShapedEchoShriekerRecipe(RecipeOutput exporter) {
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ECHO_SHRIEKER.get())
                 .define('f', SHRIEKER_FANG::get)
-                .define('s', WARDEN_SOUL::get)
-                .define('e', ECHO_INGOT::get)
                 .define('w', WARDEN_INGOT::get)
-                .define('r', Items.STRING)
-                .pattern("fer")
-                .pattern("wsr")
-                .pattern("fer")
+                .define('s', Items.STRING)
+                .pattern("fws")
+                .pattern("w s")
+                .pattern("fws")
                 .unlockedBy(RecipeProvider.getHasName(WARDEN_INGOT.get()), RecipeProvider.has(WARDEN_INGOT.get()))
                 .save(exporter);
     }
 
     private static void offerShapedSckulifiedBowrRecipe(RecipeOutput exporter) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, SCULKIFIED_BOW.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ECHO_LOCATOR.get(), 1)
                 .define('f', SHRIEKER_FANG::get)
                 .define('i', ECHO_INGOT::get)
-                .define('r', Items.STRING)
-                .pattern(" fr")
-                .pattern("i r")
-                .pattern(" fr")
-                .unlockedBy("has_shrieker_fang", RecipeProvider.has(SHRIEKER_FANG.get()))
+                .define('s', Items.STRING)
+                .pattern(" fs")
+                .pattern("i s")
+                .pattern(" fs")
+                .unlockedBy(RecipeProvider.getHasName(SHRIEKER_FANG.get()), RecipeProvider.has(SHRIEKER_FANG.get()))
                 .save(exporter);
     }
 
@@ -194,10 +196,12 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
     }
 
     private static void offerShapelessWardenIngotRecipe(RecipeOutput exporter) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, WARDEN_INGOT.get(), 4)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, WARDEN_INGOT.get(), 2)
                 .requires(SCULK_SHELL::get)
-                .requires(Items.NETHERITE_INGOT, 4)
-                .unlockedBy(RecipeProvider.getHasName(SCULK_SHELL.get()), RecipeProvider.has(SCULK_SHELL.get()))
+                .requires(WARDEN_SOUL::get)
+                .requires(ECHO_INGOT::get, 2)
+                .requires(Items.NETHERITE_INGOT, 2)
+                .unlockedBy(RecipeProvider.getHasName(WARDEN_SOUL.get()), RecipeProvider.has(WARDEN_SOUL.get()))
                 .save(exporter);
     }
 }

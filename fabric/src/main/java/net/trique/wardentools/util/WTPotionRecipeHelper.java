@@ -16,12 +16,12 @@ public class WTPotionRecipeHelper {
                             PotionRegistry.SCULK_ADAPTION
                     );
                     builder.registerPotionRecipe(
-                            Potions.AWKWARD,
+                            PotionRegistry.SCULK_ADAPTION,
                             Ingredient.of(ItemRegistry.WARDEN_SOUL.get()),
-                            PotionRegistry.SCULK_BLESS
+                            PotionRegistry.SCULK_SCOURGE
                     );
                     builder.registerPotionRecipe(
-                            Potions.AWKWARD,
+                            PotionRegistry.SCULK_ADAPTION,
                             Ingredient.of(ItemRegistry.WARDEN_TENDRIL.get()),
                             PotionRegistry.WARDEN
                     );
@@ -31,14 +31,14 @@ public class WTPotionRecipeHelper {
                             PotionRegistry.LONG_SCULK_ADAPTION
                     );
                     builder.registerPotionRecipe(
-                            PotionRegistry.SCULK_BLESS,
+                            PotionRegistry.SCULK_SCOURGE,
                             Ingredient.of(Items.REDSTONE),
-                            PotionRegistry.LONG_SCULK_BLESS
+                            PotionRegistry.LONG_SCULK_SCOURGE
                     );
                     builder.registerPotionRecipe(
-                            PotionRegistry.SCULK_BLESS,
+                            PotionRegistry.SCULK_SCOURGE,
                             Ingredient.of(Items.GLOWSTONE_DUST),
-                            PotionRegistry.STRONG_SCULK_BLESS
+                            PotionRegistry.STRONG_SCULK_SCOURGE
                     );
                     builder.registerPotionRecipe(
                             PotionRegistry.WARDEN,

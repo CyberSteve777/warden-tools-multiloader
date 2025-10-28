@@ -24,6 +24,8 @@ public class ModLootModifiers {
             LOOT_MODIFIER_SERIALIZERS.register("add_item_to_warden_loot_modifier", () -> AddItemToWardenLootModifier.CODEC);
     public static final Supplier<MapCodec<? extends IGlobalLootModifier>> ADD_ITEM_TO_SHRIEKER_LOOT_MODIFIER =
             LOOT_MODIFIER_SERIALIZERS.register("add_item_to_shrieker_loot_modifier", () -> AddItemToShriekerLootModifier.CODEC);
+    public static final Supplier<MapCodec<? extends IGlobalLootModifier>> ADD_ENCHANTED_BOOK_TO_POOL =
+            LOOT_MODIFIER_SERIALIZERS.register("add_enchanted_book_to_pool", () -> AddEnchantedBookToPoolModifier.CODEC);
 
     public static void register(IEventBus eventBus) {
         LOOT_MODIFIER_SERIALIZERS.register(eventBus);

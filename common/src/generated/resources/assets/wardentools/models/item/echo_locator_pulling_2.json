@@ -1,0 +1,6 @@
+{
+  "parent": "wardentools:item/echo_locator",
+  "textures": {
+    "layer0": "wardentools:item/echo_locator_pulling_2"
+  }
+}
