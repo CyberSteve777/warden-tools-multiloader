@@ -27,7 +27,10 @@ public class WTDataGenerator {
         CompletableFuture<HolderLookup.Provider> lookupProvider = generator.addProvider(event.includeServer(),
                 new WTEnchantmentProvider(packOutput, event.getLookupProvider())).getRegistryProvider();
         generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Set.of(),
-                List.of(new LootTableProvider.SubProviderEntry(WTBlockLootTableProvider::new, LootContextParamSets.BLOCK)),
+                List.of(
+                        new LootTableProvider.SubProviderEntry(WTBlockLootTableProvider::new, LootContextParamSets.BLOCK),
+                        new LootTableProvider.SubProviderEntry(WTAdvancementLootTableSubProvider::new, LootContextParamSets.ADVANCEMENT_REWARD)
+                        ),
                 lookupProvider));
         BlockTagsProvider blockTagsProvider = new WTBlockTagsProvider(packOutput, lookupProvider, existingFileHelper);
         generator.addProvider(event.includeServer(), blockTagsProvider);
@@ -43,6 +46,6 @@ public class WTDataGenerator {
         generator.addProvider(event.includeClient(), new WTItemModelProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new WTParticleDescriptionProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeServer(), new WTGlobalLootModifierProvider(packOutput, lookupProvider));
-
+        generator.addProvider(event.includeServer(), new WTAdvancementProvider(packOutput, lookupProvider, existingFileHelper));
     }
 }
