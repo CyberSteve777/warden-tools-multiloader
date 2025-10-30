@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.trique.wardentools.registry.EffectRegistry;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.util.WTDamageTypeTags;
 import net.trique.wardentools.util.WTItemTags;
