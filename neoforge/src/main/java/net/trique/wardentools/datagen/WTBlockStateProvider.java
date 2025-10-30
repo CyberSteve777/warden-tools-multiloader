@@ -25,10 +25,10 @@ public class WTBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         simpleBlockWithItem(SCULKHYST_BLOCK.get(), cubeAll(BUDDING_SCULKHYST.get()));
         simpleBlockWithItem(BUDDING_SCULKHYST.get(), cubeAll(BUDDING_SCULKHYST.get()));
-//        simpleBlockWithItem(ROSE_GOLD_BLOCK.get(), cubeAll(ROSE_GOLD_BLOCK.get()));
-//        simpleBlockWithItem(ECHO_BLOCK.get(), cubeAll(ECHO_BLOCK.get()));
-//        simpleBlockWithItem(WARDEN_BLOCK.get(), cubeAll(WARDEN_BLOCK.get()));
-//        simpleBlockWithItem(BLOCK_OF_AMETHYST_INGOTS.get(), cubeAll(BLOCK_OF_AMETHYST_INGOTS.get()));
+        simpleBlockWithItem(ROSE_GOLD_BLOCK.get(), cubeAll(ROSE_GOLD_BLOCK.get()));
+        simpleBlockWithItem(ECHO_BLOCK.get(), cubeAll(ECHO_BLOCK.get()));
+        simpleBlockWithItem(WARDEN_BLOCK.get(), cubeAll(WARDEN_BLOCK.get()));
+        simpleBlockWithItem(BLOCK_OF_AMETHYST_INGOTS.get(), cubeAll(BLOCK_OF_AMETHYST_INGOTS.get()));
         simpleClusterBlockWithItem(SMALL_SCULKHYST_BUD);
         simpleClusterBlockWithItem(MEDIUM_SCULKHYST_BUD);
         simpleClusterBlockWithItem(LARGE_SCULKHYST_BUD);
