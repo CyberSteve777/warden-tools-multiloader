@@ -1,0 +1,36 @@
+{
+  "parent": "wardentools:find_ancient_city",
+  "criteria": {
+    "echo_shard": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:echo_shard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "wardentools.advancement.obtain_echo_shard.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:echo_shard"
+    },
+    "title": {
+      "translate": "wardentools.advancement.obtain_echo_shard.title"
+    }
+  },
+  "requirements": [
+    [
+      "echo_shard"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": true
+}

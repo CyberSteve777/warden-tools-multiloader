@@ -1,16 +1,14 @@
 package net.trique.wardentools.loot;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.trique.wardentools.util.WTEnchantmentHelper;
 
 import java.util.Set;
 
@@ -36,8 +34,7 @@ public class AddItemToShriekerLootModifier extends ConditionalFabricLootModifier
             return generatedLoot;
         }
         if (lootContext.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof LivingEntity entity) {
-            var registryLookup = lootContext.getLevel().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
-            int level = EnchantmentHelper.getEnchantmentLevel(registryLookup.getOrThrow(Enchantments.FORTUNE), entity);
+            int level = WTEnchantmentHelper.getMaxLevelForIncreaseBlockDrop(entity.getMainHandItem(), lootContext);
             float lootingMultiplier = baseChance + perLevel * level;
             for (int count = max; count >= min; count--) {
                 float countMultiplier = 1.0f / count;

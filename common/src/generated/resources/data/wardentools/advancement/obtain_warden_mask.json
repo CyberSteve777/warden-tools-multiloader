@@ -1,0 +1,36 @@
+{
+  "parent": "wardentools:kill_warden",
+  "criteria": {
+    "has_warden_mask": {
+      "conditions": {
+        "items": [
+          {
+            "items": "wardentools:warden_mask"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "wardentools.advancement.obtain_warden_mask.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "wardentools:warden_mask"
+    },
+    "title": {
+      "translate": "wardentools.advancement.obtain_warden_mask.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_warden_mask"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": true
+}

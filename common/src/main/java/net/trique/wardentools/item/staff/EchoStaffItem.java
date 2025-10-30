@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -109,6 +110,7 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
                 player.getCooldowns().addCooldown(this, cooldown);
                 stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
             }
+            player.awardStat(Stats.ITEM_USED.get(this));
         }
         return super.finishUsingItem(stack, world, user);
     }
