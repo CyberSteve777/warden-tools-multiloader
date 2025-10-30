@@ -22,7 +22,7 @@ public class WTAdvancementLootTableSubProvider implements LootTableSubProvider {
 
     @Override
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer) {
-        biConsumer.accept(WTLootTables.SONIC_BOOM_WEAPON_ADVANCEMENT_REWARD, LootTable.lootTable()
+        biConsumer.accept(WTLootTables.ECHO_WEAPON_ADVANCEMENT_REWARD, LootTable.lootTable()
                 .withPool(LootPool.lootPool().add(LootItem.lootTableItem(Items.ECHO_SHARD)
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(5f))))));
     }

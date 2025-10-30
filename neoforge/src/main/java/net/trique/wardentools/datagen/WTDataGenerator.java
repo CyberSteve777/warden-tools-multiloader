@@ -40,6 +40,7 @@ public class WTDataGenerator {
                 blockTagsProvider.contentsGetter(), existingFileHelper));
         generator.addProvider(event.includeServer(), new WTEntityTypeTagsProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new WTEnchantmentTagsProvider(packOutput, lookupProvider, existingFileHelper));
+        generator.addProvider(event.includeServer(), new WTDamageTypeTagsProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new WTGameEventTagsProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new WTRecipeProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeClient(), new WTBlockStateProvider(packOutput, existingFileHelper));

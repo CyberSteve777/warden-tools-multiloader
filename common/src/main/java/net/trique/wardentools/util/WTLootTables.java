@@ -7,8 +7,8 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import static net.trique.wardentools.util.ModHelper.getLoc;
 
 public class WTLootTables {
-    public static final ResourceKey<LootTable> SONIC_BOOM_WEAPON_ADVANCEMENT_REWARD =
-            create("sonic_boom_weapon_advancement_reward");
+    public static final ResourceKey<LootTable> ECHO_WEAPON_ADVANCEMENT_REWARD =
+            create("echo_weapon_advancement_reward");
 
 
     private static ResourceKey<LootTable> create(String id) {

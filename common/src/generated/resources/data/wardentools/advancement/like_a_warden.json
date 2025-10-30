@@ -1,0 +1,62 @@
+{
+  "parent": "wardentools:obtain_warden_mask",
+  "criteria": {
+    "used_echo_weapon": {
+      "conditions": {
+        "damage": {
+          "type": {
+            "direct_entity": {
+              "type": "minecraft:player",
+              "equipment": {
+                "chest": {
+                  "items": "wardentools:warden_chestplate"
+                },
+                "feet": {
+                  "items": "wardentools:warden_boots"
+                },
+                "head": {
+                  "items": "wardentools:warden_mask"
+                },
+                "legs": {
+                  "items": "wardentools:warden_leggings"
+                },
+                "mainhand": {
+                  "items": "#wardentools:echo_weapon"
+                }
+              }
+            },
+            "tags": [
+              {
+                "expected": true,
+                "id": "wardentools:sonic_boom"
+              }
+            ]
+          }
+        }
+      },
+      "trigger": "minecraft:player_hurt_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "wardentools.advancement.like_a_warden.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "wardentools:warden_chestplate"
+    },
+    "title": {
+      "translate": "wardentools.advancement.like_a_warden.title"
+    }
+  },
+  "requirements": [
+    [
+      "used_echo_weapon"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}
