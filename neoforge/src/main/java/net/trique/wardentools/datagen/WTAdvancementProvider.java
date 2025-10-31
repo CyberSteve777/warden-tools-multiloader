@@ -39,7 +39,7 @@ public class WTAdvancementProvider extends AdvancementProvider {
                             Blocks.REINFORCED_DEEPSLATE,
                             getTitleKey("find_ancient_city"),
                             getDescriptionKey("find_ancient_city"),
-                            null,
+                            getLoc("textures/gui/advancements/root.png"),
                             AdvancementType.TASK,
                             true,
                             true,
@@ -142,9 +142,40 @@ public class WTAdvancementProvider extends AdvancementProvider {
                                                     )
                                     )
                     ))
-                    .requirements(AdvancementRequirements.Strategy.AND)
                     .rewards(AdvancementRewards.Builder.experience(100))
                     .save(saver, getLoc("like_a_warden"), existingFileHelper);
+
+            AdvancementHolder the_warden = Advancement.Builder.advancement()
+                    .parent(like_a_warden)
+                    .display(
+                            Blocks.SCULK_SHRIEKER,
+                            getTitleKey("the_warden"),
+                            getDescriptionKey("the_warden"),
+                            null,
+                            AdvancementType.CHALLENGE,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("kill_warden", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(EntityType.WARDEN),
+                        DamageSourcePredicate.Builder.damageType()
+                                .tag(TagPredicate.is(WTDamageTypeTags.SONIC_BOOM))
+                                .direct(
+                                        EntityPredicate.Builder.entity()
+                                                .of(EntityType.PLAYER)
+                                                .equipment(
+                                                        EntityEquipmentPredicate.Builder.equipment()
+                                                                .mainhand(ItemPredicate.Builder.item().of(WTItemTags.ECHO_WEAPON))
+                                                                .head(ItemPredicate.Builder.item().of(ItemRegistry.WARDEN_MASK.get()))
+                                                                .chest(ItemPredicate.Builder.item().of(ItemRegistry.WARDEN_CHESTPLATE.get()))
+                                                                .legs(ItemPredicate.Builder.item().of(ItemRegistry.WARDEN_LEGGINGS.get()))
+                                                                .feet(ItemPredicate.Builder.item().of(ItemRegistry.WARDEN_BOOTS.get()))
+                                                )
+                                )
+
+                    ))
+                    .rewards(AdvancementRewards.Builder.experience(100))
+                    .save(saver, getLoc("the_warden"), existingFileHelper);
         }
 
         private static Component getTitleKey(String key) {
