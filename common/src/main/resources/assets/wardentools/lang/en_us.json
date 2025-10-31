@@ -111,16 +111,16 @@
 
   "wardentools.advancement.find_ancient_city.title": "Warden Tools",
   "wardentools.advancement.find_ancient_city.description": "Find the Ancient city",
-  "wardentools.advancement.obtain_echo_shard.title": "It echoes",
-  "wardentools.advancement.obtain_echo_shard.description": "Obtain an Echo Shard",
+  "wardentools.advancement.obtain_echo_ingot.title": "It echoes",
+  "wardentools.advancement.obtain_echo_ingot.description": "Obtain an Echo Ingot",
   "wardentools.advancement.obtain_warden_mask.title": "Like a Warden?",
   "wardentools.advancement.obtain_warden_mask.description": "Obtain Warden Mask",
   "wardentools.advancement.like_a_warden.title": "Like a Warden",
   "wardentools.advancement.like_a_warden.description": "In Warden armor set with Warden Mask, deal damage using any Echo weapon",
-  "wardentools.advancement.the_warden.title": "THE Warden",
+  "wardentools.advancement.the_warden.title": "Who is THE Warden now?",
   "wardentools.advancement.the_warden.description": "Defeat the keeper of the Ancient city while wearing Warden armor set with Warden Mask",
-  "wardentools.advancement.obtain_echo_weapon.title": "Power of Echo",
-  "wardentools.advancement.obtain_echo_weapon.description": "Obtain any Echo weapon (I hope, you have Echo Shards to use it)",
+  "wardentools.advancement.obtain_echo_staff.title": "Power of Echo",
+  "wardentools.advancement.obtain_echo_staff.description": "Obtain Echo staff (I hope, you have Echo Shards to use it)",
   "wardentools.advancement.kill_warden.title": "Warden Slayer",
   "wardentools.advancement.kill_warden.description": "Defeat the keeper of the Ancient city"
 

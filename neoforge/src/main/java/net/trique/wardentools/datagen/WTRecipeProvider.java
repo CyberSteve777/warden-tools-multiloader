@@ -68,7 +68,7 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         offerWardenMaskRecipe(recipeOutput);
         offerShapedEchoShriekerRecipe(recipeOutput);
-        offerShapedSckulifiedBowrRecipe(recipeOutput);
+        offerShapedSckulifiedBowRecipe(recipeOutput);
         offerCrossShapedRecipe(recipeOutput, RecipeCategory.MISC, Items.COPPER_INGOT, Items.ECHO_SHARD,
                 ECHO_INGOT.get(), 1);
         offerCrossShapedRecipe(recipeOutput, RecipeCategory.MISC, ECHO_INGOT.get(), Items.AMETHYST_SHARD,
@@ -165,7 +165,7 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(exporter);
     }
 
-    private static void offerShapedSckulifiedBowrRecipe(RecipeOutput exporter) {
+    private static void offerShapedSckulifiedBowRecipe(RecipeOutput exporter) {
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ECHO_LOCATOR.get(), 1)
                 .define('f', SHRIEKER_FANG::get)
                 .define('i', ECHO_INGOT::get)

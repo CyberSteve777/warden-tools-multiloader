@@ -13,6 +13,8 @@ public class WTItemTags {
             create("echo_weapon");
     public static final TagKey<Item> ECHO_WEAPON_ENCHANTABLE =
             create("enchantable/echo_weapon");
+    public static final TagKey<Item> ECHO_STAFF_UPGRADE =
+            create("echo_staff_upgrade");
 
 
     private static TagKey<Item> create(String id) {

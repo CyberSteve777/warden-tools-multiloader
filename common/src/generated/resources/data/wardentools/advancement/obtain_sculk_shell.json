@@ -1,0 +1,36 @@
+{
+  "parent": "wardentools:find_ancient_city",
+  "criteria": {
+    "has_sculk_shell": {
+      "conditions": {
+        "items": [
+          {
+            "items": "wardentools:sculk_shell"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "wardentools.advancement.obtain_sculk_shell.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "wardentools:sculk_shell"
+    },
+    "title": {
+      "translate": "wardentools.advancement.obtain_sculk_shell.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_sculk_shell"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": true
+}

@@ -69,6 +69,11 @@ public class WTItemTagsProvider extends ItemTagsProvider {
                 ENDER_UPGRADED_ECHO_STAFF.get(),
                 ECHO_SHRIEKER.get()
         );
+        tag(WTItemTags.ECHO_STAFF_UPGRADE).add(
+                ROSE_GOLD_UPGRADED_ECHO_STAFF.get(),
+                AMETHYST_UPGRADED_ECHO_STAFF.get(),
+                ENDER_UPGRADED_ECHO_STAFF.get()
+        );
         tag(WTItemTags.ECHO_WEAPON_ENCHANTABLE).addTag(WTItemTags.ECHO_WEAPON);
     }
 }

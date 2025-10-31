@@ -1,6 +1,7 @@
 package net.trique.wardentools.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.EntityTypeTags;
@@ -22,6 +23,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.trique.wardentools.registry.EntityRegistry;
 import net.trique.wardentools.registry.ItemRegistry;
+import net.trique.wardentools.registry.TriggerTypeRegistry;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -36,10 +38,10 @@ public class SculkArrowEntity extends Arrow {
     public SculkArrowEntity(Level world, LivingEntity owner) {
         super(EntityRegistry.SCULK_ARROW.get(), world);
         this.setOwner(owner);
-        if (owner.getMainHandItem().is(ItemRegistry.ECHO_LOCATOR.get())){
+        if (owner.getMainHandItem().is(ItemRegistry.ECHO_LOCATOR.get())) {
             this.setNoGravity(true);
             double multiplier = 3;
-            base_radius *=  multiplier;
+            base_radius *= multiplier;
         }
         this.setPos(owner.getX(), owner.getEyeY() - 0.1, owner.getZ());
     }
@@ -67,32 +69,40 @@ public class SculkArrowEntity extends Arrow {
     @Override
     protected void onHit(HitResult result) {
         HitResult.Type hitresult$type = result.getType();
-        Set<LivingEntity> hit = new HashSet<>();
-
+        Set<Entity> hit = new HashSet<>();
 
         if (hitresult$type == HitResult.Type.ENTITY) {
-            EntityHitResult entityhitresult = (EntityHitResult)result;
-            Entity entity = entityhitresult.getEntity();
-            if (entity.getType().is(EntityTypeTags.REDIRECTABLE_PROJECTILE) && entity instanceof Projectile) {
-                Projectile projectile = (Projectile)entity;
+            EntityHitResult entityhitresult = (EntityHitResult) result;
+            Entity hit_entity = entityhitresult.getEntity();
+            if (hit_entity.getType().is(EntityTypeTags.REDIRECTABLE_PROJECTILE) && hit_entity instanceof Projectile) {
+                Projectile projectile = (Projectile) hit_entity;
                 projectile.deflect(ProjectileDeflection.AIM_DEFLECT, this.getOwner(), this.getOwner(), true);
-            }else if(entity instanceof LivingEntity victim){
+            } else if (hit_entity instanceof LivingEntity victim) {
                 hit.addAll(this.level().getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos((int) victim.getX(),
-                                (int) victim.getY(), (int) victim.getZ())).inflate(base_radius)));
-                hit.remove((LivingEntity) this.getOwner());
-                hit.forEach(living -> living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100)));
+                        (int) victim.getY(), (int) victim.getZ())).inflate(base_radius)));
+                hit.remove(this.getOwner());
+                hit.forEach(entity -> {
+                    if (entity instanceof LivingEntity living)
+                        living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
+                });
             }
             this.onHitEntity(entityhitresult);
-            this.level().gameEvent(GameEvent.PROJECTILE_LAND, result.getLocation(), GameEvent.Context.of(this, (BlockState)null));
+            this.level().gameEvent(GameEvent.PROJECTILE_LAND, result.getLocation(), GameEvent.Context.of(this, (BlockState) null));
         } else if (hitresult$type == HitResult.Type.BLOCK) {
-            BlockHitResult blockhitresult = (BlockHitResult)result;
+            BlockHitResult blockhitresult = (BlockHitResult) result;
             this.onHitBlock(blockhitresult);
             BlockPos blockpos = blockhitresult.getBlockPos();
             this.level().gameEvent(GameEvent.PROJECTILE_LAND, blockpos, GameEvent.Context.of(this, this.level().getBlockState(blockpos)));
             hit.addAll(this.level().getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos(blockpos.getX(),
                     blockpos.getY(), blockpos.getZ())).inflate(base_radius)));
-            hit.remove((LivingEntity) this.getOwner());
-            hit.forEach(living -> living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100)));
+            hit.remove(this.getOwner());
+            hit.forEach(entity -> {
+                if (entity instanceof LivingEntity living)
+                    living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
+            });
+        }
+        if (this.getOwner() instanceof ServerPlayer player) {
+            TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, hit);
         }
     }
 }

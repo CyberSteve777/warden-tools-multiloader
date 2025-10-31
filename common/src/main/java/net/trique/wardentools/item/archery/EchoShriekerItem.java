@@ -2,6 +2,7 @@ package net.trique.wardentools.item.archery;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -28,6 +29,7 @@ import net.minecraft.world.phys.Vec3;
 import net.trique.wardentools.item.util.ISonicBoomItem;
 import net.trique.wardentools.particle.echo_particle.EchoParticleOption;
 import net.trique.wardentools.registry.ItemRegistry;
+import net.trique.wardentools.registry.TriggerTypeRegistry;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -123,6 +125,9 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
                 double horizontal = 2.5 * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
             }
+        }
+        if (user instanceof ServerPlayer player) {
+            TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, hit);
         }
     }
 

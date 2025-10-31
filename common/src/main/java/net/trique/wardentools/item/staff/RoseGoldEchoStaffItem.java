@@ -2,6 +2,7 @@
 
     import net.minecraft.core.BlockPos;
     import net.minecraft.server.level.ServerLevel;
+    import net.minecraft.server.level.ServerPlayer;
     import net.minecraft.sounds.SoundEvents;
     import net.minecraft.util.Mth;
     import net.minecraft.world.damagesource.DamageSource;
@@ -13,6 +14,7 @@
     import net.minecraft.world.phys.AABB;
     import net.minecraft.world.phys.Vec3;
     import net.trique.wardentools.registry.ParticleRegistry;
+    import net.trique.wardentools.registry.TriggerTypeRegistry;
 
     import java.util.HashSet;
     import java.util.Set;
@@ -54,6 +56,9 @@
                     double horizontal = horizontalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                     living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
                 }
+            }
+            if (user instanceof ServerPlayer player) {
+                TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, hit);
             }
         }
     }

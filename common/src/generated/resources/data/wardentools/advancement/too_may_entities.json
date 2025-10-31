@@ -1,0 +1,35 @@
+{
+  "parent": "wardentools:obtain_echo_locator",
+  "criteria": {
+    "entity_count": {
+      "conditions": {
+        "count": {
+          "min": 15
+        }
+      },
+      "trigger": "wardentools:light_up_living_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "wardentools.advancement.too_may_entities.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "wardentools:sculk_arrow"
+    },
+    "title": {
+      "translate": "wardentools.advancement.too_may_entities.title"
+    }
+  },
+  "requirements": [
+    [
+      "entity_count"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": true
+}

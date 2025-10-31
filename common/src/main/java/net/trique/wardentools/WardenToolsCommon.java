@@ -31,6 +31,7 @@ public class WardenToolsCommon {
         PotionRegistry.init();
         EnchantmentEffectComponentRegistry.init();
         EntityRegistry.init();
+        TriggerTypeRegistry.init();
         CreativeTabRegistry.init();
     }
 }

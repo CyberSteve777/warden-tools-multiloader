@@ -1,11 +1,11 @@
 {
-  "parent": "wardentools:obtain_echo_shard",
+  "parent": "wardentools:obtain_echo_staff",
   "criteria": {
-    "has_echo_weapon": {
+    "has_upgraded_echo_staff": {
       "conditions": {
         "items": [
           {
-            "items": "#wardentools:echo_weapon"
+            "items": "#wardentools:echo_staff_upgrade"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "wardentools.advancement.obtain_echo_weapon.description"
+      "translate": "wardentools.advancement.upgrade_echo_staff.description"
     },
     "icon": {
       "count": 1,
-      "id": "wardentools:echo_staff"
+      "id": "wardentools:rose_gold_upgraded_echo_staff"
     },
     "title": {
-      "translate": "wardentools.advancement.obtain_echo_weapon.title"
+      "translate": "wardentools.advancement.upgrade_echo_staff.title"
     }
   },
   "requirements": [
     [
-      "has_echo_weapon"
+      "has_upgraded_echo_staff"
     ]
   ],
   "rewards": {

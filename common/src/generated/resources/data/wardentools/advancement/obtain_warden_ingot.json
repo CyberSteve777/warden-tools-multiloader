@@ -1,0 +1,36 @@
+{
+  "parent": "wardentools:obtain_sculk_shell",
+  "criteria": {
+    "has_warden_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "wardentools:warden_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "wardentools.advancement.obtain_warden_ingot.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "wardentools:warden_ingot"
+    },
+    "title": {
+      "translate": "wardentools.advancement.obtain_warden_ingot.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_warden_ingot"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  },
+  "sends_telemetry_event": true
+}

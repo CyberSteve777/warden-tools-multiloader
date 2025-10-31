@@ -7,11 +7,11 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.trique.wardentools.advancements.criterion.AffectedEntitiesTrigger;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.util.WTDamageTypeTags;
 import net.trique.wardentools.util.WTItemTags;
@@ -50,25 +50,25 @@ public class WTAdvancementProvider extends AdvancementProvider {
                     ))
                     .rewards(AdvancementRewards.Builder.experience(50))
                     .save(saver, getLoc("find_ancient_city"), existingFileHelper);
-            AdvancementHolder obtain_echo_shard = Advancement.Builder.advancement()
+            AdvancementHolder obtain_echo_ingot = Advancement.Builder.advancement()
                     .parent(find_ancient_city)
                     .display(
-                            Items.ECHO_SHARD,
-                            getTitleKey("obtain_echo_shard"),
-                            getDescriptionKey("obtain_echo_shard"),
+                            ItemRegistry.ECHO_INGOT.get(),
+                            getTitleKey("obtain_echo_ingot"),
+                            getDescriptionKey("obtain_echo_ingot"),
                             null,
                             AdvancementType.TASK,
                             true,
                             true,
                             false
                     )
-                    .addCriterion("echo_shard", InventoryChangeTrigger.TriggerInstance.hasItems(Items.ECHO_SHARD))
+                    .addCriterion("has_echo_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ECHO_INGOT.get()))
                     .rewards(AdvancementRewards.Builder.experience(50))
-                    .save(saver, getLoc("obtain_echo_shard"), existingFileHelper);
+                    .save(saver, getLoc("obtain_echo_ingot"), existingFileHelper);
             AdvancementHolder kill_warden = Advancement.Builder.advancement()
                     .parent(find_ancient_city)
                     .display(
-                            ItemRegistry.WARDEN_SOUL.get(),
+                            ItemRegistry.WARDEN_TENDRIL.get(),
                             getTitleKey("kill_warden"),
                             getDescriptionKey("kill_warden"),
                             null,
@@ -80,21 +80,66 @@ public class WTAdvancementProvider extends AdvancementProvider {
                     .addCriterion("warden", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(EntityType.WARDEN)))
                     .rewards(AdvancementRewards.Builder.experience(100))
                     .save(saver, getLoc("kill_warden"), existingFileHelper);
-            AdvancementHolder obtain_echo_weapon = Advancement.Builder.advancement()
-                    .parent(obtain_echo_shard)
+            AdvancementHolder obtain_echo_locator = Advancement.Builder.advancement()
+                    .parent(obtain_echo_ingot)
                     .display(
-                            ItemRegistry.ECHO_STAFF.get(),
-                            getTitleKey("obtain_echo_weapon"),
-                            getDescriptionKey("obtain_echo_weapon"),
+                            ItemRegistry.ECHO_LOCATOR.get(),
+                            getTitleKey("obtain_echo_locator"),
+                            getDescriptionKey("obtain_echo_locator"),
                             null,
                             AdvancementType.TASK,
                             true,
                             true,
                             false
                     )
-                    .addCriterion("has_echo_weapon", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(WTItemTags.ECHO_WEAPON)))
+                    .addCriterion("has_echo_locator", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ECHO_LOCATOR.get()))
+                    .rewards(AdvancementRewards.Builder.experience(50))
+                    .save(saver, getLoc("obtain_echo_locator"), existingFileHelper);
+            AdvancementHolder too_may_entities = Advancement.Builder.advancement()
+                    .parent(obtain_echo_locator)
+                    .display(
+                            ItemRegistry.SCULK_ARROW.get(),
+                            getTitleKey("too_may_entities"),
+                            getDescriptionKey("too_may_entities"),
+                            null,
+                            AdvancementType.CHALLENGE,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("entity_count", AffectedEntitiesTrigger.TriggerInstance.minCount(15))
+                    .rewards(AdvancementRewards.Builder.experience(50))
+                    .save(saver, getLoc("too_may_entities"), existingFileHelper);
+            AdvancementHolder obtain_echo_staff = Advancement.Builder.advancement()
+                    .parent(obtain_echo_ingot)
+                    .display(
+                            ItemRegistry.ECHO_STAFF.get(),
+                            getTitleKey("obtain_echo_staff"),
+                            getDescriptionKey("obtain_echo_staff"),
+                            null,
+                            AdvancementType.TASK,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("has_echo_staff", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ECHO_STAFF.get()))
                     .rewards(AdvancementRewards.Builder.loot(WTLootTables.ECHO_WEAPON_ADVANCEMENT_REWARD).addExperience(50))
-                    .save(saver, getLoc("obtain_echo_weapon"), existingFileHelper);
+                    .save(saver, getLoc("obtain_echo_staff"), existingFileHelper);
+            AdvancementHolder upgrade_echo_staff = Advancement.Builder.advancement()
+                    .parent(obtain_echo_staff)
+                    .display(
+                            ItemRegistry.ROSE_GOLD_UPGRADED_ECHO_STAFF.get(),
+                            getTitleKey("upgrade_echo_staff"),
+                            getDescriptionKey("upgrade_echo_staff"),
+                            null,
+                            AdvancementType.TASK,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("has_upgraded_echo_staff", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(WTItemTags.ECHO_STAFF_UPGRADE)))
+                    .rewards(AdvancementRewards.Builder.loot(WTLootTables.ECHO_WEAPON_ADVANCEMENT_REWARD).addExperience(50))
+                    .save(saver, getLoc("upgrade_echo_staff"), existingFileHelper);
             AdvancementHolder obtain_warden_mask = Advancement.Builder.advancement()
                     .parent(kill_warden)
                     .display(
@@ -144,7 +189,6 @@ public class WTAdvancementProvider extends AdvancementProvider {
                     ))
                     .rewards(AdvancementRewards.Builder.experience(100))
                     .save(saver, getLoc("like_a_warden"), existingFileHelper);
-
             AdvancementHolder the_warden = Advancement.Builder.advancement()
                     .parent(like_a_warden)
                     .display(
@@ -176,6 +220,72 @@ public class WTAdvancementProvider extends AdvancementProvider {
                     ))
                     .rewards(AdvancementRewards.Builder.experience(100))
                     .save(saver, getLoc("the_warden"), existingFileHelper);
+            AdvancementHolder obtain_sculk_shell = Advancement.Builder.advancement()
+                    .parent(find_ancient_city)
+                    .display(
+                            ItemRegistry.SCULK_SHELL.get(),
+                            getTitleKey("obtain_sculk_shell"),
+                            getDescriptionKey("obtain_sculk_shell"),
+                            null,
+                            AdvancementType.TASK,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("has_sculk_shell", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.SCULK_SHELL.get()))
+                    .rewards(AdvancementRewards.Builder.experience(50))
+                    .save(saver, getLoc("obtain_sculk_shell"), existingFileHelper);
+            AdvancementHolder obtain_warden_ingot = Advancement.Builder.advancement()
+                    .parent(obtain_sculk_shell)
+                    .display(
+                            ItemRegistry.WARDEN_INGOT.get(),
+                            getTitleKey("obtain_warden_ingot"),
+                            getDescriptionKey("obtain_warden_ingot"),
+                            null,
+                            AdvancementType.TASK,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("has_warden_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WARDEN_INGOT.get()))
+                    .rewards(AdvancementRewards.Builder.experience(75))
+                    .save(saver, getLoc("obtain_warden_ingot"), existingFileHelper);
+            AdvancementHolder obtain_echo_shrieker = Advancement.Builder.advancement()
+                    .parent(obtain_warden_ingot)
+                    .display(
+                            ItemRegistry.ECHO_SHRIEKER.get(),
+                            getTitleKey("obtain_echo_shrieker"),
+                            getDescriptionKey("obtain_echo_shrieker"),
+                            null,
+                            AdvancementType.TASK,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("has_echo_shrieker", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ECHO_SHRIEKER.get()))
+                    .rewards(AdvancementRewards.Builder.experience(75))
+                    .save(saver, getLoc("obtain_echo_shrieker"), existingFileHelper);
+            AdvancementHolder obtain_warden_armor_piece = Advancement.Builder.advancement()
+                    .parent(obtain_warden_ingot)
+                    .display(
+                            ItemRegistry.WARDEN_HELMET.get(),
+                            getTitleKey("obtain_warden_armor_piece"),
+                            getDescriptionKey("obtain_warden_armor_piece"),
+                            null,
+                            AdvancementType.TASK,
+                            true,
+                            true,
+                            false
+                    )
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("warden_helmet", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WARDEN_HELMET.get()))
+                    .addCriterion("warden_mask", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WARDEN_MASK.get()))
+                    .addCriterion("warden_chestplate", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WARDEN_CHESTPLATE.get()))
+                    .addCriterion("warden_leggings", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WARDEN_LEGGINGS.get()))
+                    .addCriterion("warden_boots", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WARDEN_BOOTS.get()))
+                    .addCriterion("has_sculk_shell", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.SCULK_SHELL.get()))
+                    .rewards(AdvancementRewards.Builder.experience(75))
+                    .save(saver, getLoc("obtain_warden_armor_piece"), existingFileHelper);
         }
 
         private static Component getTitleKey(String key) {
