@@ -1,0 +1,69 @@
+{
+  "parent": "wardentools:like_a_warden",
+  "criteria": {
+    "kill_warden": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "minecraft:warden"
+            }
+          }
+        ],
+        "killing_blow": {
+          "direct_entity": {
+            "type": "minecraft:player",
+            "equipment": {
+              "chest": {
+                "items": "wardentools:warden_chestplate"
+              },
+              "feet": {
+                "items": "wardentools:warden_boots"
+              },
+              "head": {
+                "items": "wardentools:warden_mask"
+              },
+              "legs": {
+                "items": "wardentools:warden_leggings"
+              },
+              "mainhand": {
+                "items": "#wardentools:echo_weapon"
+              }
+            }
+          },
+          "tags": [
+            {
+              "expected": true,
+              "id": "wardentools:sonic_boom"
+            }
+          ]
+        }
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "wardentools.advancement.the_warden.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:sculk_shrieker"
+    },
+    "title": {
+      "translate": "wardentools.advancement.the_warden.title"
+    }
+  },
+  "requirements": [
+    [
+      "kill_warden"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

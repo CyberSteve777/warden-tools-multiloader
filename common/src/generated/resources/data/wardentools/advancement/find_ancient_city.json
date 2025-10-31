@@ -18,6 +18,7 @@
     }
   },
   "display": {
+    "background": "wardentools:textures/gui/advancements/root.png",
     "description": {
       "translate": "wardentools.advancement.find_ancient_city.description"
     },
