@@ -36,13 +36,13 @@ public class WardenArmorMaterials {
 
     public static final Holder<ArmorMaterial> SCULKIFIED = registerMaterial("sculkified",
             Map.of(
-                    Type.BOOTS, 4,
-                    Type.LEGGINGS, 7,
-                    Type.CHESTPLATE, 9,
-                    Type.HELMET, 4,
-                    Type.BODY, 12
-            ), 18, SoundEvents.ARMOR_EQUIP_NETHERITE,
-            () -> Ingredient.of(ItemRegistry.ECHO_INGOT.get()), 4.0f, 0.1f, false);
+                    Type.BOOTS, 3,
+                    Type.LEGGINGS, 6,
+                    Type.CHESTPLATE, 8,
+                    Type.HELMET, 3,
+                    Type.BODY, 11
+            ), 18, SoundEvents.ARMOR_EQUIP_DIAMOND,
+            () -> Ingredient.of(ItemRegistry.ECHO_INGOT.get()), 2.5f, 0f, false);
 
     public static final Holder<ArmorMaterial> WARDEN = registerMaterial("warden",
             Map.of(
@@ -52,6 +52,6 @@ public class WardenArmorMaterials {
                     Type.HELMET, 5,
                     Type.BODY, 13
             ), 21, SONIC_BOOM_SOUND,
-            () -> Ingredient.of(ItemRegistry.SCULK_SHELL.get()), 5.0f, 0.1f, false);
+            () -> Ingredient.of(ItemRegistry.WARDEN_INGOT.get()), 5.0f, 0.2f, false);
 
 }
