@@ -122,6 +122,21 @@
   "wardentools.advancement.obtain_echo_staff.title": "Power of Echo",
   "wardentools.advancement.obtain_echo_staff.description": "Obtain Echo staff (I hope, you have Echo Shards to use it)",
   "wardentools.advancement.kill_warden.title": "Warden Slayer",
-  "wardentools.advancement.kill_warden.description": "Defeat the keeper of the Ancient city"
-
+  "wardentools.advancement.kill_warden.description": "Defeat the keeper of the Ancient city",
+  "wardentools.advancement.obtain_sculk_shell.title": "Warden Power Shell",
+  "wardentools.advancement.obtain_sculk_shell.description": "Obtain Sculk Shell",
+  "wardentools.advancement.obtain_warden_ingot.title": "Brick it",
+  "wardentools.advancement.obtain_warden_ingot.description": "Obtain Warden Ingot",
+  "wardentools.advancement.obtain_echo_locator.title": "Portable radar",
+  "wardentools.advancement.obtain_echo_locator.description": "Obtain Echo Locator",
+  "wardentools.advancement.too_many_entities.title": "HOW MANY???",
+  "wardentools.advancement.too_many_entities.description": "Locate at least 15 entities via Sculk Arrow",
+  "wardentools.advancement.upgrade_echo_staff.title": "Power of Echo, but upgraded",
+  "wardentools.advancement.upgrade_echo_staff.description": "Upgrade your Echo Stuff",
+  "wardentools.advancement.obtain_echo_shrieker.title": "Individual Portable Shrieker",
+  "wardentools.advancement.obtain_echo_shrieker.description": "Obtain Echo Shrieker",
+  "wardentools.advancement.get_deaf.title": "Deaf'em all",
+  "wardentools.advancement.get_deaf.description": "Shriek on at least 8 entities",
+  "wardentools.advancement.obtain_warden_armor_piece.title": "Piece of Warden",
+  "wardentools.advancement.obtain_warden_armor_piece.description": "Obtain any piece of Warden set"
 }

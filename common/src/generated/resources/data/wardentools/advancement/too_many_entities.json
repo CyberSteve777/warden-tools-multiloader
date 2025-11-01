@@ -15,7 +15,7 @@
   },
   "display": {
     "description": {
-      "translate": "wardentools.advancement.too_may_entities.description"
+      "translate": "wardentools.advancement.too_many_entities.description"
     },
     "frame": "challenge",
     "icon": {
@@ -23,7 +23,7 @@
       "id": "wardentools:sculk_arrow"
     },
     "title": {
-      "translate": "wardentools.advancement.too_may_entities.title"
+      "translate": "wardentools.advancement.too_many_entities.title"
     }
   },
   "requirements": [

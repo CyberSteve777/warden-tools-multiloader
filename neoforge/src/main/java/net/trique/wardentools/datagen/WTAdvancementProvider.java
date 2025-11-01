@@ -99,8 +99,8 @@ public class WTAdvancementProvider extends AdvancementProvider {
                     .parent(obtain_echo_locator)
                     .display(
                             ItemRegistry.SCULK_ARROW.get(),
-                            getTitleKey("too_may_entities"),
-                            getDescriptionKey("too_may_entities"),
+                            getTitleKey("too_many_entities"),
+                            getDescriptionKey("too_many_entities"),
                             null,
                             AdvancementType.CHALLENGE,
                             true,
@@ -109,7 +109,7 @@ public class WTAdvancementProvider extends AdvancementProvider {
                     )
                     .addCriterion("entity_count", AffectedEntitiesTrigger.TriggerInstance.minCount(ItemPredicate.Builder.item().of(ItemRegistry.SCULK_ARROW.get()), 15))
                     .rewards(AdvancementRewards.Builder.experience(50))
-                    .save(saver, getLoc("too_may_entities"), existingFileHelper);
+                    .save(saver, getLoc("too_many_entities"), existingFileHelper);
             AdvancementHolder obtain_echo_staff = Advancement.Builder.advancement()
                     .parent(obtain_echo_ingot)
                     .display(
