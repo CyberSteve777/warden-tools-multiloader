@@ -107,7 +107,7 @@ public class WTAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("entity_count", AffectedEntitiesTrigger.TriggerInstance.minCount(15))
+                    .addCriterion("entity_count", AffectedEntitiesTrigger.TriggerInstance.minCount(ItemPredicate.Builder.item().of(ItemRegistry.SCULK_ARROW.get()), 15))
                     .rewards(AdvancementRewards.Builder.experience(50))
                     .save(saver, getLoc("too_may_entities"), existingFileHelper);
             AdvancementHolder obtain_echo_staff = Advancement.Builder.advancement()
@@ -286,6 +286,21 @@ public class WTAdvancementProvider extends AdvancementProvider {
                     .addCriterion("has_sculk_shell", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.SCULK_SHELL.get()))
                     .rewards(AdvancementRewards.Builder.experience(75))
                     .save(saver, getLoc("obtain_warden_armor_piece"), existingFileHelper);
+            AdvancementHolder get_deaf = Advancement.Builder.advancement()
+                    .parent(obtain_echo_shrieker)
+                    .display(
+                            ItemRegistry.ECHO_SHRIEKER.get(),
+                            getTitleKey("get_deaf"),
+                            getDescriptionKey("get_deaf"),
+                            null,
+                            AdvancementType.CHALLENGE,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("affect_entities", AffectedEntitiesTrigger.TriggerInstance.minCount(ItemPredicate.Builder.item().of(ItemRegistry.ECHO_SHRIEKER.get()), 8))
+                    .rewards(AdvancementRewards.Builder.experience(100))
+                    .save(saver, getLoc("get_deaf"), existingFileHelper);
         }
 
         private static Component getTitleKey(String key) {

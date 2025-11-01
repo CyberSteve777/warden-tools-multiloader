@@ -6,6 +6,7 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 import net.trique.wardentools.registry.TriggerTypeRegistry;
 
 import java.util.Optional;
@@ -18,44 +19,45 @@ public class AffectedEntitiesTrigger extends SimpleCriterionTrigger<AffectedEnti
         return TriggerInstance.CODEC;
     }
 
-    public void trigger(ServerPlayer player, Set<Entity> entities) {
-        this.trigger(player, triggerInstance -> triggerInstance.matches(entities.size()));
+    public void trigger(ServerPlayer player, ItemStack handheld, Set<Entity> entities) {
+        this.trigger(player, triggerInstance -> triggerInstance.matches(handheld, entities.size()));
     }
 
-    public record TriggerInstance(Optional<ContextAwarePredicate> player, MinMaxBounds.Ints count) implements SimpleCriterionTrigger.SimpleInstance {
+    public record TriggerInstance(Optional<ContextAwarePredicate> player, ItemPredicate weapon, MinMaxBounds.Ints count) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
                         EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
+                        ItemPredicate.CODEC.fieldOf("weapon").forGetter(TriggerInstance::weapon),
                         MinMaxBounds.Ints.CODEC.optionalFieldOf("count", MinMaxBounds.Ints.ANY).forGetter(TriggerInstance::count)
                 ).apply(instance, TriggerInstance::new)
         );
 
-        public TriggerInstance(Optional<ContextAwarePredicate> player) {
-            this(player, MinMaxBounds.Ints.ANY);
+        public TriggerInstance(ItemPredicate item, Optional<ContextAwarePredicate> player) {
+            this(player, item, MinMaxBounds.Ints.ANY);
         }
 
-        public static Criterion<TriggerInstance> create(MinMaxBounds.Ints count) {
-            return TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().createCriterion(new TriggerInstance(Optional.empty(), count));
+        public static Criterion<TriggerInstance> create(ItemPredicate.Builder item, MinMaxBounds.Ints count) {
+            return TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().createCriterion(new TriggerInstance(Optional.empty(), item.build(), count));
         }
 
-        public static Criterion<TriggerInstance> exactCount(int count) {
-            return create(MinMaxBounds.Ints.exactly(count));
+        public static Criterion<TriggerInstance> exactCount(ItemPredicate.Builder item, int count) {
+            return create(item, MinMaxBounds.Ints.exactly(count));
         }
 
-        public static Criterion<TriggerInstance> range(int min, int max) {
-            return create(MinMaxBounds.Ints.between(min, max));
+        public static Criterion<TriggerInstance> range(ItemPredicate.Builder item, int min, int max) {
+            return create(item, MinMaxBounds.Ints.between(min, max));
         }
 
-        public static Criterion<TriggerInstance> minCount(int min) {
-            return create(MinMaxBounds.Ints.atLeast(min));
+        public static Criterion<TriggerInstance> minCount(ItemPredicate.Builder item, int min) {
+            return create(item, MinMaxBounds.Ints.atLeast(min));
         }
 
-        public static Criterion<TriggerInstance> maxCount(int max) {
-            return create(MinMaxBounds.Ints.atMost(max));
+        public static Criterion<TriggerInstance> maxCount(ItemPredicate.Builder item, int max) {
+            return create(item, MinMaxBounds.Ints.atMost(max));
         }
 
-        public boolean matches(int entityCount) {
-            return this.count.matches(entityCount);
+        public boolean matches(ItemStack stack, int entityCount) {
+            return this.weapon.test(stack) && this.count.matches(entityCount);
         }
 
     }

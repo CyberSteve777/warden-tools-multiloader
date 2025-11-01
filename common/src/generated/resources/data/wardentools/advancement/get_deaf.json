@@ -1,13 +1,13 @@
 {
-  "parent": "wardentools:obtain_echo_locator",
+  "parent": "wardentools:obtain_echo_shrieker",
   "criteria": {
-    "entity_count": {
+    "affect_entities": {
       "conditions": {
         "count": {
-          "min": 15
+          "min": 8
         },
         "weapon": {
-          "items": "wardentools:sculk_arrow"
+          "items": "wardentools:echo_shrieker"
         }
       },
       "trigger": "wardentools:affected_entities"
@@ -15,24 +15,24 @@
   },
   "display": {
     "description": {
-      "translate": "wardentools.advancement.too_may_entities.description"
+      "translate": "wardentools.advancement.get_deaf.description"
     },
     "frame": "challenge",
     "icon": {
       "count": 1,
-      "id": "wardentools:sculk_arrow"
+      "id": "wardentools:echo_shrieker"
     },
     "title": {
-      "translate": "wardentools.advancement.too_may_entities.title"
+      "translate": "wardentools.advancement.get_deaf.title"
     }
   },
   "requirements": [
     [
-      "entity_count"
+      "affect_entities"
     ]
   ],
   "rewards": {
-    "experience": 50
+    "experience": 100
   },
   "sends_telemetry_event": true
 }

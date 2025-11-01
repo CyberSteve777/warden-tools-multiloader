@@ -58,7 +58,7 @@
                 }
             }
             if (user instanceof ServerPlayer player) {
-                TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, hit);
+                TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, stack, hit);
             }
         }
     }

@@ -102,7 +102,7 @@ public class SculkArrowEntity extends Arrow {
             });
         }
         if (this.getOwner() instanceof ServerPlayer player) {
-            TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, hit);
+            TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, this.getPickupItem(), hit);
         }
     }
 }
