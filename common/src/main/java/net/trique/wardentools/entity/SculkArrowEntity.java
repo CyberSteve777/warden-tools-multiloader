@@ -74,11 +74,10 @@ public class SculkArrowEntity extends Arrow {
         if (hitresult$type == HitResult.Type.ENTITY) {
             EntityHitResult entityhitresult = (EntityHitResult) result;
             Entity hit_entity = entityhitresult.getEntity();
-            if (hit_entity.getType().is(EntityTypeTags.REDIRECTABLE_PROJECTILE) && hit_entity instanceof Projectile) {
-                Projectile projectile = (Projectile) hit_entity;
+            if (hit_entity.getType().is(EntityTypeTags.REDIRECTABLE_PROJECTILE) && hit_entity instanceof Projectile projectile) {
                 projectile.deflect(ProjectileDeflection.AIM_DEFLECT, this.getOwner(), this.getOwner(), true);
             } else if (hit_entity instanceof LivingEntity victim) {
-                Vec3 hit_location = entityhitresult.getLocation();
+//                Vec3 hit_location = entityhitresult.getLocation();
 //                shriek(hit_location.add(0.0, victim.getBbHeight() + 0.3, 0.0));
                 hit.addAll(this.level().getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos((int) victim.getX(),
                         (int) victim.getY(), (int) victim.getZ())).inflate(base_radius)));
@@ -109,17 +108,17 @@ public class SculkArrowEntity extends Arrow {
         }
     }
 
-    protected void shriek(Vec3 pos) {
-        if (this.level() instanceof ServerLevel level) {
-            BlockPos containingPos = BlockPos.containing(pos.x, pos.y, pos.z);
-            for(int i = 0; i < 10; ++i) {
-                level.sendParticles(new ShriekParticleOption(i * 5), pos.x, pos.y, pos.z, 1, 0.0, 0.0, 0.0, 0.0);
-            }
-            BlockState blockState = level.getBlockState(containingPos);
-            boolean flag = blockState.hasProperty(BlockStateProperties.WATERLOGGED) && blockState.getValue(BlockStateProperties.WATERLOGGED);
-            if (!flag) {
-                level.playSound(null, pos.x, pos.y, pos.z, SoundEvents.SCULK_SHRIEKER_SHRIEK, this.getSoundSource(), 2.0f, 0.6f + level.getRandom().nextFloat() * 0.4f);
-            }
-        }
-    }
+//    protected void shriek(Vec3 pos) {
+//        if (this.level() instanceof ServerLevel level) {
+//            BlockPos containingPos = BlockPos.containing(pos.x, pos.y, pos.z);
+//            for(int i = 0; i < 10; ++i) {
+//                level.sendParticles(new ShriekParticleOption(i * 5), pos.x, pos.y, pos.z, 1, 0.0, 0.0, 0.0, 0.0);
+//            }
+//            BlockState blockState = level.getBlockState(containingPos);
+//            boolean flag = blockState.hasProperty(BlockStateProperties.WATERLOGGED) && blockState.getValue(BlockStateProperties.WATERLOGGED);
+//            if (!flag) {
+//                level.playSound(null, pos.x, pos.y, pos.z, SoundEvents.SCULK_SHRIEKER_SHRIEK, this.getSoundSource(), 2.0f, 0.6f + level.getRandom().nextFloat() * 0.4f);
+//            }
+//        }
+//    }
 }
