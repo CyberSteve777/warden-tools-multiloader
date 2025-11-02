@@ -10,6 +10,12 @@ repositories {
     }
 }
 
+javadoc {
+    options {
+        tags("reason:a:Overwrite reason:")
+    }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.layered {

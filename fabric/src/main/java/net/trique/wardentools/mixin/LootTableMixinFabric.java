@@ -45,6 +45,7 @@ public abstract class LootTableMixinFabric implements LootTableDuck {
 
     /**
      * @author Tfar
+     * @reason part of fabric GLMs
      */
     @Overwrite
     public void getRandomItems(LootParams params, long seed, Consumer<ItemStack> output) {
