@@ -1,6 +1,8 @@
 package net.trique.wardentools.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ShriekParticleOption;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -16,11 +18,9 @@ import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.*;
 import net.trique.wardentools.registry.EntityRegistry;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.registry.TriggerTypeRegistry;
@@ -78,6 +78,8 @@ public class SculkArrowEntity extends Arrow {
                 Projectile projectile = (Projectile) hit_entity;
                 projectile.deflect(ProjectileDeflection.AIM_DEFLECT, this.getOwner(), this.getOwner(), true);
             } else if (hit_entity instanceof LivingEntity victim) {
+                Vec3 hit_location = entityhitresult.getLocation();
+//                shriek(hit_location.add(0.0, victim.getBbHeight() + 0.3, 0.0));
                 hit.addAll(this.level().getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos((int) victim.getX(),
                         (int) victim.getY(), (int) victim.getZ())).inflate(base_radius)));
                 hit.remove(this.getOwner());
@@ -91,6 +93,7 @@ public class SculkArrowEntity extends Arrow {
         } else if (hitresult$type == HitResult.Type.BLOCK) {
             BlockHitResult blockhitresult = (BlockHitResult) result;
             this.onHitBlock(blockhitresult);
+//            shriek(blockhitresult.getLocation());
             BlockPos blockpos = blockhitresult.getBlockPos();
             this.level().gameEvent(GameEvent.PROJECTILE_LAND, blockpos, GameEvent.Context.of(this, this.level().getBlockState(blockpos)));
             hit.addAll(this.level().getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos(blockpos.getX(),
@@ -103,6 +106,20 @@ public class SculkArrowEntity extends Arrow {
         }
         if (this.getOwner() instanceof ServerPlayer player) {
             TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, this.getPickupItem(), hit);
+        }
+    }
+
+    protected void shriek(Vec3 pos) {
+        if (this.level() instanceof ServerLevel level) {
+            BlockPos containingPos = BlockPos.containing(pos.x, pos.y, pos.z);
+            for(int i = 0; i < 10; ++i) {
+                level.sendParticles(new ShriekParticleOption(i * 5), pos.x, pos.y, pos.z, 1, 0.0, 0.0, 0.0, 0.0);
+            }
+            BlockState blockState = level.getBlockState(containingPos);
+            boolean flag = blockState.hasProperty(BlockStateProperties.WATERLOGGED) && blockState.getValue(BlockStateProperties.WATERLOGGED);
+            if (!flag) {
+                level.playSound(null, pos.x, pos.y, pos.z, SoundEvents.SCULK_SHRIEKER_SHRIEK, this.getSoundSource(), 2.0f, 0.6f + level.getRandom().nextFloat() * 0.4f);
+            }
         }
     }
 }
