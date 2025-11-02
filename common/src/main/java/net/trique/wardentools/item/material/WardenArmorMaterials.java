@@ -42,7 +42,7 @@ public class WardenArmorMaterials {
                     Type.HELMET, 3,
                     Type.BODY, 11
             ), 18, SoundEvents.ARMOR_EQUIP_DIAMOND,
-            () -> Ingredient.of(ItemRegistry.ECHO_INGOT.get()), 2.5f, 0f, false);
+            () -> Ingredient.of(ItemRegistry.ECHO_INGOT.get()), 2.5f, 0.05f, false);
 
     public static final Holder<ArmorMaterial> WARDEN = registerMaterial("warden",
             Map.of(
@@ -52,6 +52,6 @@ public class WardenArmorMaterials {
                     Type.HELMET, 5,
                     Type.BODY, 13
             ), 21, SONIC_BOOM_SOUND,
-            () -> Ingredient.of(ItemRegistry.WARDEN_INGOT.get()), 5.0f, 0.2f, false);
+            () -> Ingredient.of(ItemRegistry.WARDEN_INGOT.get()), 5.0f, 0.15f, false);
 
 }
