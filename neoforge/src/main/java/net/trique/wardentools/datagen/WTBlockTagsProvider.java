@@ -28,6 +28,12 @@ public class WTBlockTagsProvider extends BlockTagsProvider {
                 LARGE_SCULKHYST_BUD.get(),
                 SCULKHYST_CLUSTER.get()
         );
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
+                WARDEN_BLOCK.get(),
+                BLOCK_OF_AMETHYST_INGOTS.get(),
+                ROSE_GOLD_BLOCK.get(),
+                ECHO_BLOCK.get()
+        );
         tag(BlockTags.NEEDS_IRON_TOOL).add(
                 BUDDING_SCULKHYST.get(),
                 SMALL_SCULKHYST_BUD.get(),
