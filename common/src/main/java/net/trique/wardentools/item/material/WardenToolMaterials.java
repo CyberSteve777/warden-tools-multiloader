@@ -11,8 +11,8 @@ import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.util.WTBlockTags;
 
 public enum WardenToolMaterials implements Tier {
-    SCULKIFIED(WTBlockTags.INCORRECT_FOR_SCULKHYST_TOOLS, 2106, 10.0f, 5.0f, 18, () -> Ingredient.of(ItemRegistry.ECHO_INGOT.get())),
-    WARDEN(WTBlockTags.INCORRECT_FOR_WARDEN_TOOLS, 3006, 11.0f, 6.0f, 21, () -> Ingredient.of(ItemRegistry.SCULK_SHELL.get()));
+    SCULKIFIED(WTBlockTags.INCORRECT_FOR_SCULKHYST_TOOLS, 1796, 8.5f, 3.5f, 12, () -> Ingredient.of(ItemRegistry.ECHO_INGOT.get())),
+    WARDEN(WTBlockTags.INCORRECT_FOR_WARDEN_TOOLS, 3001, 11.0f, 6.0f, 21, () -> Ingredient.of(ItemRegistry.WARDEN_INGOT.get()));
 
     private final TagKey<Block> inverseTag;
     private final int itemDurability;

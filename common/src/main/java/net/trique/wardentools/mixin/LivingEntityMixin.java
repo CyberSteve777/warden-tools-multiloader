@@ -76,7 +76,7 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @WrapMethod(method = "hurt")
-    private boolean reduceDamageWithSculkBless(DamageSource source, float amount, Operation<Boolean> original) {
+    private boolean reduceDamageWithSculkScourge(DamageSource source, float amount, Operation<Boolean> original) {
         if (hasEffect(EffectRegistry.SCULK_SCOURGE) && (source.is(DamageTypes.SONIC_BOOM) ||
                 (source.getEntity() instanceof LivingEntity livingEntity &&
                         (livingEntity.getType().is(WTEntityTypeTags.SCULK_BLESS_REDUCES_DAMAGE_FROM) ||
