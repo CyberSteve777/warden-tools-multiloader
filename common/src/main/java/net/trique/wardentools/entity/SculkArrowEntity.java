@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.*;
+import net.trique.wardentools.Constants;
 import net.trique.wardentools.registry.EntityRegistry;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.registry.TriggerTypeRegistry;
@@ -30,6 +31,8 @@ import java.util.Set;
 
 public class SculkArrowEntity extends Arrow {
     private double base_radius = 4;
+    private int life = 0;
+    private boolean hit = false;
 
     public SculkArrowEntity(EntityType<? extends Arrow> entityType, Level world) {
         super(entityType, world);
@@ -44,6 +47,13 @@ public class SculkArrowEntity extends Arrow {
             base_radius *= multiplier;
         }
         this.setPos(owner.getX(), owner.getEyeY() - 0.1, owner.getZ());
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        ++life;
+        if (life >= 1200 && !hit) discard();
     }
 
     @Override
@@ -69,7 +79,7 @@ public class SculkArrowEntity extends Arrow {
     @Override
     protected void onHit(HitResult result) {
         HitResult.Type hitresult$type = result.getType();
-        Set<Entity> hit = new HashSet<>();
+        Set<Entity> victims = new HashSet<>();
 
         if (hitresult$type == HitResult.Type.ENTITY) {
             EntityHitResult entityhitresult = (EntityHitResult) result;
@@ -77,12 +87,13 @@ public class SculkArrowEntity extends Arrow {
             if (hit_entity.getType().is(EntityTypeTags.REDIRECTABLE_PROJECTILE) && hit_entity instanceof Projectile projectile) {
                 projectile.deflect(ProjectileDeflection.AIM_DEFLECT, this.getOwner(), this.getOwner(), true);
             } else if (hit_entity instanceof LivingEntity victim) {
+                hit = true;
 //                Vec3 hit_location = entityhitresult.getLocation();
 //                shriek(hit_location.add(0.0, victim.getBbHeight() + 0.3, 0.0));
-                hit.addAll(this.level().getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos((int) victim.getX(),
+                victims.addAll(this.level().getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos((int) victim.getX(),
                         (int) victim.getY(), (int) victim.getZ())).inflate(base_radius)));
-                hit.remove(this.getOwner());
-                hit.forEach(entity -> {
+                victims.remove(this.getOwner());
+                victims.forEach(entity -> {
                     if (entity instanceof LivingEntity living)
                         living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
                 });
@@ -90,21 +101,22 @@ public class SculkArrowEntity extends Arrow {
             this.onHitEntity(entityhitresult);
             this.level().gameEvent(GameEvent.PROJECTILE_LAND, result.getLocation(), GameEvent.Context.of(this, (BlockState) null));
         } else if (hitresult$type == HitResult.Type.BLOCK) {
+            hit = true;
             BlockHitResult blockhitresult = (BlockHitResult) result;
             this.onHitBlock(blockhitresult);
 //            shriek(blockhitresult.getLocation());
             BlockPos blockpos = blockhitresult.getBlockPos();
             this.level().gameEvent(GameEvent.PROJECTILE_LAND, blockpos, GameEvent.Context.of(this, this.level().getBlockState(blockpos)));
-            hit.addAll(this.level().getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos(blockpos.getX(),
+            victims.addAll(this.level().getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos(blockpos.getX(),
                     blockpos.getY(), blockpos.getZ())).inflate(base_radius)));
-            hit.remove(this.getOwner());
-            hit.forEach(entity -> {
+            victims.remove(this.getOwner());
+            victims.forEach(entity -> {
                 if (entity instanceof LivingEntity living)
                     living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
             });
         }
         if (this.getOwner() instanceof ServerPlayer player) {
-            TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, this.getPickupItem(), hit);
+            TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, this.getPickupItem(), victims);
         }
     }
 
