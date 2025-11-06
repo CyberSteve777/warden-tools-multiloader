@@ -100,6 +100,8 @@ public class SculkArrowEntity extends Arrow {
             }
             this.onHitEntity(entityhitresult);
             this.level().gameEvent(GameEvent.PROJECTILE_LAND, result.getLocation(), GameEvent.Context.of(this, (BlockState) null));
+            this.level().playSound(null, hit_entity.getX(), hit_entity.getY(), hit_entity.getZ(), SoundEvents.SCULK_SHRIEKER_SHRIEK, this.getSoundSource(), 2.0f, 0.6f + this.level().getRandom().nextFloat() * 0.4f);
+
         } else if (hitresult$type == HitResult.Type.BLOCK) {
             hit = true;
             BlockHitResult blockhitresult = (BlockHitResult) result;
@@ -114,6 +116,9 @@ public class SculkArrowEntity extends Arrow {
                 if (entity instanceof LivingEntity living)
                     living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
             });
+            this.level().playSound(null, blockpos.getX(), blockpos.getY(), blockpos.getZ(), SoundEvents.SCULK_SHRIEKER_SHRIEK, this.getSoundSource(), 2.0f, 0.6f + this.level().getRandom().nextFloat() * 0.4f);
+
+
         }
         if (this.getOwner() instanceof ServerPlayer player) {
             TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, this.getPickupItem(), victims);

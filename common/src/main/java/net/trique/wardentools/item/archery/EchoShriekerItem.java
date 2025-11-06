@@ -189,10 +189,11 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
     private float calculateBaseDamage(float chargingAmount, float distanceToTarget) {
         float baseDamage = 40f; // base damage
         float amplifier = 2f; // multiplier for close-range
-        float maxMinDamage = baseDamage / 3; // minimum possible damage after falloff
+        float maxMinDamage = baseDamage / 3; // minimum possible damage after falloff (but without charging amount
         float damage = baseDamage;
+        float falloff_multiplier = (baseDamage - maxMinDamage) / (DEFAULT_DISTANCE-2); // damage falloff per block
         if (Math.floor(distanceToTarget) >= 2) {
-            damage *= (1 - ((distanceToTarget - 2) * ((baseDamage - maxMinDamage) / (DEFAULT_DISTANCE - 2))));
+            damage -= (distanceToTarget - 2) * falloff_multiplier;
             if (damage < maxMinDamage) damage = maxMinDamage;
         } else {
             damage *= amplifier;

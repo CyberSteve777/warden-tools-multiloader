@@ -30,10 +30,7 @@
     ]
   ],
   "rewards": {
-    "experience": 50,
-    "loot": [
-      "wardentools:echo_weapon_advancement_reward"
-    ]
+    "experience": 50
   },
   "sends_telemetry_event": true
 }
