@@ -138,7 +138,7 @@ public class WTAdvancementProvider extends AdvancementProvider {
                             false
                     )
                     .addCriterion("has_upgraded_echo_staff", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(WTItemTags.ECHO_STAFF_UPGRADE)))
-                    .rewards(AdvancementRewards.Builder.loot(WTLootTables.ECHO_WEAPON_ADVANCEMENT_REWARD).addExperience(50))
+                    .rewards(AdvancementRewards.Builder.experience(50))
                     .save(saver, getLoc("upgrade_echo_staff"), existingFileHelper);
             AdvancementHolder obtain_warden_mask = Advancement.Builder.advancement()
                     .parent(kill_warden)
