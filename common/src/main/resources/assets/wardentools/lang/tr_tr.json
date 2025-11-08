@@ -59,10 +59,10 @@
   "effect.wardentools.warden": "Muhafız",
   "effect.wardentools.warden_curse": "Muhafız Laneti",
 
-  "item.minecraft.smithing_template.warden_upgrade.additions_slot_description": "Sculk Kabuğu ekleyin",
-  "item.minecraft.smithing_template.warden_upgrade.applies_to": "Netherit Ekipman",
-  "item.minecraft.smithing_template.warden_upgrade.base_slot_description": "Netherit zırh, silah veya alet ekleyin",
-  "item.minecraft.smithing_template.warden_upgrade.ingredients": "Sculk Kabuğu",
+  "item.minecraft.smithing_template.warden_upgrade.additions_slot_description": "Add Warden Ingot, Rose Gold Ingot, Amethyst Ingot or Eye of Ender",
+  "item.minecraft.smithing_template.warden_upgrade.applies_to": "Sculkified Equipment and Echo Stuff",
+  "item.minecraft.smithing_template.warden_upgrade.base_slot_description": "Add sculkified armor, weapon, tool or Echo Stuff",
+  "item.minecraft.smithing_template.warden_upgrade.ingredients": "Warden Ingot, Rose Gold Ingot, Amethyst Ingot, Eye of Ender",
 
   "item.minecraft.potion.effect.sculk_adaption": "Sculk Adaptasyonu İksiri",
   "item.minecraft.potion.effect.long_sculk_adaption": "Uzun Sculk Adaptasyonu İksiri",
@@ -98,7 +98,7 @@
   "item.minecraft.tipped_arrow.effect.long_warden": "Uzun Muhafız Oku",
   "item.minecraft.tipped_arrow.effect.strong_warden": "Güçlü Muhafız Oku",
 
-  "upgrade.minecraft.warden_upgrade": "Sculklaşmış ve Muhafız Yükseltmesi",
+  "upgrade.minecraft.warden_upgrade": "Echo and Warden Upgrade",
 
   "enchantment.wardentools.sonic_boost": "Sonic İtişi",
   "enchantment.wardentools.propagation": "Yayılım",

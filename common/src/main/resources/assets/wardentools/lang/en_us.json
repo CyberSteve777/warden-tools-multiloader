@@ -59,10 +59,10 @@
   "effect.wardentools.warden": "Warden",
   "effect.wardentools.warden_curse": "Warden Curse",
 
-  "item.minecraft.smithing_template.warden_upgrade.additions_slot_description": "Add Echo Ingot or Sculk Shell",
-  "item.minecraft.smithing_template.warden_upgrade.applies_to": "Netherite and Sculkified Equipment",
-  "item.minecraft.smithing_template.warden_upgrade.base_slot_description": "Add netherite/sculkified armor, weapon, or tool",
-  "item.minecraft.smithing_template.warden_upgrade.ingredients": "Echo Ingot and Sculk Shell",
+  "item.minecraft.smithing_template.warden_upgrade.additions_slot_description": "Add Warden Ingot, Rose Gold Ingot, Amethyst Ingot or Eye of Ender",
+  "item.minecraft.smithing_template.warden_upgrade.applies_to": "Sculkified Equipment and Echo Stuff",
+  "item.minecraft.smithing_template.warden_upgrade.base_slot_description": "Add sculkified armor, weapon, tool or Echo Stuff",
+  "item.minecraft.smithing_template.warden_upgrade.ingredients": "Warden Ingot, Rose Gold Ingot, Amethyst Ingot, Eye of Ender",
 
   "item.minecraft.potion.effect.sculk_adaption": "Sculk Adaption Potion",
   "item.minecraft.potion.effect.long_sculk_adaption": "Sculk Adaption Potion",
@@ -99,7 +99,7 @@
   "item.minecraft.tipped_arrow.effect.long_warden": "Arrow of Warden",
   "item.minecraft.tipped_arrow.effect.strong_warden": "Arrow of Warden",
 
-  "upgrade.minecraft.warden_upgrade": "Sculkified and Warden Upgrade",
+  "upgrade.minecraft.warden_upgrade": "Echo and Warden Upgrade",
 
   "enchantment.wardentools.sonic_boost": "Sonic Boost",
   "enchantment.wardentools.propagation": "Propagation",

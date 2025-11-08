@@ -26,11 +26,11 @@
   "block.wardentools.medium_sculkhyst_bud": "中型伏聆晶芽",
   "block.wardentools.small_sculkhyst_bud": "小型伏聆晶芽",
 
-  "item.minecraft.smithing_template.warden_upgrade.additions_slot_description": "放置Sculk Shell",
-  "item.minecraft.smithing_template.warden_upgrade.applies_to": "獄髓裝備",
-  "item.minecraft.smithing_template.warden_upgrade.base_slot_description": "放置獄髓盔甲、武器或工具",
-  "item.minecraft.smithing_template.warden_upgrade.ingredients": "Sculk Shell",
-  "upgrade.minecraft.warden_upgrade": "伏守者升級",
+  "item.minecraft.smithing_template.warden_upgrade.additions_slot_description": "Add Warden Ingot, Rose Gold Ingot, Amethyst Ingot or Eye of Ender",
+  "item.minecraft.smithing_template.warden_upgrade.applies_to": "Sculkified Equipment and Echo Stuff",
+  "item.minecraft.smithing_template.warden_upgrade.base_slot_description": "Add sculkified armor, weapon, tool or Echo Stuff",
+  "item.minecraft.smithing_template.warden_upgrade.ingredients": "Warden Ingot, Rose Gold Ingot, Amethyst Ingot, Eye of Ender",
+  "upgrade.minecraft.warden_upgrade": "Echo and Warden Upgrade",
 
   "item.wardentools.echo_ingot": "Echo Ingot",
   "item.wardentools.rose_gold_ingot": "Rose Gold Ingot",

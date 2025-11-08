@@ -28,11 +28,11 @@
   "block.wardentools.medium_sculkhyst_bud": "中くらいのスカルクジストの芽",
   "block.wardentools.small_sculkhyst_bud": "小さなスカルクジストの芽",
 
-  "item.minecraft.smithing_template.warden_upgrade.additions_slot_description": "Sculk Shellを置いてください",
-  "item.minecraft.smithing_template.warden_upgrade.applies_to": "ネザライトの装備品",
-  "item.minecraft.smithing_template.warden_upgrade.base_slot_description": "ネザライト製の防具、武器、道具を置いてください",
-  "item.minecraft.smithing_template.warden_upgrade.ingredients": "Sculk Shell",
-  "upgrade.minecraft.warden_upgrade": "ウォーデン強化",
+  "item.minecraft.smithing_template.warden_upgrade.additions_slot_description": "Add Warden Ingot, Rose Gold Ingot, Amethyst Ingot or Eye of Ender",
+  "item.minecraft.smithing_template.warden_upgrade.applies_to": "Sculkified Equipment and Echo Stuff",
+  "item.minecraft.smithing_template.warden_upgrade.base_slot_description": "Add sculkified armor, weapon, tool or Echo Stuff",
+  "item.minecraft.smithing_template.warden_upgrade.ingredients": "Warden Ingot, Rose Gold Ingot, Amethyst Ingot, Eye of Ender",
+  "upgrade.minecraft.warden_upgrade": "Echo and Warden Upgrade",
 
   "item.wardentools.rose_gold_ingot": "Rose Gold Ingot",
   "item.wardentools.amethyst_ingot": "Amethyst Ingot",
