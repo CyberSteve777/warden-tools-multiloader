@@ -8,10 +8,9 @@ import net.trique.wardentools.item.archery.SculkArrowItem;
 import net.trique.wardentools.item.archery.EchoLocatorItem;
 import net.trique.wardentools.item.material.WardenArmorMaterials;
 import net.trique.wardentools.item.material.WardenToolMaterials;
-import net.trique.wardentools.item.melee.DarknessAxeItem;
-import net.trique.wardentools.item.melee.DarknessSwordItem;
-import net.trique.wardentools.item.melee.WardenArmorItem;
-import net.trique.wardentools.item.melee.WardenMaskItem;
+import net.trique.wardentools.item.melee.*;
+import net.trique.wardentools.item.armor.WardenArmorItem;
+import net.trique.wardentools.item.armor.WardenMaskItem;
 import net.trique.wardentools.item.misc.WardenFoodItem;
 import net.trique.wardentools.item.misc.WardenTemplateItem;
 import net.trique.wardentools.item.staff.AmethystEchoStaffItem;
@@ -78,16 +77,16 @@ public class ItemRegistry {
                     WTArmorSets.SCULKIFIED_SET));
 
     public static final RegistryObject<Item, ShovelItem> WARDEN_SHOVEL = ITEMS.register("warden_shovel", () ->
-            new ShovelItem(WardenToolMaterials.WARDEN, getFireResistantProperties().attributes(ShovelItem.createAttributes(WardenToolMaterials.WARDEN, 1.5f, -3.0f))));
+            new DarknessShovelItem(WardenToolMaterials.WARDEN, getFireResistantProperties().attributes(ShovelItem.createAttributes(WardenToolMaterials.WARDEN, 1.5f, -3.0f))));
 
     public static final RegistryObject<Item, PickaxeItem> WARDEN_PICKAXE = ITEMS.register("warden_pickaxe", () ->
-            new PickaxeItem(WardenToolMaterials.WARDEN, getFireResistantProperties().attributes(PickaxeItem.createAttributes(WardenToolMaterials.WARDEN, 1f, -2.8f))));
+            new DarknessPickaxeItem(WardenToolMaterials.WARDEN, getFireResistantProperties().attributes(PickaxeItem.createAttributes(WardenToolMaterials.WARDEN, 1f, -2.8f))));
 
     public static final RegistryObject<Item, DarknessAxeItem> WARDEN_AXE = ITEMS.register("warden_axe", () ->
             new DarknessAxeItem(WardenToolMaterials.WARDEN, getFireResistantProperties().attributes(DarknessAxeItem.createAttributes(WardenToolMaterials.WARDEN, 5, -2.9f))));
 
     public static final RegistryObject<Item, HoeItem> WARDEN_HOE = ITEMS.register("warden_hoe", () ->
-            new HoeItem(WardenToolMaterials.WARDEN, getFireResistantProperties().attributes(HoeItem.createAttributes(WardenToolMaterials.WARDEN, -4, 0.0f))));
+            new DarknessHoeItem(WardenToolMaterials.WARDEN, getFireResistantProperties().attributes(HoeItem.createAttributes(WardenToolMaterials.WARDEN, -4, 0.0f))));
 
     public static final RegistryObject<Item, DarknessSwordItem> WARDEN_SWORD = ITEMS.register("warden_sword", () ->
             new DarknessSwordItem(WardenToolMaterials.WARDEN, getFireResistantProperties().attributes(DarknessSwordItem.createAttributes(WardenToolMaterials.WARDEN, 3, -2.4f))));
