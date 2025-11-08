@@ -5,11 +5,15 @@
   "name": "${mod_name}",
   "description": "${description}",
   "authors": [
-    "${mod_author}"
+    "${mod_author}",
+    "CyberSteve",
+    "Zyablik",
+    "Tfarecenim",
+    "purrgest"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/warden-tools",
+    "sources": "https://github.com/CyberSteve777/warden-tools-multiloader"
   },
   "license": "${license}",
   "icon": "assets/${mod_id}/icon.png",
