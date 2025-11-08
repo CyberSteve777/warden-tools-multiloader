@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "wardentools:block/budding_sculkhyst"
+      "model": "wardentools:block/sculkhyst_block"
     }
   }
 }

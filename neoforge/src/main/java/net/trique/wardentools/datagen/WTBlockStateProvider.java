@@ -23,7 +23,7 @@ public class WTBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        simpleBlockWithItem(SCULKHYST_BLOCK.get(), cubeAll(BUDDING_SCULKHYST.get()));
+        simpleBlockWithItem(SCULKHYST_BLOCK.get(), cubeAll(SCULKHYST_BLOCK.get()));
         simpleBlockWithItem(BUDDING_SCULKHYST.get(), cubeAll(BUDDING_SCULKHYST.get()));
         simpleBlockWithItem(ROSE_GOLD_BLOCK.get(), cubeAll(ROSE_GOLD_BLOCK.get()));
         simpleBlockWithItem(ECHO_BLOCK.get(), cubeAll(ECHO_BLOCK.get()));
