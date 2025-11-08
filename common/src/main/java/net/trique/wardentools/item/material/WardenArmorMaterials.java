@@ -1,9 +1,11 @@
 package net.trique.wardentools.item.material;
 
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -34,24 +36,20 @@ public class WardenArmorMaterials {
         return materialRegistryObject.asHolder();
     }
 
-    public static final Holder<ArmorMaterial> SCULKIFIED = registerMaterial("sculkified",
-            Map.of(
-                    Type.BOOTS, 3,
-                    Type.LEGGINGS, 6,
-                    Type.CHESTPLATE, 8,
-                    Type.HELMET, 3,
-                    Type.BODY, 11
-            ), 18, SoundEvents.ARMOR_EQUIP_DIAMOND,
+    public static final Holder<ArmorMaterial> SCULKIFIED = registerMaterial("sculkified", Util.make(new EnumMap<>(Type.class), map -> {
+                map.put(Type.BOOTS, 3);
+                map.put(Type.LEGGINGS, 6);
+                map.put(Type.CHESTPLATE, 8);
+                map.put(Type.HELMET, 3);
+            }), 18, SoundEvents.ARMOR_EQUIP_DIAMOND,
             () -> Ingredient.of(ItemRegistry.ECHO_INGOT.get()), 2.5f, 0.05f, false);
 
-    public static final Holder<ArmorMaterial> WARDEN = registerMaterial("warden",
-            Map.of(
-                    Type.BOOTS, 5,
-                    Type.LEGGINGS, 8,
-                    Type.CHESTPLATE, 10,
-                    Type.HELMET, 5,
-                    Type.BODY, 13
-            ), 21, SONIC_BOOM_SOUND,
+    public static final Holder<ArmorMaterial> WARDEN = registerMaterial("warden", Util.make(new EnumMap<>(Type.class), map -> {
+                map.put(Type.BOOTS, 5);
+                map.put(Type.LEGGINGS, 8);
+                map.put(Type.CHESTPLATE, 10);
+                map.put(Type.HELMET, 5);
+            }), 21, SONIC_BOOM_SOUND,
             () -> Ingredient.of(ItemRegistry.WARDEN_INGOT.get()), 5.0f, 0.15f, false);
 
 }
