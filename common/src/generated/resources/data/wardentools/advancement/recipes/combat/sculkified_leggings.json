@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_echo_shard": {
+    "has_echo_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:echo_shard"
+            "items": "wardentools:echo_ingot"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "wardentools:echo_ingot"
+        "recipe": "wardentools:sculkified_leggings"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_echo_shard"
+      "has_echo_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
-      "wardentools:echo_ingot"
+      "wardentools:sculkified_leggings"
     ]
   }
 }

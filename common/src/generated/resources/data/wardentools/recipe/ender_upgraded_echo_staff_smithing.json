@@ -1,14 +1,14 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "item": "wardentools:echo_ingot"
+    "item": "minecraft:ender_eye"
   },
   "base": {
-    "item": "minecraft:diamond_pickaxe"
+    "item": "wardentools:echo_staff"
   },
   "result": {
     "count": 1,
-    "id": "wardentools:sculkified_pickaxe"
+    "id": "wardentools:ender_upgraded_echo_staff"
   },
   "template": {
     "item": "wardentools:warden_upgrade_smithing_template"

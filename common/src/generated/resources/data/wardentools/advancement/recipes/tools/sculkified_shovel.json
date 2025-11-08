@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "wardentools:sculkified_leggings_smithing"
+        "recipe": "wardentools:sculkified_shovel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "wardentools:sculkified_leggings_smithing"
+      "wardentools:sculkified_shovel"
     ]
   }
 }

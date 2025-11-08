@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_echo_ingot": {
+    "has_ender_eye": {
       "conditions": {
         "items": [
           {
-            "items": "wardentools:echo_ingot"
+            "items": "minecraft:ender_eye"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "wardentools:sculkified_axe_smithing"
+        "recipe": "wardentools:ender_upgraded_echo_staff_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_echo_ingot"
+      "has_ender_eye"
     ]
   ],
   "rewards": {
     "recipes": [
-      "wardentools:sculkified_axe_smithing"
+      "wardentools:ender_upgraded_echo_staff_smithing"
     ]
   }
 }

@@ -3,18 +3,19 @@
   "category": "equipment",
   "key": {
     "m": {
-      "item": "wardentools:rose_gold_ingot"
+      "item": "wardentools:echo_ingot"
     },
     "s": {
-      "item": "wardentools:echo_staff"
+      "item": "minecraft:stick"
     }
   },
   "pattern": [
     "mmm",
-    "msm"
+    " s ",
+    " s "
   ],
   "result": {
     "count": 1,
-    "id": "wardentools:rose_gold_upgraded_echo_staff"
+    "id": "wardentools:sculkified_pickaxe"
   }
 }

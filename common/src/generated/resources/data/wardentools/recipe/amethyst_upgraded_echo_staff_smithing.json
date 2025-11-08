@@ -1,14 +1,14 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "item": "wardentools:echo_ingot"
+    "item": "wardentools:amethyst_ingot"
   },
   "base": {
-    "item": "minecraft:diamond_sword"
+    "item": "wardentools:echo_staff"
   },
   "result": {
     "count": 1,
-    "id": "wardentools:sculkified_sword"
+    "id": "wardentools:amethyst_upgraded_echo_staff"
   },
   "template": {
     "item": "wardentools:warden_upgrade_smithing_template"

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "m": {
+      "item": "wardentools:echo_ingot"
+    },
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "mm",
+    " s",
+    " s"
+  ],
+  "result": {
+    "count": 1,
+    "id": "wardentools:sculkified_hoe"
+  }
+}

@@ -3,18 +3,16 @@
   "category": "equipment",
   "key": {
     "m": {
-      "item": "minecraft:ender_eye"
-    },
-    "s": {
-      "item": "wardentools:echo_staff"
+      "item": "wardentools:echo_ingot"
     }
   },
   "pattern": [
     "mmm",
-    "msm"
+    "m m",
+    "m m"
   ],
   "result": {
     "count": 1,
-    "id": "wardentools:ender_upgraded_echo_staff"
+    "id": "wardentools:sculkified_leggings"
   }
 }

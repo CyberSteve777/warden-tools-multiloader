@@ -1,14 +1,14 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "item": "wardentools:echo_ingot"
+    "item": "wardentools:rose_gold_ingot"
   },
   "base": {
-    "item": "minecraft:diamond_boots"
+    "item": "wardentools:echo_staff"
   },
   "result": {
     "count": 1,
-    "id": "wardentools:sculkified_boots"
+    "id": "wardentools:rose_gold_upgraded_echo_staff"
   },
   "template": {
     "item": "wardentools:warden_upgrade_smithing_template"

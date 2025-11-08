@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "m": {
+      "item": "wardentools:echo_ingot"
+    }
+  },
+  "pattern": [
+    "mmm",
+    "m m"
+  ],
+  "result": {
+    "count": 1,
+    "id": "wardentools:sculkified_helmet"
+  }
+}

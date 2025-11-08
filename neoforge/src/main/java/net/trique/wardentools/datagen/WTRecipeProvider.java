@@ -29,25 +29,6 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
                 Items.DIAMOND, Items.COBBLED_DEEPSLATE);
 
         offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(),
-                Items.DIAMOND_AXE, ECHO_INGOT.get(), RecipeCategory.COMBAT, SCULKIFIED_AXE.get());
-        offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(),
-                Items.DIAMOND_SWORD, ECHO_INGOT.get(), RecipeCategory.COMBAT, SCULKIFIED_SWORD.get());
-        offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(),
-                Items.DIAMOND_PICKAXE, ECHO_INGOT.get(), RecipeCategory.TOOLS, SCULKIFIED_PICKAXE.get());
-        offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(),
-                Items.DIAMOND_SHOVEL, ECHO_INGOT.get(), RecipeCategory.TOOLS, SCULKIFIED_SHOVEL.get());
-        offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(),
-                Items.DIAMOND_HOE, ECHO_INGOT.get(), RecipeCategory.TOOLS, SCULKIFIED_HOE.get());
-        offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(),
-                Items.DIAMOND_HELMET, ECHO_INGOT.get(), RecipeCategory.COMBAT, SCULKIFIED_HELMET.get());
-        offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(),
-                Items.DIAMOND_CHESTPLATE, ECHO_INGOT.get(), RecipeCategory.COMBAT, SCULKIFIED_CHESTPLATE.get());
-        offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(),
-                Items.DIAMOND_LEGGINGS, ECHO_INGOT.get(), RecipeCategory.COMBAT, SCULKIFIED_LEGGINGS.get());
-        offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(),
-                Items.DIAMOND_BOOTS, ECHO_INGOT.get(), RecipeCategory.COMBAT, SCULKIFIED_BOOTS.get());
-
-        offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(),
                 SCULKIFIED_AXE.get(), WARDEN_INGOT.get(), RecipeCategory.COMBAT, WARDEN_AXE.get());
         offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(),
                 SCULKIFIED_SWORD.get(), WARDEN_INGOT.get(), RecipeCategory.COMBAT, WARDEN_SWORD.get());
@@ -69,16 +50,25 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
         offerWardenMaskRecipe(recipeOutput);
         offerShapedEchoShriekerRecipe(recipeOutput);
         offerShapedSckulifiedBowRecipe(recipeOutput);
-        offerCrossShapedRecipe(recipeOutput, RecipeCategory.MISC, Items.COPPER_INGOT, Items.ECHO_SHARD,
-                ECHO_INGOT.get(), 1);
+        offerShapelessEchoIngotRecipe(recipeOutput);
+        sword(recipeOutput, ECHO_INGOT.get(), SCULKIFIED_SWORD.get());
+        shovel(recipeOutput, ECHO_INGOT.get(), SCULKIFIED_SHOVEL.get());
+        pickaxe(recipeOutput, ECHO_INGOT.get(), SCULKIFIED_PICKAXE.get());
+        axe(recipeOutput, ECHO_INGOT.get(), SCULKIFIED_AXE.get());
+        hoe(recipeOutput, ECHO_INGOT.get(), SCULKIFIED_HOE.get());
+        helmet(recipeOutput, ECHO_INGOT.get(), SCULKIFIED_HELMET.get());
+        chestplate(recipeOutput, ECHO_INGOT.get(), SCULKIFIED_CHESTPLATE.get());
+        leggings(recipeOutput, ECHO_INGOT.get(), SCULKIFIED_LEGGINGS.get());
+        boots(recipeOutput, ECHO_INGOT.get(), SCULKIFIED_BOOTS.get());
         offerCrossShapedRecipe(recipeOutput, RecipeCategory.MISC, ECHO_INGOT.get(), Items.AMETHYST_SHARD,
                 AMETHYST_INGOT.get(), 1);
         offerCrossShapedRecipe(recipeOutput, RecipeCategory.FOOD, Items.APPLE, Items.ECHO_SHARD,
                 ECHO_APPLE.get(), 1);
         offerShapedEchoStaffRecipe(recipeOutput);
-        offerShapedUpgradedEchoStaffRecipe(recipeOutput, ECHO_STAFF.get(), ROSE_GOLD_INGOT.get(), ROSE_GOLD_UPGRADED_ECHO_STAFF.get());
-        offerShapedUpgradedEchoStaffRecipe(recipeOutput, ECHO_STAFF.get(), AMETHYST_INGOT.get(), AMETHYST_UPGRADED_ECHO_STAFF.get());
-        offerShapedUpgradedEchoStaffRecipe(recipeOutput, ECHO_STAFF.get(), Items.ENDER_EYE, ENDER_UPGRADED_ECHO_STAFF.get());
+
+        offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(), ECHO_STAFF.get(), ROSE_GOLD_INGOT.get(), RecipeCategory.COMBAT, ROSE_GOLD_UPGRADED_ECHO_STAFF.get());
+        offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(), ECHO_STAFF.get(), AMETHYST_INGOT.get(), RecipeCategory.COMBAT, AMETHYST_UPGRADED_ECHO_STAFF.get());
+        offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(), ECHO_STAFF.get(), Items.ENDER_EYE, RecipeCategory.COMBAT, ENDER_UPGRADED_ECHO_STAFF.get());
         offerShapelessRoseGoldIngotRecipe(recipeOutput);
         offerShapelessSculkArrowRecipe(recipeOutput);
         offerShapelessWardenIngotRecipe(recipeOutput);
@@ -202,6 +192,108 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(ECHO_INGOT::get, 2)
                 .requires(Items.NETHERITE_INGOT, 2)
                 .unlockedBy(RecipeProvider.getHasName(WARDEN_SOUL.get()), RecipeProvider.has(WARDEN_SOUL.get()))
+                .save(exporter);
+    }
+
+    protected static void sword(RecipeOutput exporter, ItemLike material, ItemLike result) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, result)
+                .define('s', Items.STICK)
+                .define('m', material)
+                .pattern("m")
+                .pattern("m")
+                .pattern("s")
+                .unlockedBy(RecipeProvider.getHasName(material), RecipeProvider.has(material))
+                .save(exporter);
+    }
+
+    protected static void shovel(RecipeOutput exporter, ItemLike material, ItemLike result) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, result)
+                .define('s', Items.STICK)
+                .define('m', material)
+                .pattern("m")
+                .pattern("s")
+                .pattern("s")
+                .unlockedBy(RecipeProvider.getHasName(material), RecipeProvider.has(material))
+                .save(exporter);
+    }
+
+    protected static void axe(RecipeOutput exporter, ItemLike material, ItemLike result) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, result)
+                .define('s', Items.STICK)
+                .define('m', material)
+                .pattern("mm")
+                .pattern("ms")
+                .pattern(" s")
+                .unlockedBy(RecipeProvider.getHasName(material), RecipeProvider.has(material))
+                .save(exporter);
+    }
+
+    protected static void hoe(RecipeOutput exporter, ItemLike material, ItemLike result) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, result)
+                .define('s', Items.STICK)
+                .define('m', material)
+                .pattern("mm")
+                .pattern(" s")
+                .pattern(" s")
+                .unlockedBy(RecipeProvider.getHasName(material), RecipeProvider.has(material))
+                .save(exporter);
+    }
+
+    protected static void pickaxe(RecipeOutput exporter, ItemLike material, ItemLike result) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, result)
+                .define('s', Items.STICK)
+                .define('m', material)
+                .pattern("mmm")
+                .pattern(" s ")
+                .pattern(" s ")
+                .unlockedBy(RecipeProvider.getHasName(material), RecipeProvider.has(material))
+                .save(exporter);
+    }
+
+    protected static void helmet(RecipeOutput exporter, ItemLike material, ItemLike result) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, result)
+                .define('m', material)
+                .pattern("mmm")
+                .pattern("m m")
+                .unlockedBy(RecipeProvider.getHasName(material), RecipeProvider.has(material))
+                .save(exporter);
+    }
+
+    protected static void boots(RecipeOutput exporter, ItemLike material, ItemLike result) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, result)
+                .define('m', material)
+                .pattern("m m")
+                .pattern("m m")
+                .unlockedBy(RecipeProvider.getHasName(material), RecipeProvider.has(material))
+                .save(exporter);
+    }
+
+    protected static void chestplate(RecipeOutput exporter, ItemLike material, ItemLike result) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, result)
+                .define('m', material)
+                .pattern("m m")
+                .pattern("mmm")
+                .pattern("mmm")
+                .unlockedBy(RecipeProvider.getHasName(material), RecipeProvider.has(material))
+                .save(exporter);
+    }
+
+    protected static void leggings(RecipeOutput exporter, ItemLike material, ItemLike result) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, result)
+                .define('m', material)
+                .pattern("mmm")
+                .pattern("m m")
+                .pattern("m m")
+                .unlockedBy(RecipeProvider.getHasName(material), RecipeProvider.has(material))
+                .save(exporter);
+    }
+
+    protected static void offerShapelessEchoIngotRecipe(RecipeOutput exporter) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ECHO_INGOT.get())
+                .requires(Items.ECHO_SHARD, 4)
+                .requires(Items.COPPER_INGOT, 2)
+                .requires(Items.IRON_INGOT, 2)
+                .unlockedBy(RecipeProvider.getHasName(Items.ECHO_SHARD), RecipeProvider.has(Items.ECHO_SHARD))
                 .save(exporter);
     }
 }

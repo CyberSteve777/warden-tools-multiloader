@@ -3,18 +3,16 @@
   "category": "equipment",
   "key": {
     "m": {
-      "item": "wardentools:amethyst_ingot"
-    },
-    "s": {
-      "item": "wardentools:echo_staff"
+      "item": "wardentools:echo_ingot"
     }
   },
   "pattern": [
+    "m m",
     "mmm",
-    "msm"
+    "mmm"
   ],
   "result": {
     "count": 1,
-    "id": "wardentools:amethyst_upgraded_echo_staff"
+    "id": "wardentools:sculkified_chestplate"
   }
 }
