@@ -27,7 +27,6 @@ public class WardenTemplateItem extends SmithingTemplateItem {
     private static final ResourceLocation EMPTY_SLOT_SWORD_TEXTURE;
     private static final ResourceLocation EMPTY_SLOT_SHOVEL_TEXTURE;
     private static final ResourceLocation EMPTY_SLOT_PICKAXE_TEXTURE;
-    private static final ResourceLocation EMPTY_SLOT_SCULK_SHELL_TEXTURE;
     private static final ResourceLocation EMPTY_SLOT_ECHO_INGOT_TEXTURE;
     private final Component baseSlotDescriptionText;
     private final Component additionsSlotDescriptionText;
@@ -51,7 +50,7 @@ public class WardenTemplateItem extends SmithingTemplateItem {
     }
 
     private static List<ResourceLocation> getWardenUpgradeEmptyAdditionsSlotTextures() {
-        return List.of(EMPTY_SLOT_SCULK_SHELL_TEXTURE, EMPTY_SLOT_ECHO_INGOT_TEXTURE);
+        return List.of(EMPTY_SLOT_ECHO_INGOT_TEXTURE);
     }
 
     public Component getBaseSlotDescription() {
@@ -94,7 +93,6 @@ public class WardenTemplateItem extends SmithingTemplateItem {
         EMPTY_SLOT_SWORD_TEXTURE = ResourceLocation.parse("minecraft:item/empty_slot_sword");
         EMPTY_SLOT_SHOVEL_TEXTURE = ResourceLocation.parse("minecraft:item/empty_slot_shovel");
         EMPTY_SLOT_PICKAXE_TEXTURE = ResourceLocation.parse("minecraft:item/empty_slot_pickaxe");
-        EMPTY_SLOT_SCULK_SHELL_TEXTURE = ResourceLocation.parse("wardentools:item/empty_slot_sculk_shell");
         EMPTY_SLOT_ECHO_INGOT_TEXTURE = ResourceLocation.parse("wardentools:item/empty_slot_echo_ingot");
     }
 }
