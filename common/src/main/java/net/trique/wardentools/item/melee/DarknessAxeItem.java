@@ -14,16 +14,6 @@ public class DarknessAxeItem extends AxeItem implements IEffectHandHeldItem {
     }
 
     @Override
-    public EffectList getEffectsWhenInHand(LivingEntity entity) {
-        return EffectList.getEmptyList();
-    }
-
-    @Override
-    public EffectList getEffectsForSelfOnAttack(DamageSource source, LivingEntity owner, float amount) {
-        return EffectList.getEmptyList();
-    }
-
-    @Override
     public EffectList getEffectsForTargetOnAttack(DamageSource source, LivingEntity owner, float amount) {
         return new EffectList.Builder().addEffect(MobEffects.DARKNESS, 100, 0, false,
                 false, true).build();
