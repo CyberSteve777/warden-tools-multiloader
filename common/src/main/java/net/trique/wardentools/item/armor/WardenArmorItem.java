@@ -1,4 +1,4 @@
-package net.trique.wardentools.item.melee;
+package net.trique.wardentools.item.armor;
 
 import me.cybersteve.equiplib.armorset.base.EffectArmorSet;
 import me.cybersteve.equiplib.item.armor.base.IEffectArmorItem;

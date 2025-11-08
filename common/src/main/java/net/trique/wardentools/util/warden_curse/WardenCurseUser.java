@@ -16,7 +16,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.PositionSource;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
 import net.trique.wardentools.config.WTConfigServer;
-import net.trique.wardentools.item.melee.WardenMaskItem;
+import net.trique.wardentools.item.armor.WardenMaskItem;
 import net.trique.wardentools.networking.packet.AddBlockOutlinePacket;
 import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.platform.Services;

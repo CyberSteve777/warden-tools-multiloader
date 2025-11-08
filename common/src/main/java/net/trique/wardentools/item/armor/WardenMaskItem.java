@@ -1,4 +1,4 @@
-package net.trique.wardentools.item.melee;
+package net.trique.wardentools.item.armor;
 
 import me.cybersteve.equiplib.armorset.base.EffectArmorSet;
 import net.minecraft.client.model.HumanoidModel;
