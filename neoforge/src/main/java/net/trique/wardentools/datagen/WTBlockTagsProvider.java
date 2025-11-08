@@ -22,6 +22,7 @@ public class WTBlockTagsProvider extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(BlockTags.MINEABLE_WITH_HOE).add(
+                SCULKHYST_BLOCK.get(),
                 BUDDING_SCULKHYST.get(),
                 SMALL_SCULKHYST_BUD.get(),
                 MEDIUM_SCULKHYST_BUD.get(),
