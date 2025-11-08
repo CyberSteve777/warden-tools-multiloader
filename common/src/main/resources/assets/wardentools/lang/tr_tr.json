@@ -122,7 +122,7 @@
   "wardentools.advancement.obtain_echo_staff.description": "Bir Yankı Asası edinin (Umarım kullanacak Yankı Parçalarınız vardır)",
   "wardentools.advancement.kill_warden.title": "Muhafız Avcısı",
   "wardentools.advancement.kill_warden.description": "Antik Şehrin bekçisini alt edin",
-  "item.minecraft.tipped_arrow.effect.sculk_warden": "Muhafız Oku",
+  "item.minecraft.tipped_arrow.effect.warden": "Muhafız Oku",
   "wardentools.advancement.obtain_sculk_shell.title": "Muhafız Güç Kabuğu",
   "wardentools.advancement.obtain_sculk_shell.description": "Bir Sculk Kabuğu edinin",
   "wardentools.advancement.obtain_warden_ingot.title": "Bloklaştır",
