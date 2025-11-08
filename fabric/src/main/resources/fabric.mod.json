@@ -16,7 +16,7 @@
     "sources": "https://github.com/CyberSteve777/warden-tools-multiloader"
   },
   "license": "${license}",
-  "icon": "icon.png",
+  "icon": "assets/${mod_id}/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
