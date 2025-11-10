@@ -1,16 +1,6 @@
 {
   "parent": "wardentools:obtain_warden_ingot",
   "criteria": {
-    "has_sculk_shell": {
-      "conditions": {
-        "items": [
-          {
-            "items": "wardentools:sculk_shell"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "warden_boots": {
       "conditions": {
         "items": [
@@ -80,8 +70,7 @@
       "warden_mask",
       "warden_chestplate",
       "warden_leggings",
-      "warden_boots",
-      "has_sculk_shell"
+      "warden_boots"
     ]
   ],
   "rewards": {

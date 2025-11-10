@@ -283,7 +283,6 @@ public class WTAdvancementProvider extends AdvancementProvider {
                     .addCriterion("warden_chestplate", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WARDEN_CHESTPLATE.get()))
                     .addCriterion("warden_leggings", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WARDEN_LEGGINGS.get()))
                     .addCriterion("warden_boots", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WARDEN_BOOTS.get()))
-                    .addCriterion("has_sculk_shell", InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.SCULK_SHELL.get()))
                     .rewards(AdvancementRewards.Builder.experience(75))
                     .save(saver, getLoc("obtain_warden_armor_piece"), existingFileHelper);
             AdvancementHolder get_deaf = Advancement.Builder.advancement()
