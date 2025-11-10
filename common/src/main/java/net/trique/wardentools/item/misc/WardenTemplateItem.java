@@ -1,12 +1,13 @@
 package net.trique.wardentools.item.misc;
 
-import java.util.List;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.SmithingTemplateItem;
 
+import java.util.List;
 
 public class WardenTemplateItem extends SmithingTemplateItem {
     private static final ChatFormatting TITLE_FORMATTING;
