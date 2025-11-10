@@ -4,13 +4,13 @@ transitive-extendable class net/minecraft/client/renderer/FogRenderer$MobEffectF
 transitive-accessible class net/minecraft/client/renderer/FogRenderer$FogData
 transitive-accessible class net/minecraft/world/item/enchantment/EnchantmentHelper$EnchantmentVisitor
 transitive-accessible method net/minecraft/world/item/enchantment/EnchantmentHelper runIterationOnItem (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/enchantment/EnchantmentHelper$EnchantmentVisitor;)V
-transitive-accessible field net/minecaft/world/item/SmithingTemplateItem EMPTY_SLOT_HELMET Lnet/minecraft/resources/ResourceLocation;
-transitive-accessible field net/minecaft/world/item/SmithingTemplateItem EMPTY_SLOT_CHESTPLATE Lnet/minecraft/resources/ResourceLocation;
-transitive-accessible field net/minecaft/world/item/SmithingTemplateItem EMPTY_SLOT_LEGGINGS Lnet/minecraft/resources/ResourceLocation;
-transitive-accessible field net/minecaft/world/item/SmithingTemplateItem EMPTY_SLOT_BOOTS Lnet/minecraft/resources/ResourceLocation;
-transitive-accessible field net/minecaft/world/item/SmithingTemplateItem EMPTY_SLOT_HOE Lnet/minecraft/resources/ResourceLocation;
-transitive-accessible field net/minecaft/world/item/SmithingTemplateItem EMPTY_SLOT_AXE Lnet/minecraft/resources/ResourceLocation;
-transitive-accessible field net/minecaft/world/item/SmithingTemplateItem EMPTY_SLOT_SWORD Lnet/minecraft/resources/ResourceLocation;
-transitive-accessible field net/minecaft/world/item/SmithingTemplateItem EMPTY_SLOT_SHOVEL Lnet/minecraft/resources/ResourceLocation;
-transitive-accessible field net/minecaft/world/item/SmithingTemplateItem EMPTY_SLOT_PICKAXE Lnet/minecraft/resources/ResourceLocation;
-transitive-accessible field net/minecaft/world/item/SmithingTemplateItem EMPTY_SLOT_INGOT Lnet/minecraft/resources/ResourceLocation;
+transitive-accessible field net/minecraft/world/item/SmithingTemplateItem EMPTY_SLOT_HELMET Lnet/minecraft/resources/ResourceLocation;
+transitive-accessible field net/minecraft/world/item/SmithingTemplateItem EMPTY_SLOT_CHESTPLATE Lnet/minecraft/resources/ResourceLocation;
+transitive-accessible field net/minecraft/world/item/SmithingTemplateItem EMPTY_SLOT_LEGGINGS Lnet/minecraft/resources/ResourceLocation;
+transitive-accessible field net/minecraft/world/item/SmithingTemplateItem EMPTY_SLOT_BOOTS Lnet/minecraft/resources/ResourceLocation;
+transitive-accessible field net/minecraft/world/item/SmithingTemplateItem EMPTY_SLOT_HOE Lnet/minecraft/resources/ResourceLocation;
+transitive-accessible field net/minecraft/world/item/SmithingTemplateItem EMPTY_SLOT_AXE Lnet/minecraft/resources/ResourceLocation;
+transitive-accessible field net/minecraft/world/item/SmithingTemplateItem EMPTY_SLOT_SWORD Lnet/minecraft/resources/ResourceLocation;
+transitive-accessible field net/minecraft/world/item/SmithingTemplateItem EMPTY_SLOT_SHOVEL Lnet/minecraft/resources/ResourceLocation;
+transitive-accessible field net/minecraft/world/item/SmithingTemplateItem EMPTY_SLOT_PICKAXE Lnet/minecraft/resources/ResourceLocation;
+transitive-accessible field net/minecraft/world/item/SmithingTemplateItem EMPTY_SLOT_INGOT Lnet/minecraft/resources/ResourceLocation;
