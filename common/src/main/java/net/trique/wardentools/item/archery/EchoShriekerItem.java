@@ -55,7 +55,7 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
             return InteractionResultHolder.fail(itemStack);
         } else {
             user.startUsingItem(hand);
-            world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.BLOCKS, 3.0f, 1.0f);
+            world.playSound(user, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_CHARGE, user.getSoundSource(), 3.0f, 1.0f);
             return InteractionResultHolder.consume(itemStack);
         }
     }
