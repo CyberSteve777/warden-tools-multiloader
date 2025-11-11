@@ -7,8 +7,8 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import static net.trique.wardentools.util.ModHelper.getLoc;
 
 public class WTGameEventTags {
-    public static final TagKey<GameEvent> VIBRA_SENSE_CAN_LISTEN =
-            create("vibra_sense_can_listen");
+    public static final TagKey<GameEvent> WARDEN_CURSE_USER_CAN_LISTEN =
+            create("warden_curse_user_can_listen");
 
 
     private static TagKey<GameEvent> create(String id) {

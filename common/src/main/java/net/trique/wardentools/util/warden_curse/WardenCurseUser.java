@@ -94,7 +94,7 @@ public class WardenCurseUser implements VibrationSystem {
 
         @Override
         public TagKey<GameEvent> getListenableEvents() {
-            return WTGameEventTags.VIBRA_SENSE_CAN_LISTEN;
+            return WTGameEventTags.WARDEN_CURSE_USER_CAN_LISTEN;
         }
 
         @Override
