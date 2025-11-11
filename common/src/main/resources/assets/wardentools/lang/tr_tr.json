@@ -138,5 +138,8 @@
   "wardentools.advancement.get_deaf.title": "Herkesi Sağır Et",
   "wardentools.advancement.get_deaf.description": "En az 8 varlığı çığlıkla etkileyin",
   "wardentools.advancement.obtain_warden_armor_piece.title": "Muhafızdan Bir Parça",
-  "wardentools.advancement.obtain_warden_armor_piece.description": "Muhafız zırh setinden herhangi bir parça edinin"
+  "wardentools.advancement.obtain_warden_armor_piece.description": "Muhafız zırh setinden herhangi bir parça edinin",
+  "wardentools.seconds_to_outline_block": "Seconds of outlining block",
+  "wardentools.seconds_to_glow_entity": "Seconds of glowing entity",
+  "wardentools.outline_pos": "Outline position"
 }
