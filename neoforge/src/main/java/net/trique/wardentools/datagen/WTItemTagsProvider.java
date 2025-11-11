@@ -75,5 +75,7 @@ public class WTItemTagsProvider extends ItemTagsProvider {
                 ENDER_UPGRADED_ECHO_STAFF.get()
         );
         tag(WTItemTags.ECHO_WEAPON_ENCHANTABLE).addTag(WTItemTags.ECHO_WEAPON);
+        tag(ItemTags.BOW_ENCHANTABLE).add(ECHO_LOCATOR.get());
+        tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(WTItemTags.ECHO_WEAPON).add(ECHO_LOCATOR.get());
     }
 }
