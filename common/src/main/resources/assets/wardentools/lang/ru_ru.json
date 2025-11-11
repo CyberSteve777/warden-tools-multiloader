@@ -121,5 +121,8 @@
   "wardentools.advancement.get_deaf.title": "Свето-шумовая пошла",
   "wardentools.advancement.get_deaf.description": "Накричи хотя бы на 8 существ",
   "wardentools.advancement.obtain_warden_armor_piece.title": "Кусок Хранителя",
-  "wardentools.advancement.obtain_warden_armor_piece.description": "Получи часть брони Хранителя"
+  "wardentools.advancement.obtain_warden_armor_piece.description": "Получи часть брони Хранителя",
+  "wardentools.seconds_to_outline_block": "Обводка блока (в секундах)",
+  "wardentools.seconds_to_glow_entity": "Подсвечивание сущности (в секундах)",
+  "wardentools.outline_pos": "Обводка позиции"
 }

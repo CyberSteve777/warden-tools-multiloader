@@ -127,5 +127,8 @@
   "wardentools.advancement.get_deaf.title": "Deaf'em all",
   "wardentools.advancement.get_deaf.description": "Shriek on at least 8 entities",
   "wardentools.advancement.obtain_warden_armor_piece.title": "Piece of Warden",
-  "wardentools.advancement.obtain_warden_armor_piece.description": "Obtain any piece of Warden set"
+  "wardentools.advancement.obtain_warden_armor_piece.description": "Obtain any piece of Warden set",
+  "wardentools.seconds_to_outline_block": "Seconds of outlining block",
+  "wardentools.seconds_to_glow_entity": "Seconds of glowing entity",
+  "wardentools.outline_pos": "Outline position"
 }
