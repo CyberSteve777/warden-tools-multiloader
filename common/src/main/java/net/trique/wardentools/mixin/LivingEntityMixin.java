@@ -79,7 +79,7 @@ public abstract class LivingEntityMixin extends Entity {
     private boolean reduceDamageWithSculkScourge(DamageSource source, float amount, Operation<Boolean> original) {
         if (hasEffect(EffectRegistry.SCULK_SCOURGE) && (source.is(DamageTypes.SONIC_BOOM) ||
                 (source.getEntity() instanceof LivingEntity livingEntity &&
-                        (livingEntity.getType().is(WTEntityTypeTags.SCULK_BLESS_REDUCES_DAMAGE_FROM) ||
+                        (livingEntity.getType().is(WTEntityTypeTags.SCULK_SCOURGE_REDUCES_DAMAGE_FROM) ||
                                 livingEntity.hasEffect(EffectRegistry.SCULK_ADAPTION))))) {
             int amplifier = getEffect(EffectRegistry.SCULK_SCOURGE).getAmplifier();
             return original.call(source, amount * 0.1f * (amplifier + 1));
@@ -142,7 +142,7 @@ public abstract class LivingEntityMixin extends Entity {
     @WrapMethod(method = "hurt")
     public boolean applyExtraDamageFromSculkBless(DamageSource source, float amount, Operation<Boolean> original) {
         if (source.getEntity() instanceof LivingEntity attacker && attacker.hasEffect(EffectRegistry.SCULK_SCOURGE) &&
-                (getType().is(WTEntityTypeTags.SCULK_BLESS_DEALS_EXTRA_DAMAGE_TO) ||
+                (getType().is(WTEntityTypeTags.SCULK_SCOURGE_DEALS_EXTRA_DAMAGE_TO) ||
                         hasEffect(EffectRegistry.SCULK_ADAPTION))) {
             int amplifier = attacker.getEffect(EffectRegistry.SCULK_SCOURGE).getAmplifier();
             return original.call(source, amount * (1 + 0.25f * (1 + amplifier)));

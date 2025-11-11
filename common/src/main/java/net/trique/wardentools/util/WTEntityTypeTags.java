@@ -7,10 +7,10 @@ import net.minecraft.world.entity.EntityType;
 import static net.trique.wardentools.util.ModHelper.getLoc;
 
 public class WTEntityTypeTags {
-    public static final TagKey<EntityType<?>> SCULK_BLESS_DEALS_EXTRA_DAMAGE_TO =
-            create("sculk_bless_deals_extra_damage_to");
-    public static final TagKey<EntityType<?>> SCULK_BLESS_REDUCES_DAMAGE_FROM =
-            create("sculk_bless_reduces_damage_from");
+    public static final TagKey<EntityType<?>> SCULK_SCOURGE_DEALS_EXTRA_DAMAGE_TO =
+            create("sculk_scourge_deals_extra_damage_to");
+    public static final TagKey<EntityType<?>> SCULK_SCOURGE_REDUCES_DAMAGE_FROM =
+            create("sculk_scourge_reduces_damage_from");
 
 
     private static TagKey<EntityType<?>> create(String id) {
