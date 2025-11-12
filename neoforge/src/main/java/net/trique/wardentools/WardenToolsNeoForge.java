@@ -29,7 +29,7 @@ public class WardenToolsNeoForge {
         // project.
 
         // Use NeoForge to bootstrap the Common mod.
-        Constants.LOGGER.info("Hello NeoForge world!");
+//        Constants.LOGGER.info("Hello NeoForge world!");
         WardenToolsCommon.init();
         ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.SERVER, WTConfigServer.SPEC);
         ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIENT, WTConfigClient.SPEC);

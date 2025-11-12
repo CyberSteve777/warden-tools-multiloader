@@ -22,7 +22,7 @@ public class WardenToolsFabric implements ModInitializer {
         // project.
 
         // Use Fabric to bootstrap the Common mod.
-        Constants.LOGGER.info("Hello Fabric world!");
+//        Constants.LOGGER.info("Hello Fabric world!");
         WardenToolsCommon.init();
         WTPotionRecipeHelper.addPotionRecipes();
         WTGlobalLootTableModifierUtils.addModifiers();
