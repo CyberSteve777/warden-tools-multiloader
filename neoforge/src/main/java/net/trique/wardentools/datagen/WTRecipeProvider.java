@@ -66,9 +66,9 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
                 ECHO_APPLE.get(), 1);
         offerShapedEchoStaffRecipe(recipeOutput);
 
-        offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(), ECHO_STAFF.get(), ROSE_GOLD_INGOT.get(), RecipeCategory.COMBAT, ROSE_GOLD_UPGRADED_ECHO_STAFF.get());
-        offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(), ECHO_STAFF.get(), AMETHYST_INGOT.get(), RecipeCategory.COMBAT, AMETHYST_UPGRADED_ECHO_STAFF.get());
-        offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(), ECHO_STAFF.get(), Items.ENDER_EYE, RecipeCategory.COMBAT, ENDER_UPGRADED_ECHO_STAFF.get());
+        offerCustomUpgradeRecipe(recipeOutput, STAFF_UPGRADE_SMITHING_TEMPLATE.get(), ECHO_STAFF.get(), ROSE_GOLD_INGOT.get(), RecipeCategory.COMBAT, ROSE_GOLD_UPGRADED_ECHO_STAFF.get());
+        offerCustomUpgradeRecipe(recipeOutput, STAFF_UPGRADE_SMITHING_TEMPLATE.get(), ECHO_STAFF.get(), AMETHYST_INGOT.get(), RecipeCategory.COMBAT, AMETHYST_UPGRADED_ECHO_STAFF.get());
+        offerCustomUpgradeRecipe(recipeOutput, STAFF_UPGRADE_SMITHING_TEMPLATE.get(), ECHO_STAFF.get(), Items.ENDER_EYE, RecipeCategory.COMBAT, ENDER_UPGRADED_ECHO_STAFF.get());
         offerShapelessRoseGoldIngotRecipe(recipeOutput);
         offerShapelessSculkArrowRecipe(recipeOutput);
         offerShapelessWardenIngotRecipe(recipeOutput);

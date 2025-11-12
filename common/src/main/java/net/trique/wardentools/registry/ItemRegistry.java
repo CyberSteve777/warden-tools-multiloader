@@ -11,6 +11,7 @@ import net.trique.wardentools.item.material.WardenToolMaterials;
 import net.trique.wardentools.item.melee.*;
 import net.trique.wardentools.item.armor.WardenArmorItem;
 import net.trique.wardentools.item.armor.WardenMaskItem;
+import net.trique.wardentools.item.misc.StaffTemplateItem;
 import net.trique.wardentools.item.misc.WardenFoodItem;
 import net.trique.wardentools.item.misc.WardenTemplateItem;
 import net.trique.wardentools.item.staff.AmethystEchoStaffItem;
@@ -143,6 +144,8 @@ public class ItemRegistry {
 
     public static final RegistryObject<Item, WardenTemplateItem> WARDEN_UPGRADE_SMITHING_TEMPLATE =
             ITEMS.register("warden_upgrade_smithing_template", WardenTemplateItem::createWardenUpgrade);
+    public static final RegistryObject<Item, StaffTemplateItem> STAFF_UPGRADE_SMITHING_TEMPLATE =
+            ITEMS.register("staff_upgrade_smithing_template", StaffTemplateItem::createStaffUpgrade);
 
 
     public static Item.Properties getItemProperties() {

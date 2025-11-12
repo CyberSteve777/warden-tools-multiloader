@@ -96,6 +96,7 @@ public class CreativeTabRegistry {
                                 output.accept(ROSE_GOLD_INGOT.get());
                                 output.accept(AMETHYST_INGOT.get());
                                 output.accept(WARDEN_UPGRADE_SMITHING_TEMPLATE.get());
+                                output.accept(STAFF_UPGRADE_SMITHING_TEMPLATE.get());
                                 output.accept(WARDEN_SOUL.get());
                                 output.accept(SCULK_SHELL.get());
                                 output.accept(SHRIEKER_FANG.get());

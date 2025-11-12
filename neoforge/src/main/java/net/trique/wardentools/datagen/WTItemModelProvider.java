@@ -69,6 +69,7 @@ public class WTItemModelProvider extends ItemModelProvider {
         basicItem(WARDEN_MASK.get());
 
         basicItem(WARDEN_UPGRADE_SMITHING_TEMPLATE.get());
+        basicItem(STAFF_UPGRADE_SMITHING_TEMPLATE.get());
         basicItem(ECHO_APPLE.get());
 
         basicItem(WARDEN_SOUL.get());
