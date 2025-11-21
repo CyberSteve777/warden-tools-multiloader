@@ -11,6 +11,7 @@ import net.minecraft.tags.GameEventTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.gameevent.DynamicGameEventListener;
 import net.minecraft.world.level.gameevent.EntityPositionSource;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.PositionSource;
@@ -21,6 +22,7 @@ import net.trique.wardentools.networking.packet.AddBlockOutlinePacket;
 import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
 import net.trique.wardentools.platform.Services;
 import net.trique.wardentools.registry.EffectRegistry;
+import net.trique.wardentools.registry.GameEventRegistry;
 import net.trique.wardentools.util.WTGameEventTags;
 import software.bernie.geckolib.animatable.GeoItem;
 import org.jetbrains.annotations.Contract;
@@ -33,6 +35,7 @@ public class WardenCurseUser implements VibrationSystem {
     private final VibrationSystem.User vibrationUser;
     private final net.trique.wardentools.util.warden_curse.Ticker COOLDOWN_TICKER =
             new net.trique.wardentools.util.warden_curse.Ticker();
+    private final DynamicGameEventListener<Listener> GAME_EVENT_LISTENER = new DynamicGameEventListener<>(new Listener(this));
 
     public WardenCurseUser(LivingEntity livingEntity) {
         holder = livingEntity;
@@ -56,6 +59,10 @@ public class WardenCurseUser implements VibrationSystem {
     @Override
     public User getVibrationUser() {
         return vibrationUser;
+    }
+
+    public DynamicGameEventListener<Listener> getListener() {
+        return GAME_EVENT_LISTENER;
     }
 
     public int getExtraBonus() {
@@ -158,6 +165,7 @@ public class WardenCurseUser implements VibrationSystem {
                     }
                     serverLevel.playSound(null, holder.getX(), holder.getY(), holder.getZ(),
                             SoundEvents.WARDEN_TENDRIL_CLICKS, holder.getSoundSource(), 1.0F, holder.getVoicePitch());
+                    serverLevel.gameEvent(holder, GameEventRegistry.ENTITY_SOUND.asHolder(), holder.getEyePosition());
                 }
                 if (holder instanceof ServerPlayer player) {
                     int entity_glow_seconds = (int) (WTConfigServer.CONFIG.seconds_to_glow_entity.get() * 20);
