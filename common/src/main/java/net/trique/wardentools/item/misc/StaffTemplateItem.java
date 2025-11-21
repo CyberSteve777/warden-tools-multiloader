@@ -48,7 +48,7 @@ public class StaffTemplateItem extends SmithingTemplateItem {
         STAFF_UPGRADE_INGREDIENTS_TEXT = Component.translatable(Util.makeDescriptionId("item", ResourceLocation.parse("smithing_template.staff_upgrade.ingredients"))).withStyle(DESCRIPTION_FORMATTING);
         STAFF_UPGRADE_BASE_SLOT_DESCRIPTION_TEXT = Component.translatable(Util.makeDescriptionId("item", ResourceLocation.parse("smithing_template.staff_upgrade.base_slot_description")));
         STAFF_UPGRADE_ADDITIONS_SLOT_DESCRIPTION_TEXT = Component.translatable(Util.makeDescriptionId("item", ResourceLocation.parse("smithing_template.staff_upgrade.additions_slot_description")));
-        EMPTY_SLOT_STAFF = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/empty_slot_staff");
+        EMPTY_SLOT_STAFF = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/empty_slot_echo_staff");
         EMPTY_SLOT_ENDER_EYE = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/empty_slot_ender_eye");
     }
 }

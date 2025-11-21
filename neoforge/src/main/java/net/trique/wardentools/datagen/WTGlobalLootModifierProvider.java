@@ -35,6 +35,10 @@ public class WTGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
                 LootItemRandomChanceCondition.randomChance(0.1f).build()
         }, WARDEN_UPGRADE_SMITHING_TEMPLATE.get()));
+        add("add_staff_upgrade_smithing_template", new AddItemModifier(new LootItemCondition[]{
+                LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
+                LootItemRandomChanceCondition.randomChance(0.1f).build()
+        }, STAFF_UPGRADE_SMITHING_TEMPLATE.get()));
         add("add_sculk_shell", new AddItemModifier(new LootItemCondition[]{
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
                 LootItemRandomChanceCondition.randomChance(0.25f).build()

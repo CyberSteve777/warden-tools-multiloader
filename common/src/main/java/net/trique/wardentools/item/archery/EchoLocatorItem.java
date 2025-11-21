@@ -79,4 +79,8 @@ public class EchoLocatorItem extends BowItem {
     public Predicate<ItemStack> getAllSupportedProjectiles() {
         return itemStack -> itemStack.is(ItemRegistry.SCULK_ARROW.get());
     }
+
+    public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
+        return ingredient.is(ItemRegistry.SHRIEKER_FANG.get());
+    }
 }

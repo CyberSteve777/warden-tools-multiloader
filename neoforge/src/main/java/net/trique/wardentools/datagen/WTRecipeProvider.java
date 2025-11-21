@@ -26,7 +26,9 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput) {
         offerCustomSmithingTemplateCopyingRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE::get,
-                Items.DIAMOND, Items.COBBLED_DEEPSLATE);
+                SHRIEKER_FANG.get(), Items.COBBLED_DEEPSLATE);
+        offerCustomSmithingTemplateCopyingRecipe(recipeOutput, STAFF_UPGRADE_SMITHING_TEMPLATE::get,
+                Items.ECHO_SHARD, Items.COBBLED_DEEPSLATE);
 
         offerCustomUpgradeRecipe(recipeOutput, WARDEN_UPGRADE_SMITHING_TEMPLATE.get(),
                 SCULKIFIED_AXE.get(), WARDEN_INGOT.get(), RecipeCategory.COMBAT, WARDEN_AXE.get());
@@ -60,7 +62,7 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
         chestplate(recipeOutput, ECHO_INGOT.get(), SCULKIFIED_CHESTPLATE.get());
         leggings(recipeOutput, ECHO_INGOT.get(), SCULKIFIED_LEGGINGS.get());
         boots(recipeOutput, ECHO_INGOT.get(), SCULKIFIED_BOOTS.get());
-        offerCrossShapedRecipe(recipeOutput, RecipeCategory.MISC, ECHO_INGOT.get(), Items.AMETHYST_SHARD,
+        offerCrossShapedRecipe(recipeOutput, RecipeCategory.MISC, ROSE_GOLD_INGOT.get(), Items.AMETHYST_SHARD,
                 AMETHYST_INGOT.get(), 1);
         offerCrossShapedRecipe(recipeOutput, RecipeCategory.FOOD, Items.APPLE, Items.ECHO_SHARD,
                 ECHO_APPLE.get(), 1);

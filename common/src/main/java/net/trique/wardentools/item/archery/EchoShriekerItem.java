@@ -88,7 +88,7 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
     }
 
     public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
-        return ingredient.is(ItemRegistry.SHRIEKER_FANG.get());
+        return ingredient.is(ItemRegistry.WARDEN_INGOT.get());
     }
 
     private void spawnSonicBoom(ItemStack stack, ServerLevel world, LivingEntity user, float remainTicks) {
