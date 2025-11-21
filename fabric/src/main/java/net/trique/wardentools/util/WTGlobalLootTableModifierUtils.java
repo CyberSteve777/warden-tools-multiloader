@@ -32,6 +32,8 @@ public class WTGlobalLootTableModifierUtils {
         insertIDs();
         MODIFIERS.add(new AddItemModifier(new LootItemCondition[]{LootItemRandomChanceCondition.randomChance(.1f).build()},
                 Set.of(ANCIENT_CITY_LOOT_LOCATION), ItemRegistry.WARDEN_UPGRADE_SMITHING_TEMPLATE.get()));
+        MODIFIERS.add(new AddItemModifier(new LootItemCondition[]{LootItemRandomChanceCondition.randomChance(.1f).build()},
+                Set.of(ANCIENT_CITY_LOOT_LOCATION), ItemRegistry.STAFF_UPGRADE_SMITHING_TEMPLATE.get()));
 
         MODIFIERS.add(new AddItemModifier(new LootItemCondition[]{LootItemRandomChanceCondition.randomChance(.25f).build()},
                 Set.of(ANCIENT_CITY_LOOT_LOCATION), ItemRegistry.SCULK_SHELL.get()));

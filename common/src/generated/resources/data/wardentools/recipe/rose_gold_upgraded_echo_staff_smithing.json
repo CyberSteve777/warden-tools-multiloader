@@ -11,6 +11,6 @@
     "id": "wardentools:rose_gold_upgraded_echo_staff"
   },
   "template": {
-    "item": "wardentools:warden_upgrade_smithing_template"
+    "item": "wardentools:staff_upgrade_smithing_template"
   }
 }

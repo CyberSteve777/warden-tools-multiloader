@@ -68,7 +68,7 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
 
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
-        return ingredient.is(ItemRegistry.SCULK_SHELL.get());
+        return ingredient.is(ItemRegistry.ECHO_INGOT.get());
     }
 
     @Override

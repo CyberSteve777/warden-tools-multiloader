@@ -6,6 +6,7 @@ import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.SmithingTemplateItem;
+import net.trique.wardentools.Constants;
 
 import java.util.List;
 

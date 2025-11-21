@@ -13,6 +13,7 @@
     import net.minecraft.world.item.ItemStack;
     import net.minecraft.world.phys.AABB;
     import net.minecraft.world.phys.Vec3;
+    import net.trique.wardentools.registry.ItemRegistry;
     import net.trique.wardentools.registry.ParticleRegistry;
     import net.trique.wardentools.registry.TriggerTypeRegistry;
 
@@ -60,5 +61,10 @@
             if (user instanceof ServerPlayer player) {
                 TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, stack, hit);
             }
+        }
+
+        @Override
+        public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
+            return ingredient.is(ItemRegistry.ROSE_GOLD_INGOT.get());
         }
     }

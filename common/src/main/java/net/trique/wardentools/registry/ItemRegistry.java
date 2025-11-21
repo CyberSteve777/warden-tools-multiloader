@@ -113,7 +113,7 @@ public class ItemRegistry {
                     WTArmorSets.WARDEN_SET));
 
     public static final RegistryObject<Item, Item> SCULK_SHELL = ITEMS.register("sculk_shell", () ->
-            new Item(getFireResistantProperties().rarity(Rarity.RARE).food(WardenFoodItem.getSculkShellProperties())));
+            new Item(getFireResistantProperties().rarity(Rarity.EPIC).food(WardenFoodItem.getSculkShellProperties())));
 
     public static final RegistryObject<Item, Item> WARDEN_TENDRIL = ITEMS.register("warden_tendril", () ->
             new Item(getFireResistantProperties().rarity(Rarity.EPIC)));
@@ -128,16 +128,16 @@ public class ItemRegistry {
             new Item(getFireResistantProperties().rarity(Rarity.RARE)));
 
     public static final RegistryObject<Item, Item> WARDEN_INGOT = ITEMS.register("warden_ingot", () ->
-            new Item(getFireResistantProperties().rarity(Rarity.RARE)));
+            new Item(getFireResistantProperties().rarity(Rarity.EPIC)));
 
     public static final RegistryObject<Item, Item> ECHO_INGOT = ITEMS.register("echo_ingot", () ->
-            new Item(getItemProperties().rarity(Rarity.UNCOMMON)));
+            new Item(getItemProperties().rarity(Rarity.RARE)));
 
     public static final RegistryObject<Item, Item> ROSE_GOLD_INGOT = ITEMS.register("rose_gold_ingot", () ->
-            new Item(getFireResistantProperties().rarity(Rarity.UNCOMMON)));
+            new Item(getFireResistantProperties().rarity(Rarity.RARE)));
 
     public static final RegistryObject<Item, Item> AMETHYST_INGOT = ITEMS.register("amethyst_ingot", () ->
-            new Item(getFireResistantProperties().rarity(Rarity.UNCOMMON)));
+            new Item(getFireResistantProperties().rarity(Rarity.RARE)));
 
     public static final RegistryObject<Item, SculkArrowItem> SCULK_ARROW = ITEMS.register("sculk_arrow", () ->
             new SculkArrowItem(getFireResistantProperties()));

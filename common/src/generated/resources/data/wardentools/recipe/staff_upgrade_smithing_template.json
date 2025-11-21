@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "wardentools:shrieker_fang"
+      "item": "minecraft:echo_shard"
     },
     "C": {
       "item": "minecraft:cobbled_deepslate"
     },
     "S": {
-      "item": "wardentools:warden_upgrade_smithing_template"
+      "item": "wardentools:staff_upgrade_smithing_template"
     }
   },
   "pattern": [
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 2,
-    "id": "wardentools:warden_upgrade_smithing_template"
+    "id": "wardentools:staff_upgrade_smithing_template"
   }
 }

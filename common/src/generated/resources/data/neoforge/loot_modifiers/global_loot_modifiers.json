@@ -1,6 +1,7 @@
 {
   "entries": [
     "wardentools:add_warden_upgrade_smithing_template",
+    "wardentools:add_staff_upgrade_smithing_template",
     "wardentools:add_sculk_shell",
     "wardentools:add_echo_apple",
     "wardentools:add_extra_echo_shards",
