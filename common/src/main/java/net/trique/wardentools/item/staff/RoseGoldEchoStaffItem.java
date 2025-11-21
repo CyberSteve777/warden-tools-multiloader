@@ -30,7 +30,7 @@
         protected void spawnSonicBoom(ItemStack stack, ServerLevel world, LivingEntity user) {
             world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_BOOM, user.getSoundSource(), 5.0f, 1.0f);
             world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.TRIAL_SPAWNER_EJECT_ITEM, user.getSoundSource(), 4.0f, 1.0f);
-            Vec3 source = user.position().add(0.0, user.getEyeHeight(), 0.0);
+            Vec3 source = user.getEyePosition();
             float enhanced_distance = calculateFinalDistance(stack, world, distance);
             Vec3 target = source.add(user.getLookAngle().scale(enhanced_distance));
             Vec3 offsetToTarget = target.subtract(source);
