@@ -37,11 +37,8 @@ import java.util.function.BiConsumer;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
     @Unique
-    private final WardenCurseUser wardentools$wardenCurseUser = new WardenCurseUser((LivingEntity) (Object) this);
+    private WardenCurseUser wardentools$wardenCurseUser = null;
 
-    @Unique
-    private final DynamicGameEventListener<VibrationSystem.Listener> wardentools$dynamicGameEventListener =
-            new DynamicGameEventListener<>(new VibrationSystem.Listener(wardentools$wardenCurseUser));
 
     public LivingEntityMixin(EntityType<?> entityType, Level level) {
         super(entityType, level);
@@ -55,6 +52,12 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Shadow
     public abstract MobEffectInstance getEffect(Holder<MobEffect> effect);
+
+
+    @Unique
+    protected LivingEntity wardentools$getSelf() {
+        return (LivingEntity) (Object) this;
+    }
 
     @WrapMethod(method = "canBeAffected")
     private boolean preventDarknessIfSculkAdapted(MobEffectInstance effectInstance, Operation<Boolean> original) {
@@ -94,24 +97,44 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
     private void addVibrationDataFromWardenCurse(CompoundTag compound, CallbackInfo ci) {
-        VibrationSystem.Data.CODEC.encodeStart(NbtOps.INSTANCE, wardentools$wardenCurseUser.getVibrationData())
-                .resultOrPartial(Constants.LOGGER::warn)
-                .ifPresent(tag -> compound.put("WTWardenCurseVibrationData", tag));
+        if (wardentools$wardenCurseUser != null) {
+            VibrationSystem.Data.CODEC.encodeStart(NbtOps.INSTANCE, wardentools$wardenCurseUser.getVibrationData())
+                    .resultOrPartial(Constants.LOGGER::warn)
+                    .ifPresent(tag -> compound.put("WTWardenCurseVibrationData", tag));
+        }
+
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
     private void readVibrationDataForWardenCurse(CompoundTag compound, CallbackInfo ci) {
-        if (compound.contains("WTWardenCurseVibrationData", 10)) {
-            VibrationSystem.Data.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, compound.getCompound("WTVibrationData")))
-                    .resultOrPartial(Constants.LOGGER::warn).ifPresent(data -> wardentools$wardenCurseUser.setVibrationData(data));
+        if (hasEffect(EffectRegistry.WARDEN_CURSE)) {
+            wardentools$wardenCurseUser = new WardenCurseUser(wardentools$getSelf());
+            if (compound.contains("WTWardenCurseVibrationData", 10)) {
+                VibrationSystem.Data.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, compound.getCompound("WTVibrationData")))
+                        .resultOrPartial(Constants.LOGGER::warn).ifPresent(wardentools$wardenCurseUser::setVibrationData);
+            }
+        }
+    }
+
+    @Inject(method = "onEffectAdded", at = @At("TAIL"))
+    private void makeWardenCurseUser(MobEffectInstance effectInstance, Entity entity, CallbackInfo ci) {
+        if (effectInstance.is(EffectRegistry.WARDEN_CURSE)) {
+            wardentools$wardenCurseUser = new WardenCurseUser(wardentools$getSelf());
+        }
+    }
+
+    @Inject(method = "onEffectRemoved", at = @At("TAIL"))
+    private void removeWardenCurseUser(MobEffectInstance effectInstance, CallbackInfo ci) {
+        if (effectInstance.is(EffectRegistry.WARDEN_CURSE)) {
+            wardentools$wardenCurseUser = null;
         }
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void updateWardenCurseBonus(CallbackInfo ci) {
-        LivingEntity self = (LivingEntity) (Object) this;
+        LivingEntity self = wardentools$getSelf();
         if (this.level() instanceof ServerLevel level) {
-            if (self.hasEffect(EffectRegistry.WARDEN_CURSE)) {
+            if (wardentools$wardenCurseUser != null) {
                 Holder<Biome> currentBiome = level.getBiome(self.getOnPos());
                 if (currentBiome.is(WTBiomeTags.WARDEN_CURSE_RECEIVE_BONUS_IN) && wardentools$wardenCurseUser.getExtraBonus() == 0) {
                     wardentools$wardenCurseUser.setExtraBonus(16);
@@ -124,8 +147,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void tickWardenCurse(CallbackInfo ci) {
-        if (level() instanceof ServerLevel serverLevel) {
-//            Constants.LOGGER.info("amplifier: {}", wardentools$echolocateUser.getAmplifier());
+        if (level() instanceof ServerLevel serverLevel && wardentools$wardenCurseUser != null) {
             VibrationSystem.Ticker.tick(serverLevel, wardentools$wardenCurseUser.getVibrationData(),
                     wardentools$wardenCurseUser.getVibrationUser());
             wardentools$wardenCurseUser.tickCooldown();
@@ -134,8 +156,8 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Override
     public void updateDynamicGameEventListener(BiConsumer<DynamicGameEventListener<?>, ServerLevel> listenerConsumer) {
-        if (level() instanceof ServerLevel level) {
-            listenerConsumer.accept(wardentools$dynamicGameEventListener, level);
+        if (level() instanceof ServerLevel level && wardentools$wardenCurseUser != null) {
+            listenerConsumer.accept(wardentools$wardenCurseUser.getListener(), level);
         }
     }
 
