@@ -97,7 +97,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
     private void addVibrationDataFromWardenCurse(CompoundTag compound, CallbackInfo ci) {
-        if (hasEffect(EffectRegistry.WARDEN_CURSE) && wardentools$wardenCurseUser != null) {
+        if (wardentools$wardenCurseUser != null) {
             VibrationSystem.Data.CODEC.encodeStart(NbtOps.INSTANCE, wardentools$wardenCurseUser.getVibrationData())
                     .resultOrPartial(Constants.LOGGER::warn)
                     .ifPresent(tag -> compound.put("WTWardenCurseVibrationData", tag));
@@ -134,7 +134,7 @@ public abstract class LivingEntityMixin extends Entity {
     private void updateWardenCurseBonus(CallbackInfo ci) {
         LivingEntity self = wardentools$getSelf();
         if (this.level() instanceof ServerLevel level) {
-            if (self.hasEffect(EffectRegistry.WARDEN_CURSE)) {
+            if (wardentools$wardenCurseUser != null) {
                 Holder<Biome> currentBiome = level.getBiome(self.getOnPos());
                 if (currentBiome.is(WTBiomeTags.WARDEN_CURSE_RECEIVE_BONUS_IN) && wardentools$wardenCurseUser.getExtraBonus() == 0) {
                     wardentools$wardenCurseUser.setExtraBonus(16);
@@ -148,7 +148,6 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "tick", at = @At("HEAD"))
     private void tickWardenCurse(CallbackInfo ci) {
         if (level() instanceof ServerLevel serverLevel && wardentools$wardenCurseUser != null) {
-//            Constants.LOGGER.info("amplifier: {}", wardentools$echolocateUser.getAmplifier());
             VibrationSystem.Ticker.tick(serverLevel, wardentools$wardenCurseUser.getVibrationData(),
                     wardentools$wardenCurseUser.getVibrationUser());
             wardentools$wardenCurseUser.tickCooldown();
