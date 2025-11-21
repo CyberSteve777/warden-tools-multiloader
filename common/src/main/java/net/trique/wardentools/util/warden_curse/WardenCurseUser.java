@@ -18,8 +18,8 @@ import net.minecraft.world.level.gameevent.PositionSource;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
 import net.trique.wardentools.config.WTConfigServer;
 import net.trique.wardentools.item.armor.WardenMaskItem;
-import net.trique.wardentools.networking.packet.AddBlockOutlinePacket;
-import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
+import net.trique.wardentools.networking.packet.S2CAddBlockOutlinePacket;
+import net.trique.wardentools.networking.packet.S2CAddEntityGlowPacket;
 import net.trique.wardentools.platform.Services;
 import net.trique.wardentools.registry.EffectRegistry;
 import net.trique.wardentools.registry.GameEventRegistry;
@@ -171,15 +171,15 @@ public class WardenCurseUser implements VibrationSystem {
                     int entity_glow_seconds = (int) (WTConfigServer.CONFIG.seconds_to_glow_entity.get() * 20);
                     int block_outline_seconds = (int) (WTConfigServer.CONFIG.seconds_to_outline_block.get() * 20);
                     if (entity != null && !entity.equals(holder)) {
-                        Services.PACKET_HELPER.sendPacket(player, new AddEntityGlowPacket(entity.getId(),
+                        Services.PACKET_HELPER.sendPacket(player, new S2CAddEntityGlowPacket(entity.getId(),
                                 entity_glow_seconds));
-                        Services.PACKET_HELPER.sendPacket(player, new AddBlockOutlinePacket(blockPos,
+                        Services.PACKET_HELPER.sendPacket(player, new S2CAddBlockOutlinePacket(blockPos,
                                 block_outline_seconds));
                     }
                     if (possibleShooter != null && !possibleShooter.equals(holder)) {
-                        Services.PACKET_HELPER.sendPacket(player, new AddEntityGlowPacket(possibleShooter.getId(),
+                        Services.PACKET_HELPER.sendPacket(player, new S2CAddEntityGlowPacket(possibleShooter.getId(),
                                 entity_glow_seconds));
-                        Services.PACKET_HELPER.sendPacket(player, new AddBlockOutlinePacket(
+                        Services.PACKET_HELPER.sendPacket(player, new S2CAddBlockOutlinePacket(
                                 possibleShooter.getOnPos().above(), block_outline_seconds
                         ));
                     }

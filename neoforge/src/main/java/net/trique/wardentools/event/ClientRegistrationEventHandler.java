@@ -8,8 +8,10 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.trique.wardentools.Constants;
+import net.trique.wardentools.client.WTKeybinds;
 import net.trique.wardentools.client.renderer.SculkArrowRenderer;
 import net.trique.wardentools.particle.*;
 import net.trique.wardentools.registry.EntityRegistry;
@@ -56,5 +58,10 @@ public class ClientRegistrationEventHandler {
         ItemProperties.register(ItemRegistry.ECHO_LOCATOR.get(), ResourceLocation.parse("pulling"),
                 (stack, world, entity, seed) -> entity != null && entity.isUsingItem()
                         && entity.getUseItem() == stack ? 1.0f : 0.0f);
+    }
+
+    @SubscribeEvent
+    public static void registerKeybinds(RegisterKeyMappingsEvent event) {
+        event.register(WTKeybinds.CONSUME_CHARGES);
     }
 }

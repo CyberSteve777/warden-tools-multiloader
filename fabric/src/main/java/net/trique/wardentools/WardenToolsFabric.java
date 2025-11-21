@@ -6,8 +6,9 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.neoforged.fml.config.ModConfig;
 import net.trique.wardentools.config.WTConfigClient;
 import net.trique.wardentools.config.WTConfigServer;
-import net.trique.wardentools.networking.packet.AddBlockOutlinePacket;
-import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
+import net.trique.wardentools.networking.packet.PacketHandler;
+import net.trique.wardentools.networking.packet.S2CAddBlockOutlinePacket;
+import net.trique.wardentools.networking.packet.S2CAddEntityGlowPacket;
 import net.trique.wardentools.util.WTGlobalLootTableModifierUtils;
 import net.trique.wardentools.util.WTPotionRecipeHelper;
 import net.trique.wardentools.worldgen.WardenWorldGeneration;
@@ -28,8 +29,7 @@ public class WardenToolsFabric implements ModInitializer {
         WTGlobalLootTableModifierUtils.addModifiers();
 //        WTLootTableModifiers.modifyLootTables();
         WardenWorldGeneration.generateWardenWorldGen();
-        PayloadTypeRegistry.playS2C().register(AddEntityGlowPacket.TYPE, AddEntityGlowPacket.CODEC);
-        PayloadTypeRegistry.playS2C().register(AddBlockOutlinePacket.TYPE, AddBlockOutlinePacket.CODEC);
+        PacketHandler.registerPackets();
         NeoForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, WTConfigServer.SPEC);
         NeoForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.CLIENT, WTConfigClient.SPEC);
     }

@@ -106,7 +106,7 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
     public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
         if (world instanceof ServerLevel serverLevel && user instanceof Player player) {
             ItemStack echoShardStack = findEchoShard(player);
-            spawnSonicBoom(stack, serverLevel, player);
+            spawnSonicBoom(stack, serverLevel, user);
             if (!player.hasInfiniteMaterials()) {
                 echoShardStack.shrink(1);
                 player.getCooldowns().addCooldown(this, cooldown);

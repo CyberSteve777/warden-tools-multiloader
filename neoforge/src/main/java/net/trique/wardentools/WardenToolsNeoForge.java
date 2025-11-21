@@ -12,8 +12,10 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.trique.wardentools.config.WTConfigClient;
 import net.trique.wardentools.config.WTConfigServer;
 import net.trique.wardentools.loot.ModLootModifiers;
-import net.trique.wardentools.networking.packet.AddBlockOutlinePacket;
-import net.trique.wardentools.networking.packet.AddEntityGlowPacket;
+import net.trique.wardentools.networking.packet.PacketHandler;
+import net.trique.wardentools.networking.packet.S2CAddBlockOutlinePacket;
+import net.trique.wardentools.networking.packet.S2CAddEntityGlowPacket;
+import net.trique.wardentools.platform.NeoForgePlatformHelper;
 import net.trique.wardentools.platform.Services;
 import net.trique.wardentools.util.warden_curse.WardenCurseClientHelper;
 
@@ -42,12 +44,7 @@ public class WardenToolsNeoForge {
     }
 
     private void setupPackets(final RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar registrar = event.registrar(Constants.MOD_ID).versioned("1").optional();
-        registrar.playToClient(AddEntityGlowPacket.TYPE, AddEntityGlowPacket.CODEC, (message, context) -> context.enqueueWork(() -> {
-            WardenCurseClientHelper.addEntity(message.id(), message.ticks());
-        }));
-        registrar.playToClient(AddBlockOutlinePacket.TYPE, AddBlockOutlinePacket.CODEC, (message, context) -> context.enqueueWork(() -> {
-            if (CONFIG.outline_pos.get()) WardenCurseClientHelper.addBlockPos(message.pos(), message.ticks());
-        }));
+        NeoForgePlatformHelper.setRegistrar(event.registrar(Constants.MOD_ID).versioned("1").optional());
+        PacketHandler.registerPackets();
     }
 }
