@@ -171,17 +171,16 @@ public class WardenCurseUser implements VibrationSystem {
                     int entity_glow_seconds = (int) (WTConfigServer.CONFIG.seconds_to_glow_entity.get() * 20);
                     int block_outline_seconds = (int) (WTConfigServer.CONFIG.seconds_to_outline_block.get() * 20);
                     if (entity != null && !entity.equals(holder)) {
-                        Services.PACKET_HELPER.sendPacket(player, new S2CAddEntityGlowPacket(entity.getId(),
-                                entity_glow_seconds));
-                        Services.PACKET_HELPER.sendPacket(player, new S2CAddBlockOutlinePacket(blockPos,
-                                block_outline_seconds));
+                        Services.PLATFORM.sendToClient(new S2CAddEntityGlowPacket(entity.getId(),
+                                entity_glow_seconds), player);
+                        Services.PLATFORM.sendToClient(new S2CAddBlockOutlinePacket(blockPos,
+                                block_outline_seconds), player);
                     }
                     if (possibleShooter != null && !possibleShooter.equals(holder)) {
-                        Services.PACKET_HELPER.sendPacket(player, new S2CAddEntityGlowPacket(possibleShooter.getId(),
-                                entity_glow_seconds));
-                        Services.PACKET_HELPER.sendPacket(player, new S2CAddBlockOutlinePacket(
-                                possibleShooter.getOnPos().above(), block_outline_seconds
-                        ));
+                        Services.PLATFORM.sendToClient(new S2CAddEntityGlowPacket(possibleShooter.getId(),
+                                entity_glow_seconds), player);
+                        Services.PLATFORM.sendToClient(new S2CAddBlockOutlinePacket(
+                                possibleShooter.getOnPos().above(), block_outline_seconds), player);
                     }
                 }
             }
