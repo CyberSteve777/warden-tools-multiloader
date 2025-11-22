@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.trique.wardentools.client.WTKeybinds;
 import net.trique.wardentools.networking.packet.S2CAddBlockOutlinePacket;
+import net.trique.wardentools.util.ClientFunctions;
 import net.trique.wardentools.util.WTRegModelUtil;
 import net.trique.wardentools.client.renderer.SculkArrowRenderer;
 import net.trique.wardentools.networking.packet.S2CAddEntityGlowPacket;
@@ -39,6 +40,7 @@ public class WardenToolsFabricClient implements ClientModInitializer {
         ClientTickEvents.START_CLIENT_TICK.register((client) -> {
             WardenCurseClientHelper.tickClientGlowingEntities();
             WardenCurseClientHelper.tickOutlinedBlocks();
+            ClientFunctions.handleClientTick();
         });
         WorldRenderEvents.AFTER_TRANSLUCENT.register(worldRenderContext ->
                 WardenCurseClientHelper.renderOutlinedBlocks(worldRenderContext.matrixStack()));

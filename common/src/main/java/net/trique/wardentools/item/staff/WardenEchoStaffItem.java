@@ -7,7 +7,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.trique.wardentools.Constants;
 import net.trique.wardentools.registry.DataComponentRegistry;
+import net.trique.wardentools.util.WardenEchoStaffHelper;
 
 public class WardenEchoStaffItem extends EchoStaffItem {
     public WardenEchoStaffItem(Properties settings, int cooldown, int useDuration, int distance, int particleDelta, float damage, double horizontalKnockbackCoefficient, double verticalKnockbackCoefficient) {
@@ -50,13 +52,13 @@ public class WardenEchoStaffItem extends EchoStaffItem {
 
     private boolean shouldPerformSpecialAttack(ItemStack stack, LivingEntity user) {
         int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
-        if (user instanceof Player) {
-            return charges > 0;
+        if (user instanceof Player player) {
+            return charges > 0 && WardenEchoStaffHelper.playerPressedButton(player.getId());
         }
         return charges == 5;
     }
 
     protected void performSpecialAttack(ItemStack stack, ServerLevel world, LivingEntity user) {
-
+        Constants.LOGGER.info("Special Attack!");
     }
 }

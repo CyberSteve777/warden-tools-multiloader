@@ -6,6 +6,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.trique.wardentools.Constants;
+import net.trique.wardentools.util.ClientFunctions;
 import net.trique.wardentools.util.warden_curse.WardenCurseClientHelper;
 
 @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
@@ -20,5 +21,10 @@ public class ClientTickEventHandler {
     private static void renderBlocks(final RenderLevelStageEvent event) {
         if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) return;
         WardenCurseClientHelper.renderOutlinedBlocks(event.getPoseStack());
+    }
+
+    @SubscribeEvent
+    public static void clientFillRenderPositions(final ClientTickEvent.Pre event) {
+        ClientFunctions.handleClientTick();
     }
 }

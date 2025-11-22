@@ -14,10 +14,7 @@ import net.trique.wardentools.item.armor.WardenMaskItem;
 import net.trique.wardentools.item.misc.StaffTemplateItem;
 import net.trique.wardentools.item.misc.WardenFoodItem;
 import net.trique.wardentools.item.misc.WardenTemplateItem;
-import net.trique.wardentools.item.staff.AmethystEchoStaffItem;
-import net.trique.wardentools.item.staff.EchoStaffItem;
-import net.trique.wardentools.item.staff.EnderEchoStaffItem;
-import net.trique.wardentools.item.staff.RoseGoldEchoStaffItem;
+import net.trique.wardentools.item.staff.*;
 import net.trique.wardentools.registration.RegistrationProvider;
 import net.trique.wardentools.registration.RegistryObject;
 
@@ -26,6 +23,9 @@ public class ItemRegistry {
 
     public static final RegistryObject<Item, EchoStaffItem> ECHO_STAFF = ITEMS.register("echo_staff",
             () -> new EchoStaffItem(getItemProperties().rarity(Rarity.EPIC).durability(76),
+                    80, 20, 20, 7, 10.0f, 5.0, 1.0));
+    public static final RegistryObject<Item, WardenEchoStaffItem> WARDEN_ECHO_STAFF = ITEMS.register("warden_echo_staff",
+            () -> new WardenEchoStaffItem(getItemProperties().rarity(Rarity.EPIC).durability(76),
                     80, 20, 20, 7, 10.0f, 5.0, 1.0));
 
     public static final RegistryObject<Item, AmethystEchoStaffItem> AMETHYST_UPGRADED_ECHO_STAFF = ITEMS.register("amethyst_upgraded_echo_staff",

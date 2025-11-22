@@ -9,6 +9,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
+import net.trique.wardentools.client.WTKeybinds;
+import net.trique.wardentools.networking.packet.C2SKeybindPacket;
 
 import java.util.List;
 
@@ -30,5 +32,10 @@ public class ClientFunctions {
 
     public static LocalPlayer getLocalPlayer() {
         return Minecraft.getInstance().player;
+    }
+    public static void handleClientTick() {
+        while (WTKeybinds.CONSUME_CHARGES.isDown()) {
+            C2SKeybindPacket.sendToServer(KeyAction.CONSUME_CHARGES);
+        }
     }
 }

@@ -2,6 +2,8 @@ package net.trique.wardentools;
 
 import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.neoforged.fml.config.ModConfig;
 import net.trique.wardentools.config.WTConfigClient;
@@ -11,6 +13,7 @@ import net.trique.wardentools.networking.packet.S2CAddBlockOutlinePacket;
 import net.trique.wardentools.networking.packet.S2CAddEntityGlowPacket;
 import net.trique.wardentools.util.WTGlobalLootTableModifierUtils;
 import net.trique.wardentools.util.WTPotionRecipeHelper;
+import net.trique.wardentools.util.WardenEchoStaffHelper;
 import net.trique.wardentools.worldgen.WardenWorldGeneration;
 
 public class WardenToolsFabric implements ModInitializer {
@@ -30,6 +33,7 @@ public class WardenToolsFabric implements ModInitializer {
 //        WTLootTableModifiers.modifyLootTables();
         WardenWorldGeneration.generateWardenWorldGen();
         PacketHandler.registerPackets();
+        ServerTickEvents.START_WORLD_TICK.register(world -> WardenEchoStaffHelper.clearAllPresses());
         NeoForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, WTConfigServer.SPEC);
         NeoForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.CLIENT, WTConfigClient.SPEC);
     }

@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.trique.wardentools.util.KeyAction;
 import net.trique.wardentools.util.ModHelper;
+import net.trique.wardentools.util.WardenEchoStaffHelper;
 
 
 public record C2SKeybindPacket(KeyAction action) implements C2SModPacket<RegistryFriendlyByteBuf> {
@@ -23,7 +24,7 @@ public record C2SKeybindPacket(KeyAction action) implements C2SModPacket<Registr
     public void handleServer(ServerPlayer player) {
         switch (action) {
             case CONSUME_CHARGES -> {
-
+                WardenEchoStaffHelper.addPlayer(player.getId());
             }
         }
     }
