@@ -10,7 +10,7 @@ import net.trique.wardentools.util.KeyAction;
 import net.trique.wardentools.util.ModHelper;
 
 
-public record C2SKeybindPacket<KeyA>(KeyAction action) implements C2SModPacket<RegistryFriendlyByteBuf> {
+public record C2SKeybindPacket(KeyAction action) implements C2SModPacket<RegistryFriendlyByteBuf> {
 
     public static final ResourceLocation ID = ModHelper.getLoc("keybind");
 
