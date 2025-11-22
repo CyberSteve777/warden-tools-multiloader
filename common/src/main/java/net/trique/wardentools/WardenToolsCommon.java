@@ -27,6 +27,7 @@ public class WardenToolsCommon {
         WardenArmorMaterials.init();
         ParticleRegistry.init();
         PotionRegistry.init();
+        DataComponentRegistry.init();
         EnchantmentEffectComponentRegistry.init();
         EntityRegistry.init();
         TriggerTypeRegistry.init();
