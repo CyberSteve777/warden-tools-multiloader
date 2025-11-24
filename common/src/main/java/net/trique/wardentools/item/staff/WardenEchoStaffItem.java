@@ -37,7 +37,7 @@ public class WardenEchoStaffItem extends EchoStaffItem {
             }
             player.awardStat(Stats.ITEM_USED.get(this));
         }
-        return super.finishUsingItem(stack, world, user);
+        return stack;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class WardenEchoStaffItem extends EchoStaffItem {
     }
 
     private boolean shouldPerformSpecialAttack(ItemStack stack, LivingEntity user) {
-        int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
+        int charges = calculateAmountOfChargesToConsume(stack, user);
         if (user instanceof Player player) {
             return charges > 0 && WardenEchoStaffHelper.playerPressedButton(player, KeyAction.CONSUME_CHARGES);
         }
