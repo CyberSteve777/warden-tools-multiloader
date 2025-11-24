@@ -34,8 +34,8 @@ public class ClientFunctions {
         return Minecraft.getInstance().player;
     }
     public static void handleClientTick() {
-        while (WTKeybinds.CONSUME_CHARGES.isDown()) {
-            C2SKeybindPacket.sendToServer(KeyAction.CONSUME_CHARGES);
+        if(getLocalPlayer() != null) {//this can run outside the world
+            C2SKeybindPacket.sendToServer(KeyAction.CONSUME_CHARGES, WTKeybinds.CONSUME_CHARGES.isDown());
         }
     }
 }

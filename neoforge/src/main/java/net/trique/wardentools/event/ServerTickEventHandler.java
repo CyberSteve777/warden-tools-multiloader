@@ -11,6 +11,5 @@ import net.trique.wardentools.util.WardenEchoStaffHelper;
 public class ServerTickEventHandler {
     @SubscribeEvent
     public static void clientFillRenderPositions(final ServerTickEvent.Pre event) {
-        WardenEchoStaffHelper.clearAllPresses();
     }
 }

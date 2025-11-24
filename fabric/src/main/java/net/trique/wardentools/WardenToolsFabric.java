@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.neoforged.fml.config.ModConfig;
+import net.trique.wardentools.attachments.CommonDataAttachments;
 import net.trique.wardentools.config.WTConfigClient;
 import net.trique.wardentools.config.WTConfigServer;
 import net.trique.wardentools.networking.packet.PacketHandler;
@@ -28,12 +29,13 @@ public class WardenToolsFabric implements ModInitializer {
         // Use Fabric to bootstrap the Common mod.
 //        Constants.LOGGER.info("Hello Fabric world!");
         WardenToolsCommon.init();
+        CommonDataAttachments.init();
         WTPotionRecipeHelper.addPotionRecipes();
         WTGlobalLootTableModifierUtils.addModifiers();
 //        WTLootTableModifiers.modifyLootTables();
         WardenWorldGeneration.generateWardenWorldGen();
         PacketHandler.registerPackets();
-        ServerTickEvents.START_WORLD_TICK.register(world -> WardenEchoStaffHelper.clearAllPresses());
+        ServerTickEvents.START_WORLD_TICK.register(world -> {});
         NeoForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, WTConfigServer.SPEC);
         NeoForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.CLIENT, WTConfigClient.SPEC);
     }
