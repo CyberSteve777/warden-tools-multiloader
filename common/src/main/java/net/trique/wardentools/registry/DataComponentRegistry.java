@@ -17,11 +17,6 @@ public class DataComponentRegistry {
             DATA_COMPONENT_PROVIDER.register("charge_count", () -> DataComponentType.<Integer>builder().
                     persistent(Codec.INT).networkSynchronized(ByteBufCodecs.INT).build());
 
-    public static RegistryObject<DataComponentType<?>, DataComponentType<Boolean>> SPECIAL_ATTACK =
-            DATA_COMPONENT_PROVIDER.register("special_attack", () -> DataComponentType.<Boolean>builder()
-                    .networkSynchronized(ByteBufCodecs.BOOL).build());
-
-
     public static void init() {
         Constants.LOGGER.info("Registering warden data components...");
     }
