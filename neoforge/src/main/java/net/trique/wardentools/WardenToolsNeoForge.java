@@ -9,6 +9,8 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import net.neoforged.neoforge.registries.RegisterEvent;
+import net.trique.wardentools.attachments.CommonDataAttachments;
 import net.trique.wardentools.config.WTConfigClient;
 import net.trique.wardentools.config.WTConfigServer;
 import net.trique.wardentools.loot.ModLootModifiers;
@@ -41,6 +43,7 @@ public class WardenToolsNeoForge {
             ModLoadingContext.get().getActiveContainer().registerExtensionPoint(IConfigScreenFactory.class,
                     ConfigurationScreen::new);
         }
+        eventBus.addListener(RegisterEvent.class,event -> CommonDataAttachments.init());
     }
 
     private void setupPackets(final RegisterPayloadHandlersEvent event) {

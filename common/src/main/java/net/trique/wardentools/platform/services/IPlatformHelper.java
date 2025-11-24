@@ -4,8 +4,11 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.trique.wardentools.attachments.CommonDataAttachment;
 import net.trique.wardentools.networking.packet.C2SModPacket;
 import net.trique.wardentools.networking.packet.S2CModPacket;
+import org.jetbrains.annotations.Nullable;
 
 public interface IPlatformHelper {
 
@@ -43,6 +46,20 @@ public interface IPlatformHelper {
 
         return isDevelopmentEnvironment() ? "development" : "production";
     }
+
+    <T> void registerDataAttachment(CommonDataAttachment<T> attachment);
+    @Nullable
+    <T> T getAttachedValue(Object object, CommonDataAttachment<T> attachment);
+    default <T> T getOrCreateAttachedValue(Entity entity, CommonDataAttachment<T> attachment) {
+        T value = getAttachedValue(entity,attachment);
+        if (value!=null) {
+            return value;
+        }
+        setAttachedValue(entity,attachment,attachment.getDefaultValueSupplier().apply(entity));
+        T newValue = getAttachedValue(entity,attachment);
+        return newValue;
+    }
+    <T> void setAttachedValue(Object object, CommonDataAttachment<T> attachment,@Nullable T value);
 
     <MSG extends S2CModPacket<?>> void registerClientPlayPacket(CustomPacketPayload.Type<MSG> type, StreamCodec<RegistryFriendlyByteBuf,MSG> streamCodec);
     <MSG extends C2SModPacket<?>> void registerServerPlayPacket(CustomPacketPayload.Type<MSG> type, StreamCodec<RegistryFriendlyByteBuf,MSG> streamCodec);
