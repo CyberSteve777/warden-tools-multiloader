@@ -93,7 +93,7 @@ public class WardenEchoStaffItem extends EchoStaffItem {
 
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
             }
-
+            stack.set(DataComponentRegistry.CHARGE_COUNT.get(), Math.max(0, stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0) - charges));
         }
     }
 
