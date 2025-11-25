@@ -14,11 +14,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.trique.wardentools.Constants;
 import net.trique.wardentools.registry.DataComponentRegistry;
+import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.util.KeyAction;
-import net.trique.wardentools.util.WTEnchantmentHelper;
-import net.trique.wardentools.util.WTEnchantments;
 import net.trique.wardentools.util.WardenEchoStaffHelper;
 
 import java.util.List;
@@ -65,7 +63,7 @@ public class WardenEchoStaffItem extends EchoStaffItem {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        tooltipComponents.add(Component.literal("Charges: "+stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(),0)));
+        tooltipComponents.add(Component.literal("Charges: " + stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0)));
     }
 
     private boolean shouldPerformSpecialAttack(ItemStack stack, LivingEntity user) {
@@ -77,15 +75,13 @@ public class WardenEchoStaffItem extends EchoStaffItem {
     }
 
     protected void performSpecialAttack(ItemStack stack, ServerLevel world, LivingEntity user) {
-        int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
-        double r = calculateFinalDistance(stack, world,5);
+        int charges = calculateAmountOfChargesToConsume(stack, user);
+        double r = calculateFinalDistance(stack, world, 5);
         Vec3 center = user.position();
-        List<Entity> entities = world.getEntities(user,new AABB(center.x-r,center.y-r,center.z-r,
-                center.x+r,center.y+r,center.z+r),Entity::isAlive);
-
+        List<Entity> entities = world.getEntities(user, new AABB(center, center).inflate(r), it -> !(it.isAlive() && it.isAlliedTo(user)));
         for (Entity entity : entities) {
             double distSq = entity.distanceToSqr(center);
-            double scaled = (1+ charges/20d)/(distSq+1);
+            double scaled = (1 + charges / 20d) / (distSq + 1);
             DamageSource damageSource = world.damageSources().sonicBoom(user);
             entity.hurt(damageSource, calculateEnchantedDamage(world, stack, entity, damageSource, (float) (scaled * damage)));
 
@@ -99,7 +95,10 @@ public class WardenEchoStaffItem extends EchoStaffItem {
             }
 
         }
+    }
 
-        Constants.LOGGER.info("Special Attack!");
+    @Override
+    public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
+        return ingredient.is(ItemRegistry.WARDEN_INGOT.get());
     }
 }
