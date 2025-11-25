@@ -10,14 +10,12 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.GameEvent.Context;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.registry.ParticleRegistry;
 import net.trique.wardentools.registry.TriggerTypeRegistry;
 
@@ -46,13 +44,10 @@ public class EnderEchoStaffItem extends EchoStaffItem {
             Vec3 pos = source.add(normalized.scale(i));
             world.sendParticles(ParticleRegistry.ENDER_SONIC_BOOM.get(),
                     pos.x, pos.y, pos.z, 1, 0.0, 0.0, 0.0, 0.0);
-            hit.addAll(world.getEntitiesOfClass(LivingEntity.class,
+            hit.addAll(world.getEntities(user,
                     new AABB(BlockPos.containing(pos)).inflate(1),
-                    it -> !(it.isAlliedTo(user) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
+                    it -> !(it.isAlive() && it.isAlliedTo(user))));
         }
-
-        hit.remove(user);
-
         for (Entity hitTarget : hit) {
             DamageSource damageSource = world.damageSources().sonicBoom(user);
             hitTarget.hurt(world.damageSources().sonicBoom(user), calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));

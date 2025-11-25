@@ -44,12 +44,10 @@ public class AmethystEchoStaffItem extends EchoStaffItem {
             Vec3 particlePos = source.add(normalized.scale(particleIndex));
             world.sendParticles(ParticleRegistry.AMETHYST_SONIC_BOOM.get(), particlePos.x, particlePos.y, particlePos.z, 1, 0.0, 0.0, 0.0, 0.0);
 
-            hit.addAll(world.getEntitiesOfClass(LivingEntity.class, new AABB(new BlockPos((int) particlePos.x(),
+            hit.addAll(world.getEntities(user, new AABB(new BlockPos((int) particlePos.x(),
                             (int) particlePos.y(), (int) particlePos.z())).inflate(1),
-                    it -> !(it.isAlliedTo(user) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
+                    it -> !(it.isAlive() && it.isAlliedTo(user))));
         }
-
-        hit.remove(user);
 
         for (Entity hitTarget : hit) {
             DamageSource damageSource = world.damageSources().sonicBoom(user);
