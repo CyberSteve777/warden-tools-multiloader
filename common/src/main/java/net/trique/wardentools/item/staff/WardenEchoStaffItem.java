@@ -3,15 +3,22 @@ package net.trique.wardentools.item.staff;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.registry.DataComponentRegistry;
 import net.trique.wardentools.util.KeyAction;
+import net.trique.wardentools.util.WTEnchantmentHelper;
+import net.trique.wardentools.util.WTEnchantments;
 import net.trique.wardentools.util.WardenEchoStaffHelper;
 
 import java.util.List;
@@ -37,7 +44,7 @@ public class WardenEchoStaffItem extends EchoStaffItem {
             }
             player.awardStat(Stats.ITEM_USED.get(this));
         }
-        return super.finishUsingItem(stack, world, user);
+        return stack;
     }
 
     @Override
@@ -70,6 +77,29 @@ public class WardenEchoStaffItem extends EchoStaffItem {
     }
 
     protected void performSpecialAttack(ItemStack stack, ServerLevel world, LivingEntity user) {
+        int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
+        double r = calculateFinalDistance(stack, world,5);
+        Vec3 center = user.position();
+        List<Entity> entities = world.getEntities(user,new AABB(center.x-r,center.y-r,center.z-r,
+                center.x+r,center.y+r,center.z+r),Entity::isAlive);
+
+        for (Entity entity : entities) {
+            double distSq = entity.distanceToSqr(center);
+            double scaled = (1+ charges/20d)/(distSq+1);
+            DamageSource damageSource = world.damageSources().sonicBoom(user);
+            entity.hurt(damageSource, calculateEnchantedDamage(world, stack, entity, damageSource, (float) (scaled * damage)));
+
+            if (entity instanceof LivingEntity living) {
+                double vertical = verticalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+                double horizontal = horizontalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+
+                Vec3 normalized = entity.position().subtract(user.position()).normalize();
+
+                living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
+            }
+
+        }
+
         Constants.LOGGER.info("Special Attack!");
     }
 }
