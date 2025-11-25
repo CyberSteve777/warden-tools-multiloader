@@ -1,10 +1,10 @@
 package net.trique.wardentools.attachments;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.trique.wardentools.Constants;
 import net.trique.wardentools.platform.Services;
 import net.trique.wardentools.util.KeyAction;
 
@@ -35,6 +35,6 @@ public class CommonDataAttachments {
     }
 
     public static void init() {
-
+        Constants.LOGGER.info("Registering Warden Tools Data Attachments...");
     }
 }
