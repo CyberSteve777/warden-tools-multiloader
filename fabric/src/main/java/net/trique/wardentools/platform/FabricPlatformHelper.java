@@ -7,6 +7,8 @@ import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -107,6 +109,11 @@ public class FabricPlatformHelper implements IPlatformHelper {
     @Override
     public void sendToServer(C2SModPacket<?> msg) {
         ClientPlayNetworking.send(msg);
+    }
+
+    @Override
+    public SimpleParticleType getSimpleParticle() {
+        return FabricParticleTypes.simple();
     }
 
 }

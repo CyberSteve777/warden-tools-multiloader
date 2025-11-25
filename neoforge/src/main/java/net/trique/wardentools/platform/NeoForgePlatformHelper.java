@@ -1,6 +1,7 @@
 package net.trique.wardentools.platform;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -117,5 +118,8 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
         PacketDistributor.sendToServer(msg);
     }
 
-
+    @Override
+    public SimpleParticleType getSimpleParticle() {
+        return new SimpleParticleType(false);
+    }
 }
