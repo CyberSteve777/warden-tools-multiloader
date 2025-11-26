@@ -79,7 +79,8 @@ public class WardenEchoStaffItem extends EchoStaffItem {
         int charges = calculateAmountOfChargesToConsume(stack, user);
         double r = calculateFinalDistance(stack, world, 5);
         Vec3 center = user.position();
-        List<Entity> entities = world.getEntities(user, new AABB(center, center).inflate(r), it -> !(it.isAlive() && it.isAlliedTo(user)));
+        List<Entity> entities = world.getEntities(user, new AABB(center, center).inflate(r), it -> it.isAlive() &&
+                it.distanceToSqr(center) <= r * r && !(it.isAlliedTo(user)));
         for (Entity entity : entities) {
             double distSq = entity.distanceToSqr(center);
             double scaled = (1 + charges / 20d) / (distSq + 1);
