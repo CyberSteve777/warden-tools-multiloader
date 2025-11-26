@@ -14,6 +14,7 @@ import net.trique.wardentools.Constants;
 import net.trique.wardentools.client.WTKeybinds;
 import net.trique.wardentools.client.renderer.SculkArrowRenderer;
 import net.trique.wardentools.particle.*;
+import net.trique.wardentools.particle.sonic_wave.SonicWaveParticle;
 import net.trique.wardentools.registry.EntityRegistry;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.registry.ParticleRegistry;
@@ -24,6 +25,7 @@ public class ClientRegistrationEventHandler {
     @SubscribeEvent
     public static void registerParticleProviders(final RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ParticleRegistry.ECHO_PARTICLE.get(), EchoParticle.Factory::new);
+        event.registerSpriteSet(ParticleRegistry.SONIC_WAVE.get(), SonicWaveParticle.Factory::new);
         event.registerSpriteSet(ParticleRegistry.ROSE_GOLD_SONIC_BOOM.get(), RoseGoldSonicBoomParticle.Factory::new);
         event.registerSpriteSet(ParticleRegistry.AMETHYST_SONIC_BOOM.get(), AmethystSonicBoomParticle.Factory::new);
         event.registerSpriteSet(ParticleRegistry.ENDER_SONIC_BOOM.get(), EnderSonicBoomParticle.Factory::new);

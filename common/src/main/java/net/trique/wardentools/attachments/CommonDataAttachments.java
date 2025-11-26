@@ -35,6 +35,6 @@ public class CommonDataAttachments {
     }
 
     public static void init() {
-        Constants.LOGGER.info("Registering Warden Tools Data Attachments...");
+
     }
 }
