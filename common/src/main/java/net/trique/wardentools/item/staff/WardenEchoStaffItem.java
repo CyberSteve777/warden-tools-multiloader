@@ -14,6 +14,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.trique.wardentools.particle.sonic_wave.SonicWaveParticleOption;
 import net.trique.wardentools.registry.DataComponentRegistry;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.util.KeyAction;
@@ -93,7 +94,10 @@ public class WardenEchoStaffItem extends EchoStaffItem {
 
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
             }
-            stack.set(DataComponentRegistry.CHARGE_COUNT.get(), Math.max(0, stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0) - charges));
+        }
+        stack.set(DataComponentRegistry.CHARGE_COUNT.get(), Math.max(0, stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0) - charges));
+        for (int i = 0; i < 10; i++) {
+            world.sendParticles(new SonicWaveParticleOption(i * 5), center.x, center.y, center.z, 1, 0.0, 0.0, 0.0, 0);
         }
     }
 
