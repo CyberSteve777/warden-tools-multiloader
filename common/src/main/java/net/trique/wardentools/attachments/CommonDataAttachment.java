@@ -5,7 +5,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.trique.wardentools.Constants;
-import net.trique.wardentools.WardenToolsCommon;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
