@@ -49,23 +49,27 @@ public interface IPlatformHelper {
     }
 
     <T> void registerDataAttachment(CommonDataAttachment<T> attachment);
+
     @Nullable
     <T> T getAttachedValue(Object object, CommonDataAttachment<T> attachment);
+
     default <T> T getOrCreateAttachedValue(Entity entity, CommonDataAttachment<T> attachment) {
-        T value = getAttachedValue(entity,attachment);
-        if (value!=null) {
+        T value = getAttachedValue(entity, attachment);
+        if (value != null) {
             return value;
         }
-        setAttachedValue(entity,attachment,attachment.getDefaultValueSupplier().apply(entity));
-        T newValue = getAttachedValue(entity,attachment);
-        return newValue;
+        setAttachedValue(entity, attachment, attachment.getDefaultValueSupplier().apply(entity));
+        return getAttachedValue(entity, attachment);
     }
-    <T> void setAttachedValue(Object object, CommonDataAttachment<T> attachment,@Nullable T value);
 
-    <MSG extends S2CModPacket<?>> void registerClientPlayPacket(CustomPacketPayload.Type<MSG> type, StreamCodec<RegistryFriendlyByteBuf,MSG> streamCodec);
-    <MSG extends C2SModPacket<?>> void registerServerPlayPacket(CustomPacketPayload.Type<MSG> type, StreamCodec<RegistryFriendlyByteBuf,MSG> streamCodec);
+    <T> void setAttachedValue(Object object, CommonDataAttachment<T> attachment, @Nullable T value);
+
+    <MSG extends S2CModPacket<?>> void registerClientPlayPacket(CustomPacketPayload.Type<MSG> type, StreamCodec<RegistryFriendlyByteBuf, MSG> streamCodec);
+
+    <MSG extends C2SModPacket<?>> void registerServerPlayPacket(CustomPacketPayload.Type<MSG> type, StreamCodec<RegistryFriendlyByteBuf, MSG> streamCodec);
 
     void sendToClient(S2CModPacket<?> msg, ServerPlayer player);
+
     void sendToServer(C2SModPacket<?> msg);
 
     SimpleParticleType getSimpleParticle();
