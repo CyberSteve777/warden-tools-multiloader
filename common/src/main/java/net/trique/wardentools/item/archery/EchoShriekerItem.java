@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -65,7 +64,7 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
             int i = this.getUseDuration(stack, user) - remainingUseTicks;
             float loadAmount = getPowerForTime(i);
             ItemStack ammo = findEchoShard(player);
-            if (!((double) loadAmount < 0.1f)) {
+            if (loadAmount >= 0.1f) {
                 spawnSonicBoom(stack, serverLevel, user, loadAmount);
                 if (!player.isCreative()) {
                     player.getCooldowns().addCooldown(this, 120);
