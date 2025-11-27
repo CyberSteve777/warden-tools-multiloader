@@ -83,6 +83,7 @@ public class WTItemModelProvider extends ItemModelProvider {
 
         handheldItem(ENDER_UPGRADED_ECHO_STAFF.get());
 
+        handheldItem(WARDEN_ECHO_STAFF.get());
         basicItem(SCULK_ARROW.get());
         basicItem(SHRIEKER_FANG.get());
         bowItem(ECHO_SHRIEKER);
