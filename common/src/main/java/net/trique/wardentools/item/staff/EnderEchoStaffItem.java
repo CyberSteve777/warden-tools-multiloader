@@ -25,8 +25,8 @@ import java.util.Set;
 public class EnderEchoStaffItem extends EchoStaffItem {
 
 
-    public EnderEchoStaffItem(Properties settings, int cooldown, int useDuration, int distance, int particleDelta, float damage, double horizontalKnockbackCoefficient, double verticalKnockbackCoefficient) {
-        super(settings, cooldown, useDuration, distance, particleDelta, damage, horizontalKnockbackCoefficient, verticalKnockbackCoefficient);
+    public EnderEchoStaffItem(Properties settings, int cooldown, int distance, int particleDelta, float damage, double horizontalKnockbackCoefficient, double verticalKnockbackCoefficient) {
+        super(settings, cooldown, distance, particleDelta, damage, horizontalKnockbackCoefficient, verticalKnockbackCoefficient);
     }
 
     @Override

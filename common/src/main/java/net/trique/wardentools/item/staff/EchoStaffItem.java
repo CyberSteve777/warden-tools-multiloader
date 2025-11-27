@@ -36,19 +36,17 @@ import java.util.function.Predicate;
 
 public class EchoStaffItem extends Item implements ISonicBoomItem {
     protected int cooldown;
-    protected int useDuration;
     protected int distance;
     protected int particleDelta;
     protected float damage;
     protected double horizontalKnockbackCoefficient;
     protected double verticalKnockbackCoefficient;
 
-    public EchoStaffItem(Properties settings, int cooldown, int useDuration, int distance,
+    public EchoStaffItem(Properties settings, int cooldown, int distance,
                          int particleDelta, float damage, double horizontalKnockbackCoefficient,
                          double verticalKnockbackCoefficient) {
         super(settings.attributes(createAttributeModifiers()));
         this.cooldown = cooldown;
-        this.useDuration = useDuration;
         this.distance = distance;
         this.particleDelta = particleDelta;
         this.damage = damage;
@@ -91,7 +89,7 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
 
     @Override
     public int getUseDuration(ItemStack stack, LivingEntity usr) {
-        return useDuration;
+        return 72000;
     }
 
     @Override
@@ -104,18 +102,21 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
+    public void releaseUsing(ItemStack stack, Level world, LivingEntity user, int timeCharged) {
         if (world instanceof ServerLevel serverLevel && user instanceof Player player) {
             ItemStack echoShardStack = findEchoShard(player);
-            spawnSonicBoom(stack, serverLevel, user);
-            if (!player.hasInfiniteMaterials()) {
-                echoShardStack.shrink(1);
-                player.getCooldowns().addCooldown(this, cooldown);
-                stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+            int tick_progress = this.getUseDuration(stack, user) - timeCharged;
+            float progress = getChargePowerForTime(tick_progress);
+            if (progress >= 0.2f) {
+                spawnSonicBoom(stack, serverLevel, user);
+                if (!player.hasInfiniteMaterials()) {
+                    echoShardStack.shrink(1);
+                    player.getCooldowns().addCooldown(this, cooldown);
+                    stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+                }
+                player.awardStat(Stats.ITEM_USED.get(this));
             }
-            player.awardStat(Stats.ITEM_USED.get(this));
         }
-        return super.finishUsingItem(stack, world, user);
     }
 
     protected ItemStack findEchoShard(Player player) {
