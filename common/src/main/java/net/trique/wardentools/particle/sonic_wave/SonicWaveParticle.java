@@ -65,8 +65,10 @@ public class SonicWaveParticle extends TextureSheetParticle {
                                                  double ySpeed,
                                                  double zSpeed) {
             SonicWaveParticle particle = new SonicWaveParticle(clientLevel, x, y, z, option.delay());
+            float scale = option.radius();
             particle.pickSprite(this.sprite);
             particle.setAlpha(1.0F);
+            particle.scale(scale*2f);
             return particle;
         }
     }

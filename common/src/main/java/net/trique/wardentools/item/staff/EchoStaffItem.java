@@ -159,5 +159,6 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
         if (user instanceof ServerPlayer player) {
             TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, stack, hit);
         }
+
     }
 }

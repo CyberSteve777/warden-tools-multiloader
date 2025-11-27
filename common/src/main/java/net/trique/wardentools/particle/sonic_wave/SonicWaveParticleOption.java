@@ -10,12 +10,16 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.trique.wardentools.registry.ParticleRegistry;
 
-public record SonicWaveParticleOption(int delay) implements ParticleOptions {
+public record SonicWaveParticleOption(int delay,float radius) implements ParticleOptions {
     public static final MapCodec<SonicWaveParticleOption> CODEC = RecordCodecBuilder.mapCodec(
-            instance -> instance.group(Codec.INT.fieldOf("delay").forGetter(SonicWaveParticleOption::delay)).apply(instance, SonicWaveParticleOption::new)
+            instance -> instance.group(
+                    Codec.INT.fieldOf("delay").forGetter(SonicWaveParticleOption::delay),
+                    Codec.FLOAT.fieldOf("radius").forGetter(SonicWaveParticleOption::radius)
+            ).apply(instance, SonicWaveParticleOption::new)
     );
     public static final StreamCodec<RegistryFriendlyByteBuf, SonicWaveParticleOption> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.VAR_INT, instance -> instance.delay, SonicWaveParticleOption::new
+            ByteBufCodecs.VAR_INT, instance -> instance.delay,
+            ByteBufCodecs.FLOAT, SonicWaveParticleOption::radius,SonicWaveParticleOption::new
     );
 
     @Override

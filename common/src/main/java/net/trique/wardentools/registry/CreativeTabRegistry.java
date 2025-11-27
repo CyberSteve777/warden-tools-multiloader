@@ -72,6 +72,7 @@ public class CreativeTabRegistry {
                                 output.accept(WARDEN_LEGGINGS.get());
                                 output.accept(WARDEN_BOOTS.get());
                                 output.accept(ECHO_STAFF.get());
+                                output.accept(WARDEN_ECHO_STAFF.get());
                                 output.accept(ROSE_GOLD_UPGRADED_ECHO_STAFF.get());
                                 output.accept(AMETHYST_UPGRADED_ECHO_STAFF.get());
                                 output.accept(ENDER_UPGRADED_ECHO_STAFF.get());
