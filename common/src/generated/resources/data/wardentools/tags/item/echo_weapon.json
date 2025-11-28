@@ -1,9 +1,7 @@
 {
   "values": [
+    "#wardentools:echo_staff_upgrade",
     "wardentools:echo_staff",
-    "wardentools:rose_gold_upgraded_echo_staff",
-    "wardentools:amethyst_upgraded_echo_staff",
-    "wardentools:ender_upgraded_echo_staff",
     "wardentools:echo_shrieker"
   ]
 }
