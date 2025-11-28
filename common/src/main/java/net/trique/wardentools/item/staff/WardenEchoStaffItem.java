@@ -30,28 +30,33 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static net.trique.wardentools.config.WTConfigServer.CONFIG;
+
 public class WardenEchoStaffItem extends EchoStaffItem {
-    public WardenEchoStaffItem(Properties settings, int cooldown, int useDuration, int distance, int particleDelta, float damage, double horizontalKnockbackCoefficient, double verticalKnockbackCoefficient) {
-        super(settings, cooldown, useDuration, distance, particleDelta, damage, horizontalKnockbackCoefficient, verticalKnockbackCoefficient);
+    public WardenEchoStaffItem(Properties settings, int cooldown, int distance, int particleDelta, float damage, double horizontalKnockbackCoefficient, double verticalKnockbackCoefficient) {
+        super(settings, cooldown, distance, particleDelta, damage, horizontalKnockbackCoefficient, verticalKnockbackCoefficient);
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
+    public void releaseUsing(ItemStack stack, Level world, LivingEntity user, int timeCharged) {
         if (world instanceof ServerLevel serverLevel && user instanceof Player player) {
             ItemStack echoShardStack = findEchoShard(player);
-            if (shouldPerformSpecialAttack(stack, user)) {
-                performSpecialAttack(stack, serverLevel, user);
-            } else {
-                spawnSonicBoom(stack, serverLevel, user);
+            int tick_progress = this.getUseDuration(stack, user) - timeCharged;
+            float progress = getChargePowerForTime(tick_progress);
+            if (progress >= 0.2f) {
+                if (shouldPerformSpecialAttack(stack, user)) {
+                    performSpecialAttack(stack, serverLevel, user, progress);
+                } else {
+                    spawnSonicBoom(stack, serverLevel, user);
+                }
+                if (!player.hasInfiniteMaterials()) {
+                    echoShardStack.shrink(1);
+                    player.getCooldowns().addCooldown(this, cooldown);
+                    stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+                }
+                player.awardStat(Stats.ITEM_USED.get(this));
             }
-            if (!player.hasInfiniteMaterials()) {
-                echoShardStack.shrink(1);
-                player.getCooldowns().addCooldown(this, cooldown);
-                stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
-            }
-            player.awardStat(Stats.ITEM_USED.get(this));
         }
-        return stack;
     }
 
     @Override
@@ -82,9 +87,9 @@ public class WardenEchoStaffItem extends EchoStaffItem {
                 double horizontal = horizontalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
             }
-            if (!hitTarget.isAlive()){
+            if (!hitTarget.isAlive()) {
                 int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
-                stack.set(DataComponentRegistry.CHARGE_COUNT.get(), ++charges);
+                stack.set(DataComponentRegistry.CHARGE_COUNT.get(), Math.min(++charges, CONFIG.max_charges.get()));
             }
         }
         if (user instanceof ServerPlayer player) {
@@ -93,12 +98,12 @@ public class WardenEchoStaffItem extends EchoStaffItem {
 
     }
 
-    private int calculateAmountOfChargesToConsume(ItemStack stack, LivingEntity user) {
+    private int calculateAmountOfChargesToConsume(ItemStack stack, LivingEntity user, float progress) {
         if (user instanceof Player) {
             int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
-            return Math.min(5, charges);
+            return Math.min(Mth.floor(progress * CONFIG.max_charges.get()), charges);
         }
-        return 5;
+        return CONFIG.max_charges.get();
     }
 
     @Override
@@ -108,22 +113,25 @@ public class WardenEchoStaffItem extends EchoStaffItem {
     }
 
     private boolean shouldPerformSpecialAttack(ItemStack stack, LivingEntity user) {
-        int charges = calculateAmountOfChargesToConsume(stack, user);
+        int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
+        boolean res = charges > 0;
         if (user instanceof Player player) {
-            return charges > 0 && WardenEchoStaffHelper.playerPressedButton(player, KeyAction.CONSUME_CHARGES);
+            res &= WardenEchoStaffHelper.playerPressedButton(player, KeyAction.CONSUME_CHARGES);
         }
-        return charges == 5;
+        return res;
     }
 
-    protected void performSpecialAttack(ItemStack stack, ServerLevel world, LivingEntity user) {
-        int charges = calculateAmountOfChargesToConsume(stack, user);
+    protected void performSpecialAttack(ItemStack stack, ServerLevel world, LivingEntity user, float progress) {
+        world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_BOOM, user.getSoundSource(), 5.0f, 1.0f);
+        int charges = calculateAmountOfChargesToConsume(stack, user, progress);
         float r = calculateFinalDistance(stack, world, 5);
         Vec3 center = user.position();
-        List<Entity> entities = world.getEntities(user, new AABB(center, center).inflate(r), it -> it.isAlive() &&
-                it.distanceToSqr(center) <= r * r && !(it.isAlliedTo(user)));
+        world.sendParticles(new SonicWaveParticleOption(0, r), center.x, center.y, center.z, 1, 0.0, 0.0, 0.0, 0);
+        Set<Entity> entities = new HashSet<>(world.getEntities(user, new AABB(center, center).inflate(r), it -> it.isAlive() &&
+                it.distanceToSqr(center) <= r * r && !(it.isAlliedTo(user))));
         for (Entity entity : entities) {
             float distSq = entity.distanceTo(user);
-            float final_damage = calculateDamage(damage,distSq,charges,r);
+            float final_damage = calculateDamage(damage, distSq, charges, r);
             DamageSource damageSource = world.damageSources().sonicBoom(user);
             entity.hurt(damageSource, calculateEnchantedDamage(world, stack, entity, damageSource, final_damage));
 
@@ -136,11 +144,10 @@ public class WardenEchoStaffItem extends EchoStaffItem {
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
             }
         }
+        if (user instanceof ServerPlayer player) {
+            TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, stack, entities);
+        }
         stack.set(DataComponentRegistry.CHARGE_COUNT.get(), Math.max(0, stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0) - charges));
-//        for (int i = 0; i < 10; i++) {
-//
-//        }
-        world.sendParticles(new SonicWaveParticleOption(0,r),center.x, center.y, center.z, 1, 0.0, 0.0, 0.0, 0);
     }
 
     @Override
@@ -148,13 +155,13 @@ public class WardenEchoStaffItem extends EchoStaffItem {
         return ingredient.is(ItemRegistry.WARDEN_INGOT.get());
     }
 
-    private float calculateDamage(float base_damage, float distance, int charges, float radius){
-        float damage = base_damage*1.5f;
+    private float calculateDamage(float base_damage, float distance, int charges, float radius) {
+        float damage = base_damage * 1.5f;
         float damage_per_stack_multiplier = 0.1f;
-        float maxMinDamage = damage/2;
-        damage = damage * (1+(charges*damage_per_stack_multiplier));
-        float falloff_multiplier = (damage-maxMinDamage) / radius;
-        damage -= falloff_multiplier*(distance-1);
+        float maxMinDamage = damage / 2;
+        damage = damage * (1 + (charges * damage_per_stack_multiplier));
+        float falloff_multiplier = (damage - maxMinDamage) / radius;
+        damage -= falloff_multiplier * (distance - 1);
         return damage;
     }
 }
