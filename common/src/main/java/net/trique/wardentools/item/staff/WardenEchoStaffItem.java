@@ -38,12 +38,12 @@ public class WardenEchoStaffItem extends EchoStaffItem {
     }
 
     @Override
-    public void releaseUsing(ItemStack stack, Level world, LivingEntity user, int timeCharged) {
+    public void releaseUsing(ItemStack stack, Level world, LivingEntity user, int remainingUsageTicks) {
         if (world instanceof ServerLevel serverLevel && user instanceof Player player) {
             ItemStack echoShardStack = findEchoShard(player);
-            int tick_progress = this.getUseDuration(stack, user) - timeCharged;
+            int tick_progress = this.getUseDuration(stack, user) - remainingUsageTicks;
             float progress = getChargePowerForTime(tick_progress);
-            if (progress >= 0.2f) {
+            if (progress >= 0.5f) {
                 if (shouldPerformSpecialAttack(stack, user)) {
                     performSpecialAttack(stack, serverLevel, user, progress);
                 } else {
