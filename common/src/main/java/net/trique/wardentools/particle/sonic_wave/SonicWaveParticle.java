@@ -15,7 +15,7 @@ public class SonicWaveParticle extends TextureSheetParticle {
         super(level, x, y, z, 0.0, 0.0, 0.0);
         this.delay = delay;
         this.quadSize = 0.85F;
-        this.lifetime = 10;
+        this.lifetime = 7;
         this.gravity = 0.0F;
         this.xd = 0.0;
         this.yd = 0.0;
@@ -68,7 +68,7 @@ public class SonicWaveParticle extends TextureSheetParticle {
                                        double ySpeed,
                                        double zSpeed) {
             SonicWaveParticle particle = new SonicWaveParticle(clientLevel, x, y, z, option.delay());
-            float scale = option.radius() * 5f;
+            float scale = option.radius() * 8f;
             particle.pickSprite(this.sprite);
             particle.setAlpha(1.0F);
             particle.scale(scale);
