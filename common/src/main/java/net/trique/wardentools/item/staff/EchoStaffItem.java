@@ -107,7 +107,7 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
             ItemStack echoShardStack = findEchoShard(player);
             int tick_progress = this.getUseDuration(stack, user) - timeCharged;
             float progress = getChargePowerForTime(tick_progress);
-            if (progress >= 0.2f) {
+            if (progress >= 0.5f) {
                 spawnSonicBoom(stack, serverLevel, user);
                 if (!player.hasInfiniteMaterials()) {
                     echoShardStack.shrink(1);
