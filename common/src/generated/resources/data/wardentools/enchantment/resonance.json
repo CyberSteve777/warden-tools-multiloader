@@ -1,0 +1,30 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "translate": "enchantment.wardentools.resonance"
+  },
+  "effects": {
+    "wardentools:reduce_cooldown": {
+      "type": "minecraft:add",
+      "value": {
+        "type": "minecraft:linear",
+        "base": -0.15,
+        "per_level_above_first": -0.15
+      }
+    }
+  },
+  "max_cost": {
+    "base": 25,
+    "per_level_above_first": 10
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 10
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#wardentools:enchantable/echo_weapon",
+  "weight": 1
+}

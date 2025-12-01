@@ -21,7 +21,10 @@ public class WTEnchantmentTagsProvider extends EnchantmentTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         tag(EnchantmentTags.TREASURE)
                 .add(WTEnchantments.PROPAGATION)
-                .add(WTEnchantments.SONIC_BOOST);
+                .add(WTEnchantments.RESONANCE);
+        tag(EnchantmentTags.NON_TREASURE)
+                .add(WTEnchantments.SONIC_BOOST)
+                .add(WTEnchantments.SONIC_PUNCH);
         tag(Tags.Enchantments.WEAPON_DAMAGE_ENHANCEMENTS)
                 .add(WTEnchantments.SONIC_BOOST);
     }

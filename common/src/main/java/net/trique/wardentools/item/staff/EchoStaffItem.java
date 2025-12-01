@@ -29,6 +29,7 @@ import net.minecraft.world.phys.Vec3;
 import net.trique.wardentools.item.util.ISonicBoomItem;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.registry.TriggerTypeRegistry;
+import net.trique.wardentools.util.WTEnchantmentHelper;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,18 +38,16 @@ import java.util.function.Predicate;
 public class EchoStaffItem extends Item implements ISonicBoomItem {
     protected int cooldown;
     protected int distance;
-    protected int particleDelta;
     protected float damage;
-    protected double horizontalKnockbackCoefficient;
-    protected double verticalKnockbackCoefficient;
+    protected float horizontalKnockbackCoefficient;
+    protected float verticalKnockbackCoefficient;
 
     public EchoStaffItem(Properties settings, int cooldown, int distance,
-                         int particleDelta, float damage, double horizontalKnockbackCoefficient,
-                         double verticalKnockbackCoefficient) {
+                         float damage, float horizontalKnockbackCoefficient,
+                         float verticalKnockbackCoefficient) {
         super(settings.attributes(createAttributeModifiers()));
         this.cooldown = cooldown;
         this.distance = distance;
-        this.particleDelta = particleDelta;
         this.damage = damage;
         this.horizontalKnockbackCoefficient = horizontalKnockbackCoefficient;
         this.verticalKnockbackCoefficient = verticalKnockbackCoefficient;
@@ -111,7 +110,7 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
                 spawnSonicBoom(stack, serverLevel, user);
                 if (!player.hasInfiniteMaterials()) {
                     echoShardStack.shrink(1);
-                    player.getCooldowns().addCooldown(this, cooldown);
+                    player.getCooldowns().addCooldown(this, WTEnchantmentHelper.getCooldown(serverLevel, stack, cooldown));
                     stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
                 }
                 player.awardStat(Stats.ITEM_USED.get(this));
@@ -139,7 +138,7 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
         Vec3 normalized = offsetToTarget.normalize();
 
         Set<Entity> hit = new HashSet<>();
-        for (int particleIndex = 1; particleIndex <= Mth.floor(offsetToTarget.length()) + particleDelta; ++particleIndex) {
+        for (int particleIndex = 1; particleIndex <= Mth.floor(offsetToTarget.length()) + 7; ++particleIndex) {
             Vec3 particlePos = source.add(normalized.scale(particleIndex));
             world.sendParticles(ParticleTypes.SONIC_BOOM, particlePos.x, particlePos.y, particlePos.z, 1, 0.0, 0.0, 0.0, 0.0);
 
@@ -152,8 +151,8 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
             DamageSource damageSource = world.damageSources().sonicBoom(user);
             hitTarget.hurt(damageSource, calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
             if (hitTarget instanceof LivingEntity living) {
-                double vertical = verticalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
-                double horizontal = horizontalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+                float vertical = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource, verticalKnockbackCoefficient * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)));
+                float horizontal = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource, horizontalKnockbackCoefficient * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)));
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
             }
         }

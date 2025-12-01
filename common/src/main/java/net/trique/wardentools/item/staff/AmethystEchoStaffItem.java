@@ -17,6 +17,7 @@ import net.minecraft.world.phys.Vec3;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.registry.ParticleRegistry;
 import net.trique.wardentools.registry.TriggerTypeRegistry;
+import net.trique.wardentools.util.WTEnchantmentHelper;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,8 +25,8 @@ import java.util.Set;
 public class AmethystEchoStaffItem extends EchoStaffItem {
 
 
-    public AmethystEchoStaffItem(Properties settings, int cooldown, int distance, int particleDelta, float damage, double horizontalKnockbackCoefficient, double verticalKnockbackCoefficient) {
-        super(settings, cooldown, distance, particleDelta, damage, horizontalKnockbackCoefficient, verticalKnockbackCoefficient);
+    public AmethystEchoStaffItem(Properties settings, int cooldown, int distance, float damage, float horizontalKnockbackCoefficient, float verticalKnockbackCoefficient) {
+        super(settings, cooldown, distance, damage, horizontalKnockbackCoefficient, verticalKnockbackCoefficient);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class AmethystEchoStaffItem extends EchoStaffItem {
         Vec3 normalized = offsetToTarget.normalize();
 
         Set<Entity> hit = new HashSet<>();
-        for (int particleIndex = 1; particleIndex <= Mth.floor(offsetToTarget.length()) + particleDelta; ++particleIndex) {
+        for (int particleIndex = 1; particleIndex <= Mth.floor(offsetToTarget.length()) + 7; ++particleIndex) {
             Vec3 particlePos = source.add(normalized.scale(particleIndex));
             world.sendParticles(ParticleRegistry.AMETHYST_SONIC_BOOM.get(), particlePos.x, particlePos.y, particlePos.z, 1, 0.0, 0.0, 0.0, 0.0);
 
@@ -53,8 +54,8 @@ public class AmethystEchoStaffItem extends EchoStaffItem {
             hitTarget.hurt(damageSource, calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
             if(hitTarget instanceof LivingEntity living) {
                 living.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 60, 1));
-                double vertical = verticalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
-                double horizontal = horizontalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+                double vertical = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource,  verticalKnockbackCoefficient * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)));
+                double horizontal = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource,  horizontalKnockbackCoefficient * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)));
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
             }
         }

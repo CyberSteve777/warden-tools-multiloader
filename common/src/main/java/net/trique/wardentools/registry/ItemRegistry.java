@@ -23,22 +23,22 @@ public class ItemRegistry {
 
     public static final RegistryObject<Item, EchoStaffItem> ECHO_STAFF = ITEMS.register("echo_staff",
             () -> new EchoStaffItem(getItemProperties().rarity(Rarity.EPIC).durability(75),
-                    80, 20, 7, 10.0f, 5.0, 1.0));
+                    100, 20, 10.0f, 5.0f, 1.0f));
     public static final RegistryObject<Item, WardenEchoStaffItem> WARDEN_ECHO_STAFF = ITEMS.register("warden_echo_staff",
             () -> new WardenEchoStaffItem(getItemProperties().rarity(Rarity.EPIC).durability(100),
-                    80, 20, 7, 15.0f, 5.0, 1.0));
+                    100, 20, 15.0f, 5.0f, 1.0f));
 
     public static final RegistryObject<Item, AmethystEchoStaffItem> AMETHYST_UPGRADED_ECHO_STAFF = ITEMS.register("amethyst_upgraded_echo_staff",
             () -> new AmethystEchoStaffItem(getItemProperties().rarity(Rarity.EPIC).durability(85),
-                    60, 20, 7, 10.0f, 7.5, 1.5));
+                    80, 20, 10.0f, 7.5f, 1.5f));
 
     public static final RegistryObject<Item, EnderEchoStaffItem> ENDER_UPGRADED_ECHO_STAFF = ITEMS.register("ender_upgraded_echo_staff",
             () -> new EnderEchoStaffItem(getItemProperties().rarity(Rarity.EPIC).durability(80),
-                    80, 20, 7, 10.0f, 5.0, 1.0));
+                    100, 20, 10.0f, 5.0f, 1.0f));
 
     public static final RegistryObject<Item, RoseGoldEchoStaffItem> ROSE_GOLD_UPGRADED_ECHO_STAFF = ITEMS.register("rose_gold_upgraded_echo_staff",
             () -> new RoseGoldEchoStaffItem(getItemProperties().rarity(Rarity.EPIC).durability(90),
-                    80, 40, 7, 20.0f, 2.5, 0.5));
+                    100, 40, 20.0f, 2.5f, 0.5f));
 
     public static final RegistryObject<Item, EchoShriekerItem> ECHO_SHRIEKER = ITEMS.register("echo_shrieker",
             () -> new EchoShriekerItem(getFireResistantProperties().rarity(Rarity.EPIC).durability(50)));
