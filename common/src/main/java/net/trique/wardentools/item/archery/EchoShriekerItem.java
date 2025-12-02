@@ -114,8 +114,8 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
             float baseDamage = calculateBaseDamage(remainTicks, distanceToTarget);
             DamageSource damageSource = world.damageSources().sonicBoom(user);
             float enchantedDamage = calculateEnchantedDamage(world, stack, hitTarget, damageSource, baseDamage);
-            hitTarget.hurt(damageSource, enchantedDamage);
             if (hitTarget instanceof LivingEntity living) {
+                hitTarget.hurt(damageSource, enchantedDamage);
                 living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
                 living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
                 living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 160, 2));
