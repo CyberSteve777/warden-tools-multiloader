@@ -17,6 +17,9 @@ public class EnchantmentEffectComponentRegistry {
     public static RegistryObject<DataComponentType<?>, DataComponentType<EnchantmentValueEffect>> INCREASE_RANGE =
             register("increase_range",
             (builder -> builder.persistent(EnchantmentValueEffect.CODEC)));
+    public static RegistryObject<DataComponentType<?>, DataComponentType<EnchantmentValueEffect>> REDUCE_COOLDOWN =
+            register("reduce_cooldown",
+            (builder -> builder.persistent(EnchantmentValueEffect.CODEC)));
 
 
     public static void init() {

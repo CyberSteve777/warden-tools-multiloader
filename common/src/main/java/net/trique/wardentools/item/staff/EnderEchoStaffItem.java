@@ -25,8 +25,8 @@ import java.util.Set;
 public class EnderEchoStaffItem extends EchoStaffItem {
 
 
-    public EnderEchoStaffItem(Properties settings, int cooldown, int distance, int particleDelta, float damage, double horizontalKnockbackCoefficient, double verticalKnockbackCoefficient) {
-        super(settings, cooldown, distance, particleDelta, damage, horizontalKnockbackCoefficient, verticalKnockbackCoefficient);
+    public EnderEchoStaffItem(Properties settings, int cooldown, int distance, float damage, float horizontalKnockbackCoefficient, float verticalKnockbackCoefficient) {
+        super(settings, cooldown, distance, damage, horizontalKnockbackCoefficient, verticalKnockbackCoefficient);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class EnderEchoStaffItem extends EchoStaffItem {
         Vec3 normalized = offsetToTarget.normalize();
 
         Set<Entity> hit = new HashSet<>();
-        for (int i = 1; i <= Mth.floor(offsetToTarget.length()) + particleDelta; ++i) {
+        for (int i = 1; i <= Mth.floor(offsetToTarget.length()) + 7; ++i) {
             Vec3 pos = source.add(normalized.scale(i));
             world.sendParticles(ParticleRegistry.ENDER_SONIC_BOOM.get(),
                     pos.x, pos.y, pos.z, 1, 0.0, 0.0, 0.0, 0.0);

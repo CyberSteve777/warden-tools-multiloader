@@ -5,6 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -26,6 +27,14 @@ public class WTEnchantmentHelper extends EnchantmentHelper {
                     serverLevel.getRandom(), level, mutablefloat);
         }));
         return mutablefloat.floatValue();
+    }
+
+    public static int getCooldown(ServerLevel serverLevel, ItemStack tool, int baseCooldown) {
+        MutableFloat mutableFloat = new MutableFloat(1);
+        runIterationOnItem(tool, ((holder, level) -> holder.value().modifyUnfilteredValue(
+                EnchantmentEffectComponentRegistry.REDUCE_COOLDOWN.get(), serverLevel.getRandom(), level, mutableFloat
+        )));
+        return Mth.floor(baseCooldown * mutableFloat.floatValue());
     }
 
     public static int getMaxLevelForIncreaseEntityDrop(ItemStack tool, LootContext context) {

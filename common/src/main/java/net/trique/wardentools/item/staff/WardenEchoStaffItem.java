@@ -24,6 +24,7 @@ import net.trique.wardentools.registry.DataComponentRegistry;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.registry.TriggerTypeRegistry;
 import net.trique.wardentools.util.KeyAction;
+import net.trique.wardentools.util.WTEnchantmentHelper;
 import net.trique.wardentools.util.WardenEchoStaffHelper;
 
 import java.util.HashSet;
@@ -33,8 +34,8 @@ import java.util.Set;
 import static net.trique.wardentools.config.WTConfigServer.CONFIG;
 
 public class WardenEchoStaffItem extends EchoStaffItem {
-    public WardenEchoStaffItem(Properties settings, int cooldown, int distance, int particleDelta, float damage, double horizontalKnockbackCoefficient, double verticalKnockbackCoefficient) {
-        super(settings, cooldown, distance, particleDelta, damage, horizontalKnockbackCoefficient, verticalKnockbackCoefficient);
+    public WardenEchoStaffItem(Properties settings, int cooldown, int distance, float damage, float horizontalKnockbackCoefficient, float verticalKnockbackCoefficient) {
+        super(settings, cooldown, distance, damage, horizontalKnockbackCoefficient, verticalKnockbackCoefficient);
     }
 
     @Override
@@ -51,7 +52,7 @@ public class WardenEchoStaffItem extends EchoStaffItem {
                 }
                 if (!player.hasInfiniteMaterials()) {
                     echoShardStack.shrink(1);
-                    player.getCooldowns().addCooldown(this, cooldown);
+                    player.getCooldowns().addCooldown(this, WTEnchantmentHelper.getCooldown(serverLevel, stack, cooldown));
                     stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
                 }
                 player.awardStat(Stats.ITEM_USED.get(this));
@@ -70,7 +71,7 @@ public class WardenEchoStaffItem extends EchoStaffItem {
         Vec3 normalized = offsetToTarget.normalize();
 
         Set<Entity> hit = new HashSet<>();
-        for (int particleIndex = 1; particleIndex <= Mth.floor(offsetToTarget.length()) + particleDelta; ++particleIndex) {
+        for (int particleIndex = 1; particleIndex <= Mth.floor(offsetToTarget.length()) + 7; ++particleIndex) {
             Vec3 particlePos = source.add(normalized.scale(particleIndex));
             world.sendParticles(ParticleTypes.SONIC_BOOM, particlePos.x, particlePos.y, particlePos.z, 1, 0.0, 0.0, 0.0, 0.0);
 
@@ -81,11 +82,13 @@ public class WardenEchoStaffItem extends EchoStaffItem {
 
         for (Entity hitTarget : hit) {
             DamageSource damageSource = world.damageSources().sonicBoom(user);
-
+            hitTarget.hurt(damageSource, calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
             if (hitTarget instanceof LivingEntity living) {
                 living.hurt(damageSource, calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
                 double vertical = verticalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 double horizontal = horizontalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+                double vertical = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource,  verticalKnockbackCoefficient * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)));
+                double horizontal = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource,  horizontalKnockbackCoefficient * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)));
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
             }
             if (!hitTarget.isAlive()) {
@@ -127,15 +130,15 @@ public class WardenEchoStaffItem extends EchoStaffItem {
         int charges = calculateAmountOfChargesToConsume(stack, user, progress);
         float r = calculateFinalDistance(stack, world, 5);
         Vec3 center = user.position();
-        for(int i=0;i<3;i++){
-            world.sendParticles(new SonicWaveParticleOption(i*2, r), center.x, center.y, center.z, 1, 0.0, 0.0, 0.0, 0);
-        }
+        world.sendParticles(new SonicWaveParticleOption(0, r), center.x, center.y, center.z, 1, 0.0, 0.0, 0.0, 0);
         Set<Entity> entities = new HashSet<>(world.getEntities(user, new AABB(center, center).inflate(r), it -> it.isAlive() &&
                 it.distanceToSqr(center) <= r * r && !(it.isAlliedTo(user))));
         for (Entity entity : entities) {
             float distSq = entity.distanceTo(user);
             float final_damage = calculateDamage(damage, distSq, charges, r);
             DamageSource damageSource = world.damageSources().sonicBoom(user);
+            entity.hurt(damageSource, calculateEnchantedDamage(world, stack, entity, damageSource, final_damage));
+
             if (entity instanceof LivingEntity living) {
                 living.hurt(damageSource, calculateEnchantedDamage(world, stack, entity, damageSource, final_damage));
                 double vertical = verticalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));

@@ -71,10 +71,13 @@ public class WTItemTagsProvider extends ItemTagsProvider {
         tag(WTItemTags.ECHO_WEAPON)
                 .addTag(WTItemTags.ECHO_STAFF_UPGRADE)
                 .add(
-                ECHO_STAFF.get(),
-                ECHO_SHRIEKER.get()
-        );
+                        ECHO_STAFF.get(),
+                        ECHO_SHRIEKER.get()
+                );
         tag(WTItemTags.ECHO_WEAPON_ENCHANTABLE).addTag(WTItemTags.ECHO_WEAPON);
+        tag(WTItemTags.ECHO_WEAPON_KNOCKBACK_ENCHANTABLE)
+                .addTag(WTItemTags.ECHO_WEAPON_ENCHANTABLE)
+                .remove(ENDER_UPGRADED_ECHO_STAFF.get());
         tag(ItemTags.BOW_ENCHANTABLE).add(ECHO_LOCATOR.get());
         tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(WTItemTags.ECHO_WEAPON).add(ECHO_LOCATOR.get());
     }
