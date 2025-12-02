@@ -81,8 +81,9 @@ public class WardenEchoStaffItem extends EchoStaffItem {
 
         for (Entity hitTarget : hit) {
             DamageSource damageSource = world.damageSources().sonicBoom(user);
-            hitTarget.hurt(damageSource, calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
+
             if (hitTarget instanceof LivingEntity living) {
+                living.hurt(damageSource, calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
                 double vertical = verticalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 double horizontal = horizontalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
@@ -126,16 +127,17 @@ public class WardenEchoStaffItem extends EchoStaffItem {
         int charges = calculateAmountOfChargesToConsume(stack, user, progress);
         float r = calculateFinalDistance(stack, world, 5);
         Vec3 center = user.position();
-        world.sendParticles(new SonicWaveParticleOption(0, r), center.x, center.y, center.z, 1, 0.0, 0.0, 0.0, 0);
+        for(int i=0;i<3;i++){
+            world.sendParticles(new SonicWaveParticleOption(i*2, r), center.x, center.y, center.z, 1, 0.0, 0.0, 0.0, 0);
+        }
         Set<Entity> entities = new HashSet<>(world.getEntities(user, new AABB(center, center).inflate(r), it -> it.isAlive() &&
                 it.distanceToSqr(center) <= r * r && !(it.isAlliedTo(user))));
         for (Entity entity : entities) {
             float distSq = entity.distanceTo(user);
             float final_damage = calculateDamage(damage, distSq, charges, r);
             DamageSource damageSource = world.damageSources().sonicBoom(user);
-            entity.hurt(damageSource, calculateEnchantedDamage(world, stack, entity, damageSource, final_damage));
-
             if (entity instanceof LivingEntity living) {
+                living.hurt(damageSource, calculateEnchantedDamage(world, stack, entity, damageSource, final_damage));
                 double vertical = verticalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 double horizontal = horizontalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
 
