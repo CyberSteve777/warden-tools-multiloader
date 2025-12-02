@@ -82,4 +82,8 @@ public class EnderEchoStaffItem extends EchoStaffItem {
     public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
         return ingredient.is(Items.ENDER_EYE);
     }
+    @Override
+    public int getEnchantmentValue() {
+        return 19;
+    }
 }

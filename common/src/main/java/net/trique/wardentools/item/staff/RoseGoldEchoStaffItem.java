@@ -64,4 +64,8 @@
         public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
             return ingredient.is(ItemRegistry.ROSE_GOLD_INGOT.get());
         }
+        @Override
+        public int getEnchantmentValue() {
+            return 20;
+        }
     }

@@ -199,4 +199,9 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
         }
         return damage * chargingAmount;
     }
+
+    @Override
+    public int getEnchantmentValue() {
+        return 21;
+    }
 }
