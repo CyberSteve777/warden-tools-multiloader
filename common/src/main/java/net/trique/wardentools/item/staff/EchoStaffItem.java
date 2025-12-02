@@ -41,6 +41,7 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
     protected float damage;
     protected float horizontalKnockbackCoefficient;
     protected float verticalKnockbackCoefficient;
+    protected final float CHARGE_TIME = 20f;
 
     public EchoStaffItem(Properties settings, int cooldown, int distance,
                          float damage, float horizontalKnockbackCoefficient,
@@ -92,6 +93,11 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
     }
 
     @Override
+    public int getEnchantmentValue() {
+        return 18;
+    }
+
+    @Override
     public void onUseTick(Level world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         super.onUseTick(world, user, stack, remainingUseTicks);
 
@@ -105,8 +111,8 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
         if (world instanceof ServerLevel serverLevel && user instanceof Player player) {
             ItemStack echoShardStack = findEchoShard(player);
             int tick_progress = this.getUseDuration(stack, user) - timeCharged;
-            float progress = getChargePowerForTime(tick_progress);
-            if (progress >= 0.5f) {
+            float progress = getChargePowerForTime(tick_progress,CHARGE_TIME);
+            if (progress >= 0.95f) {
                 spawnSonicBoom(stack, serverLevel, user);
                 if (!player.hasInfiniteMaterials()) {
                     echoShardStack.shrink(1);
@@ -149,8 +155,8 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
 
         for (Entity hitTarget : hit) {
             DamageSource damageSource = world.damageSources().sonicBoom(user);
-            hitTarget.hurt(damageSource, calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
             if (hitTarget instanceof LivingEntity living) {
+                hitTarget.hurt(damageSource, calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
                 float vertical = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource, verticalKnockbackCoefficient * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)));
                 float horizontal = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource, horizontalKnockbackCoefficient * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)));
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);

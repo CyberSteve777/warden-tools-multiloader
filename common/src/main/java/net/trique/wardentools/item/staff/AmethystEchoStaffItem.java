@@ -67,4 +67,8 @@ public class AmethystEchoStaffItem extends EchoStaffItem {
     public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
         return ingredient.is(ItemRegistry.AMETHYST_INGOT.get());
     }
+    @Override
+    public int getEnchantmentValue() {
+        return 22;
+    }
 }

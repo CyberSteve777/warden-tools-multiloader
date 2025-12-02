@@ -102,9 +102,13 @@ public class CreativeTabRegistry {
                                 output.accept(SCULK_SHELL.get());
                                 output.accept(SHRIEKER_FANG.get());
                                 output.accept(WARDEN_TENDRIL.get());
-                                var echo_concentration = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.SONIC_BOOST);
-                                var resonation = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.PROPAGATION);
-                                output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(echo_concentration, echo_concentration.value().getMaxLevel())));
+                                var sonic_punch = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.SONIC_PUNCH);
+                                var resonation = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.RESONANCE);
+                                var sonic_boost = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.SONIC_BOOST);
+                                var propagation = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.PROPAGATION);
+                                output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(sonic_boost, sonic_boost.value().getMaxLevel())));
+                                output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(propagation, propagation.value().getMaxLevel())));
+                                output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(sonic_punch, sonic_punch.value().getMaxLevel())));
                                 output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(resonation, resonation.value().getMaxLevel())));
                             }
                     )

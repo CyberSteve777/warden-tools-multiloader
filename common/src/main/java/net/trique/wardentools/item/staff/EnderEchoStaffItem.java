@@ -50,8 +50,8 @@ public class EnderEchoStaffItem extends EchoStaffItem {
         }
         for (Entity hitTarget : hit) {
             DamageSource damageSource = world.damageSources().sonicBoom(user);
-            hitTarget.hurt(world.damageSources().sonicBoom(user), calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
             if (hitTarget instanceof LivingEntity living) {
+                hitTarget.hurt(world.damageSources().sonicBoom(user), calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
                 Vec3 originalPos = living.position();
                 for (int j = 0; j < 16; ++j) {
                     double dx = living.getX() + (living.getRandom().nextDouble() - 0.5) * 32.0;
@@ -81,5 +81,9 @@ public class EnderEchoStaffItem extends EchoStaffItem {
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
         return ingredient.is(Items.ENDER_EYE);
+    }
+    @Override
+    public int getEnchantmentValue() {
+        return 19;
     }
 }

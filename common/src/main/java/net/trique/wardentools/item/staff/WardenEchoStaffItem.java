@@ -19,6 +19,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.trique.wardentools.Constants;
 import net.trique.wardentools.particle.sonic_wave.SonicWaveParticleOption;
 import net.trique.wardentools.registry.DataComponentRegistry;
 import net.trique.wardentools.registry.ItemRegistry;
@@ -34,6 +35,9 @@ import java.util.Set;
 import static net.trique.wardentools.config.WTConfigServer.CONFIG;
 
 public class WardenEchoStaffItem extends EchoStaffItem {
+    protected final float BASE_ATTACK_CHARGE_TIME = 20f;
+    protected final float SPECIAL_ATTACK_CHARGE_TIME = 100f;
+
     public WardenEchoStaffItem(Properties settings, int cooldown, int distance, float damage, float horizontalKnockbackCoefficient, float verticalKnockbackCoefficient) {
         super(settings, cooldown, distance, damage, horizontalKnockbackCoefficient, verticalKnockbackCoefficient);
     }
@@ -43,20 +47,20 @@ public class WardenEchoStaffItem extends EchoStaffItem {
         if (world instanceof ServerLevel serverLevel && user instanceof Player player) {
             ItemStack echoShardStack = findEchoShard(player);
             int tick_progress = this.getUseDuration(stack, user) - remainingUsageTicks;
-            float progress = getChargePowerForTime(tick_progress);
-            if (progress >= 0.5f) {
-                if (shouldPerformSpecialAttack(stack, user)) {
-                    performSpecialAttack(stack, serverLevel, user, progress);
-                } else {
+            if (shouldPerformSpecialAttack(stack, user, tick_progress)) {
+                performSpecialAttack(stack, serverLevel, user, tick_progress);
+            } else {
+                float progress = getChargePowerForTime(tick_progress, BASE_ATTACK_CHARGE_TIME);
+                if (progress >= 0.95f) {
                     spawnSonicBoom(stack, serverLevel, user);
                 }
-                if (!player.hasInfiniteMaterials()) {
-                    echoShardStack.shrink(1);
-                    player.getCooldowns().addCooldown(this, WTEnchantmentHelper.getCooldown(serverLevel, stack, cooldown));
-                    stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
-                }
-                player.awardStat(Stats.ITEM_USED.get(this));
             }
+            if (!player.hasInfiniteMaterials()) {
+                echoShardStack.shrink(1);
+                player.getCooldowns().addCooldown(this, WTEnchantmentHelper.getCooldown(serverLevel, stack, cooldown));
+                stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+            }
+            player.awardStat(Stats.ITEM_USED.get(this));
         }
     }
 
@@ -84,14 +88,16 @@ public class WardenEchoStaffItem extends EchoStaffItem {
             DamageSource damageSource = world.damageSources().sonicBoom(user);
             hitTarget.hurt(damageSource, calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
             if (hitTarget instanceof LivingEntity living) {
-                double vertical = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource,  verticalKnockbackCoefficient * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)));
-                double horizontal = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource,  horizontalKnockbackCoefficient * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)));
+                living.hurt(damageSource, calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
+                double vertical = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource, verticalKnockbackCoefficient * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)));
+                double horizontal = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource, horizontalKnockbackCoefficient * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)));
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
+                if (!living.isAlive() && living.getLastDamageSource() instanceof DamageSource kill_source && kill_source.equals(damageSource)) {
+                    int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
+                    stack.set(DataComponentRegistry.CHARGE_COUNT.get(), ++charges);
+                }
             }
-            if (!hitTarget.isAlive()) {
-                int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
-                stack.set(DataComponentRegistry.CHARGE_COUNT.get(), Math.min(++charges, CONFIG.max_charges.get()));
-            }
+
         }
         if (user instanceof ServerPlayer player) {
             TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, stack, hit);
@@ -99,10 +105,10 @@ public class WardenEchoStaffItem extends EchoStaffItem {
 
     }
 
-    private int calculateAmountOfChargesToConsume(ItemStack stack, LivingEntity user, float progress) {
+    private int calculateAmountOfChargesToConsume(ItemStack stack, LivingEntity user, int tick_progress) {
         if (user instanceof Player) {
             int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
-            return Math.min(Mth.floor(progress * CONFIG.max_charges.get()), charges);
+            return Math.min(Mth.floor(Math.min(1f, tick_progress / SPECIAL_ATTACK_CHARGE_TIME) * CONFIG.max_charges.get()), charges);
         }
         return CONFIG.max_charges.get();
     }
@@ -113,8 +119,8 @@ public class WardenEchoStaffItem extends EchoStaffItem {
         tooltipComponents.add(Component.literal("Charges: " + stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0)));
     }
 
-    private boolean shouldPerformSpecialAttack(ItemStack stack, LivingEntity user) {
-        int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
+    private boolean shouldPerformSpecialAttack(ItemStack stack, LivingEntity user, int charge_ticks) {
+        int charges = calculateAmountOfChargesToConsume(stack, user,charge_ticks);
         boolean res = charges > 0;
         if (user instanceof Player player) {
             res &= WardenEchoStaffHelper.playerPressedButton(player, KeyAction.CONSUME_CHARGES);
@@ -122,9 +128,9 @@ public class WardenEchoStaffItem extends EchoStaffItem {
         return res;
     }
 
-    protected void performSpecialAttack(ItemStack stack, ServerLevel world, LivingEntity user, float progress) {
+    protected void performSpecialAttack(ItemStack stack, ServerLevel world, LivingEntity user, int tick_progress) {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_BOOM, user.getSoundSource(), 5.0f, 1.0f);
-        int charges = calculateAmountOfChargesToConsume(stack, user, progress);
+        int charges = calculateAmountOfChargesToConsume(stack, user, tick_progress);
         float r = calculateFinalDistance(stack, world, 5);
         Vec3 center = user.position();
         world.sendParticles(new SonicWaveParticleOption(0, r), center.x, center.y, center.z, 1, 0.0, 0.0, 0.0, 0);
@@ -137,6 +143,7 @@ public class WardenEchoStaffItem extends EchoStaffItem {
             entity.hurt(damageSource, calculateEnchantedDamage(world, stack, entity, damageSource, final_damage));
 
             if (entity instanceof LivingEntity living) {
+                living.hurt(damageSource, calculateEnchantedDamage(world, stack, entity, damageSource, final_damage));
                 double vertical = verticalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 double horizontal = horizontalKnockbackCoefficient * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
 
@@ -164,5 +171,10 @@ public class WardenEchoStaffItem extends EchoStaffItem {
         float falloff_multiplier = (damage - maxMinDamage) / radius;
         damage -= falloff_multiplier * (distance - 1);
         return damage;
+    }
+
+    @Override
+    public int getEnchantmentValue() {
+        return 21;
     }
 }

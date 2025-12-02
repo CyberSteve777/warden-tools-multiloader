@@ -15,8 +15,8 @@ public interface ISonicBoomItem {
         return WTEnchantmentHelper.getRangeBonus(world, stack, base_distance);
     }
 
-    default float getChargePowerForTime(int charge) {
-        float f = (float) charge / 20.0F;
+    default float getChargePowerForTime(int charge, float charge_time) {
+        float f = (float) charge / charge_time;
         f = (f * f + f * 2.0F) / 3.0F;
         if (f > 1.0F) {
             f = 1.0F;
