@@ -25,7 +25,7 @@ import java.util.Set;
 public class AmethystEchoStaffItem extends EchoStaffItem {
 
 
-    public AmethystEchoStaffItem(Properties settings, int cooldown, int distance, float damage, float horizontalKnockbackCoefficient, float verticalKnockbackCoefficient) {
+    public AmethystEchoStaffItem(Properties settings, int cooldown, float distance, float damage, float horizontalKnockbackCoefficient, float verticalKnockbackCoefficient) {
         super(settings, cooldown, distance, damage, horizontalKnockbackCoefficient, verticalKnockbackCoefficient);
     }
 

@@ -38,7 +38,7 @@ public class WardenEchoStaffItem extends EchoStaffItem {
     protected final float BASE_ATTACK_CHARGE_TIME = 20f;
     protected final float SPECIAL_ATTACK_CHARGE_TIME = 100f;
 
-    public WardenEchoStaffItem(Properties settings, int cooldown, int distance, float damage, float horizontalKnockbackCoefficient, float verticalKnockbackCoefficient) {
+    public WardenEchoStaffItem(Properties settings, int cooldown, float distance, float damage, float horizontalKnockbackCoefficient, float verticalKnockbackCoefficient) {
         super(settings, cooldown, distance, damage, horizontalKnockbackCoefficient, verticalKnockbackCoefficient);
     }
 
@@ -116,7 +116,8 @@ public class WardenEchoStaffItem extends EchoStaffItem {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        tooltipComponents.add(Component.literal("Charges: " + stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0)));
+        tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_charges",
+                stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0)));
     }
 
     private boolean shouldPerformSpecialAttack(ItemStack stack, LivingEntity user, int charge_ticks) {

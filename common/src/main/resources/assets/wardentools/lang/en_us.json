@@ -149,5 +149,8 @@
 
   "wardentools.seconds_to_outline_block": "Seconds of outlining block",
   "wardentools.seconds_to_glow_entity": "Seconds of glowing entity",
-  "wardentools.outline_pos": "Outline position"
+  "wardentools.outline_pos": "Outline position",
+  "wardentools.staff_base_damage": "Base damage: %f",
+  "wardentools.staff_base_range": "Base distance: %f",
+  "wardentools.warden_echo_staff_charges": "Stored charges: %d"
 }

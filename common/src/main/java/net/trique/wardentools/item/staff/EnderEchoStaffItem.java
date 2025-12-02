@@ -5,7 +5,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -25,7 +24,7 @@ import java.util.Set;
 public class EnderEchoStaffItem extends EchoStaffItem {
 
 
-    public EnderEchoStaffItem(Properties settings, int cooldown, int distance, float damage, float horizontalKnockbackCoefficient, float verticalKnockbackCoefficient) {
+    public EnderEchoStaffItem(Properties settings, int cooldown, float distance, float damage, float horizontalKnockbackCoefficient, float verticalKnockbackCoefficient) {
         super(settings, cooldown, distance, damage, horizontalKnockbackCoefficient, verticalKnockbackCoefficient);
     }
 
@@ -66,7 +65,7 @@ public class EnderEchoStaffItem extends EchoStaffItem {
                     if (living.randomTeleport(dx, dy, dz, true)) {
                         world.gameEvent(GameEvent.TELEPORT, originalPos, Context.of(living));
                         world.playSound(null, dx, dy, dz,
-                                SoundEvents.PLAYER_TELEPORT, SoundSource.BLOCKS, 5.0F, 1.0F);
+                                SoundEvents.SHULKER_TELEPORT, living.getSoundSource(), 5.0F, 1.0F);
                         world.sendParticles(ParticleTypes.PORTAL, dx, dy, dz, 40, 0.5, 0.5, 0.5, 0.1);
                         living.resetFallDistance();
                         break;
