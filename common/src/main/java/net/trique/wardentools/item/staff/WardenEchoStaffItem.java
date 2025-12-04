@@ -116,11 +116,14 @@ public class WardenEchoStaffItem extends EchoStaffItem {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        tooltipComponents.add(Component.literal("Charges: " + stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0)));
+        int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
+        tooltipComponents.add(Component.literal(String.format("Charges: %d", charges)));
+        tooltipComponents.add(Component.literal(String.format("Basic attack damage: %.0f\nSpecial attack damage: %.0f", damage, damage * 1.5f)));
+        tooltipComponents.add(Component.literal(String.format("Basic attack range: %d\nSpecial attack range: %.0f", distance, 5f)));
     }
 
     private boolean shouldPerformSpecialAttack(ItemStack stack, LivingEntity user, int charge_ticks) {
-        int charges = calculateAmountOfChargesToConsume(stack, user,charge_ticks);
+        int charges = calculateAmountOfChargesToConsume(stack, user, charge_ticks);
         boolean res = charges > 0;
         if (user instanceof Player player) {
             res &= WardenEchoStaffHelper.playerPressedButton(player, KeyAction.CONSUME_CHARGES);
