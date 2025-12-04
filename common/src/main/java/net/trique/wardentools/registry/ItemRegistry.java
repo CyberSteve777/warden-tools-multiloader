@@ -23,10 +23,10 @@ public class ItemRegistry {
 
     public static final RegistryObject<Item, EchoStaffItem> ECHO_STAFF = ITEMS.register("echo_staff",
             () -> new EchoStaffItem(getItemProperties().rarity(Rarity.EPIC).durability(75),
-                    100, 20, 10.0f, 5.0f, 1.0f));
+                    100, 20f, 10.0f, 5.0f, 1.0f));
     public static final RegistryObject<Item, WardenEchoStaffItem> WARDEN_ECHO_STAFF = ITEMS.register("warden_echo_staff",
             () -> new WardenEchoStaffItem(getItemProperties().rarity(Rarity.EPIC).durability(100),
-                    100, 20, 15.0f, 5.0f, 1.0f));
+                    100, 20f, 15.0f, 5.0f, 1.0f));
 
     public static final RegistryObject<Item, AmethystEchoStaffItem> AMETHYST_UPGRADED_ECHO_STAFF = ITEMS.register("amethyst_upgraded_echo_staff",
             () -> new AmethystEchoStaffItem(getItemProperties().rarity(Rarity.EPIC).durability(85),

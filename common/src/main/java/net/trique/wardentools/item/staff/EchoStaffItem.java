@@ -2,6 +2,7 @@ package net.trique.wardentools.item.staff;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -14,14 +15,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -32,18 +29,18 @@ import net.trique.wardentools.registry.TriggerTypeRegistry;
 import net.trique.wardentools.util.WTEnchantmentHelper;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 
 public class EchoStaffItem extends Item implements ISonicBoomItem {
     protected int cooldown;
-    protected int distance;
+    protected float distance;
     protected float damage;
     protected float horizontalKnockbackCoefficient;
     protected float verticalKnockbackCoefficient;
     protected final float CHARGE_TIME = 20f;
 
-    public EchoStaffItem(Properties settings, int cooldown, int distance,
+    public EchoStaffItem(Properties settings, int cooldown, float distance,
                          float damage, float horizontalKnockbackCoefficient,
                          float verticalKnockbackCoefficient) {
         super(settings.attributes(createAttributeModifiers()));
@@ -95,6 +92,12 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
     @Override
     public int getEnchantmentValue() {
         return 18;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(Component.translatable("wardentools.staff_base_damage", damage));
+        tooltipComponents.add(Component.translatable("wardentools.staff_base_range", distance));
     }
 
     @Override

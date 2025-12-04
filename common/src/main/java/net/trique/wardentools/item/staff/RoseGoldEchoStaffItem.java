@@ -23,7 +23,7 @@
     public class RoseGoldEchoStaffItem extends EchoStaffItem {
 
 
-        public RoseGoldEchoStaffItem(Properties settings, int cooldown, int distance, float damage, float horizontalKnockbackCoefficient, float verticalKnockbackCoefficient) {
+        public RoseGoldEchoStaffItem(Properties settings, int cooldown, float distance, float damage, float horizontalKnockbackCoefficient, float verticalKnockbackCoefficient) {
             super(settings, cooldown, distance, damage, horizontalKnockbackCoefficient, verticalKnockbackCoefficient);
         }
 
