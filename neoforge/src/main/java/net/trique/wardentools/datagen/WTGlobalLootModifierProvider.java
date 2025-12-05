@@ -29,8 +29,8 @@ public class WTGlobalLootModifierProvider extends GlobalLootModifierProvider {
     @Override
     protected void start() {
         var enchantments = registries.lookupOrThrow(Registries.ENCHANTMENT);
-        var echo_concentration = enchantments.getOrThrow(WTEnchantments.SONIC_BOOST);
-        var resonation = enchantments.getOrThrow(WTEnchantments.PROPAGATION);
+        var resonance = enchantments.getOrThrow(WTEnchantments.RESONANCE);
+        var propagation = enchantments.getOrThrow(WTEnchantments.PROPAGATION);
         add("add_warden_upgrade_smithing_template", new AddItemModifier(new LootItemCondition[]{
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
                 LootItemRandomChanceCondition.randomChance(0.1f).build()
@@ -51,14 +51,14 @@ public class WTGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
                 LootItemRandomChanceCondition.randomChance(0.5f).build()
         }, Items.ECHO_SHARD, 1, 3));
-        add("add_sonic_boost_enchanted_book", new AddEnchantedBookToPoolModifier(new LootItemCondition[] {
-                LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
-                LootItemRandomChanceCondition.randomChance(0.33f).build()
-        }, echo_concentration, 1, 5));
-        add("add_propagation_enchanted_book", new AddEnchantedBookToPoolModifier(new LootItemCondition[] {
+        add("add_resonance_enchanted_book", new AddEnchantedBookToPoolModifier(new LootItemCondition[] {
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
                 LootItemRandomChanceCondition.randomChance(0.25f).build()
-        }, resonation, 1, 3));
+        }, resonance, 1, 5));
+        add("add_propagation_enchanted_book", new AddEnchantedBookToPoolModifier(new LootItemCondition[] {
+                LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
+                LootItemRandomChanceCondition.randomChance(0.1f).build()
+        }, propagation, 1, 3));
         add("add_warden_soul_to_warden_loot", new AddItemToWardenLootModifier(new LootItemCondition[0],
                 WARDEN_SOUL.get(), 0.3f, 0.1f, 1, 2));
         add("add_warden_tendril_to_warden_loot", new AddItemToWardenLootModifier(new LootItemCondition[0],
