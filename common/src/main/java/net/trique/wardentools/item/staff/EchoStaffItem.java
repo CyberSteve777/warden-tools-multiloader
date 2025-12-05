@@ -1,8 +1,11 @@
 package net.trique.wardentools.item.staff;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -96,8 +99,8 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("wardentools.staff_base_damage", damage));
-        tooltipComponents.add(Component.translatable("wardentools.staff_base_range", distance));
+        tooltipComponents.add(Component.translatable("wardentools.staff_base_damage", damage).withStyle(ChatFormatting.AQUA));
+        tooltipComponents.add(Component.translatable("wardentools.staff_base_range", distance).withStyle(ChatFormatting.AQUA));
     }
 
     @Override

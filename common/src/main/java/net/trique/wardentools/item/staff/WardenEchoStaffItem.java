@@ -1,5 +1,8 @@
 package net.trique.wardentools.item.staff;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -20,13 +23,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.trique.wardentools.Constants;
+import net.trique.wardentools.client.WTKeybinds;
 import net.trique.wardentools.particle.sonic_wave.SonicWaveParticleOption;
+import net.trique.wardentools.platform.Services;
 import net.trique.wardentools.registry.DataComponentRegistry;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.registry.TriggerTypeRegistry;
 import net.trique.wardentools.util.KeyAction;
 import net.trique.wardentools.util.WTEnchantmentHelper;
 import net.trique.wardentools.util.WardenEchoStaffHelper;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.HashSet;
 import java.util.List;
@@ -115,13 +121,22 @@ public class WardenEchoStaffItem extends EchoStaffItem {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_charges",
-                stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0)));
         int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
-        tooltipComponents.add(Component.literal(String.format("Charges: %d", charges)));
-        tooltipComponents.add(Component.literal(String.format("Basic attack damage: %.0f\nSpecial attack damage: %.0f", damage, damage * 1.5f)));
-        tooltipComponents.add(Component.literal(String.format("Basic attack range: %d\nSpecial attack range: %.0f", distance, 5f)));
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+        tooltipComponents.add(Component.literal(""));
+        if (Services.PLATFORM.isClient()) {
+            String special_attack_key = WTKeybinds.CONSUME_CHARGES.getDefaultKey().getName();
+            if (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) ||
+                    InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_RIGHT_SHIFT)) {
+                tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_desc",special_attack_key).withStyle(ChatFormatting.GRAY,ChatFormatting.ITALIC));
+                tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_charges", charges).withStyle(ChatFormatting.DARK_AQUA,ChatFormatting.ITALIC));
+                tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_damage", damage * 1.5f).withStyle(ChatFormatting.DARK_AQUA,ChatFormatting.ITALIC));
+                tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_range", 5f).withStyle(ChatFormatting.DARK_AQUA,ChatFormatting.ITALIC));
+            } else {
+                tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_hint").withStyle(ChatFormatting.DARK_AQUA,ChatFormatting.ITALIC));
+            }
+        }
+
     }
 
     private boolean shouldPerformSpecialAttack(ItemStack stack, LivingEntity user, int charge_ticks) {
