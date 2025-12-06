@@ -39,6 +39,7 @@
   "item.wardentools.rose_gold_upgraded_echo_staff": "Rose Gold Upgraded Echo Staff",
   "item.wardentools.amethyst_upgraded_echo_staff": "Amethyst Upgraded Echo Staff",
   "item.wardentools.ender_upgraded_echo_staff": "Ender Upgraded Echo Staff",
+  "item.wardentools.warden_echo_staff": "Warden Echo Staff",
   "item.wardentools.echo_shrieker": "Echo Shrieker",
   "item.wardentools.shrieker_fang": "Shrieker Fang",
   "item.wardentools.warden_tendril": "Warden Tendril",
@@ -65,10 +66,10 @@
   "item.minecraft.smithing_template.warden_upgrade.base_slot_description": "Add sculkified armor, weapon, tool",
   "item.minecraft.smithing_template.warden_upgrade.ingredients": "Warden Ingot",
 
-  "item.minecraft.smithing_template.staff_upgrade.additions_slot_description": "Add Rose Gold Ingot, Amethyst Ingot or Eye of Ender",
+  "item.minecraft.smithing_template.staff_upgrade.additions_slot_description": "Add Warden Ingot, Rose Gold Ingot, Amethyst Ingot or Eye of Ender",
   "item.minecraft.smithing_template.staff_upgrade.applies_to": "Echo Staff",
   "item.minecraft.smithing_template.staff_upgrade.base_slot_description": "Add Echo Staff",
-  "item.minecraft.smithing_template.staff_upgrade.ingredients": "Rose Gold Ingot, Amethyst Ingot, Eye of Ender",
+  "item.minecraft.smithing_template.staff_upgrade.ingredients": "Warden Ingot, Rose Gold Ingot, Amethyst Ingot, Eye of Ender",
 
   "item.minecraft.potion.effect.sculk_adaption": "Sculk Adaption Potion",
   "item.minecraft.potion.effect.long_sculk_adaption": "Sculk Adaption Potion",
@@ -110,6 +111,8 @@
 
   "enchantment.wardentools.sonic_boost": "Sonic Boost",
   "enchantment.wardentools.propagation": "Propagation",
+  "enchantment.wardentools.sonic_punch": "Sonic Punch",
+  "enchantment.wardentools.resonance": "Resonance",
 
   "wardentools.creative_tab.blocks": "Warden Tools: Blocks",
   "wardentools.creative_tab.equipment": "Warden Tools: Equipment",
@@ -150,7 +153,18 @@
   "wardentools.seconds_to_outline_block": "Seconds of outlining block",
   "wardentools.seconds_to_glow_entity": "Seconds of glowing entity",
   "wardentools.outline_pos": "Outline position",
-  "wardentools.staff_base_damage": "Base damage: %f",
-  "wardentools.staff_base_range": "Base distance: %f",
-  "wardentools.warden_echo_staff_charges": "Stored charges: %d"
+  "wardentools.staff_base_damage": "Basic attack damage: %.0f",
+  "wardentools.staff_base_range": "Basic attack distance: %.0f",
+  "wardentools.warden_echo_staff_charges": "Stored charges: %d",
+  "wardentools.warden_echo_staff_special_attack_damage": "Special attack damage: %.0f",
+  "wardentools.warden_echo_staff_special_attack_range": "Special attack range: %.0f",
+  "wardentools.warden_echo_staff_special_attack_hint": "Special attack: Hold [SHIFT] for more info",
+  "wardentools.warden_echo_staff_special_attack_desc": "Special attack: When you kill any Mob, you gain [Charge]. Each [Charge] increases its damage by 10%% per [Charge].\nHold [%s]+[%s] to charge %s and consume up to 10 [Charge] to deal damage in a spherical area around you.\nDamage falloffs with distance.",
+  "wardentools.warden_echo_locator_desc": "Empowers [%s]: [%s] starts flying straightforward",
+  "wardentools.warden_echo_shrieker_damage": "Damage: %.0f",
+  "wardentools.warden_echo_shrieker_distance": "Max attack range: %.0f",
+  "wardentools.warden_echo_shrieker_desc": "Special ability: Deals damage in a conical area in front of you.\nThis item counts as Bow, but consumes %s to shoot.\nIf target is in range of %.0f blocks or closer, you will deal x%.0f damage.\nDamage falloffs with distance.",
+  "key.wardentools.consume_charges": "Warden Echo Staff Special attack",
+  "key.categories.wardentools": "Warden Tools",
+  "wardentools.warden_echo_shrieker_hint": "Special ability: Hold [SHIFT] for more info"
 }
