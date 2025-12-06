@@ -1,6 +1,10 @@
 package net.trique.wardentools.item.archery;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -21,20 +25,27 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.trique.wardentools.item.util.ISonicBoomItem;
 import net.trique.wardentools.particle.echo_particle.EchoParticleOption;
+import net.trique.wardentools.platform.Services;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.registry.TriggerTypeRegistry;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
     private final float DEFAULT_DISTANCE = 20f;
+    private final float BASE_DAMAGE = 40f;
+    private final float BONUS_DAMAGE_MULTIPLIER = 2f; // multiplier for close-range
+    private final float BONUS_DAMAGE_RANGE = 2f;
 
     public EchoShriekerItem(Properties settings) {
         super(settings.attributes(createAttributeModifiers()));
@@ -185,17 +196,31 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
         return new Vec3(closestX, closestY, closestZ);
     }
 
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        String echo_shard = Items.ECHO_SHARD.getDescription().getString();
+        if (Services.PLATFORM.isClient()) {
+            if (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) ||
+                    InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_RIGHT_SHIFT)) {
+                tooltipComponents.add(Component.translatable("wardentools.warden_echo_shrieker_desc", echo_shard, BONUS_DAMAGE_RANGE, BONUS_DAMAGE_MULTIPLIER).withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
+            }else{
+                tooltipComponents.add(Component.translatable("wardentools.warden_echo_shrieker_damage", BASE_DAMAGE).withStyle(ChatFormatting.AQUA));
+                tooltipComponents.add(Component.translatable("wardentools.warden_echo_shrieker_distance", DEFAULT_DISTANCE).withStyle(ChatFormatting.AQUA));
+                tooltipComponents.add(Component.literal(""));
+                tooltipComponents.add(Component.translatable("wardentools.warden_echo_shrieker_hint").withStyle(ChatFormatting.DARK_AQUA,ChatFormatting.ITALIC));
+            }
+        }
+    }
+
     private float calculateBaseDamage(float chargingAmount, float distanceToTarget) {
-        float baseDamage = 40f; // base damage
-        float amplifier = 2f; // multiplier for close-range
-        float maxMinDamage = baseDamage / 3; // minimum possible damage after falloff (but without charging amount
-        float damage = baseDamage;
-        float falloff_multiplier = (baseDamage - maxMinDamage) / (DEFAULT_DISTANCE-2); // damage falloff per block
-        if (Math.floor(distanceToTarget) >= 2) {
-            damage -= (distanceToTarget - 2) * falloff_multiplier;
+        float maxMinDamage = BASE_DAMAGE / 3; // minimum possible damage after falloff (but without charging amount
+        float damage = BASE_DAMAGE;
+        float falloff_multiplier = (BASE_DAMAGE - maxMinDamage) / (DEFAULT_DISTANCE - 2); // damage falloff per block
+        if (Math.floor(distanceToTarget) >= BONUS_DAMAGE_RANGE) {
+            damage -= (distanceToTarget - BONUS_DAMAGE_RANGE) * falloff_multiplier;
             if (damage < maxMinDamage) damage = maxMinDamage;
         } else {
-            damage *= amplifier;
+            damage *= BONUS_DAMAGE_MULTIPLIER;
         }
         return damage * chargingAmount;
     }

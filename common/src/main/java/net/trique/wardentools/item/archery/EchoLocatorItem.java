@@ -1,5 +1,7 @@
 package net.trique.wardentools.item.archery;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
@@ -12,6 +14,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.trique.wardentools.registry.ItemRegistry;
@@ -64,6 +67,12 @@ public class EchoLocatorItem extends BowItem {
                 }
             }
         }
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        String sculk_arrow = ItemRegistry.SCULK_ARROW.get().getDescription().getString();
+        tooltipComponents.add(Component.translatable("wardentools.warden_echo_locator_desc",sculk_arrow,sculk_arrow).withStyle(ChatFormatting.DARK_AQUA,ChatFormatting.ITALIC));
     }
 
     protected ItemStack findSculkArrow(Player player) {

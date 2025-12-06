@@ -33,6 +33,7 @@ import net.trique.wardentools.util.KeyAction;
 import net.trique.wardentools.util.WTEnchantmentHelper;
 import net.trique.wardentools.util.WardenEchoStaffHelper;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
 import java.util.HashSet;
 import java.util.List;
@@ -122,17 +123,19 @@ public class WardenEchoStaffItem extends EchoStaffItem {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        tooltipComponents.add(Component.literal(""));
         if (Services.PLATFORM.isClient()) {
-            String special_attack_key = WTKeybinds.CONSUME_CHARGES.getDefaultKey().getName();
             if (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) ||
                     InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_RIGHT_SHIFT)) {
-                tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_desc",special_attack_key).withStyle(ChatFormatting.GRAY,ChatFormatting.ITALIC));
+                String special_attack_key = WTKeybinds.CONSUME_CHARGES.getTranslatedKeyMessage().getString();
+                String rmb = InputConstants.getKey("key.mouse.right").getDisplayName().getString();
+                String wes = ItemRegistry.WARDEN_ECHO_STAFF.get().getDescription().getString();
+                tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_desc",special_attack_key,rmb,wes).withStyle(ChatFormatting.GRAY,ChatFormatting.ITALIC));
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_charges", charges).withStyle(ChatFormatting.DARK_AQUA,ChatFormatting.ITALIC));
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_damage", damage * 1.5f).withStyle(ChatFormatting.DARK_AQUA,ChatFormatting.ITALIC));
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_range", 5f).withStyle(ChatFormatting.DARK_AQUA,ChatFormatting.ITALIC));
             } else {
+                super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                tooltipComponents.add(Component.literal(""));
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_hint").withStyle(ChatFormatting.DARK_AQUA,ChatFormatting.ITALIC));
             }
         }
