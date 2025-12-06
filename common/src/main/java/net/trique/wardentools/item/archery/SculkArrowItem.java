@@ -6,7 +6,6 @@ import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.trique.wardentools.entity.SculkArrowEntity;
-import net.trique.wardentools.registry.ItemRegistry;
 import org.jetbrains.annotations.Nullable;
 
 public class SculkArrowItem extends ArrowItem {
@@ -18,7 +17,6 @@ public class SculkArrowItem extends ArrowItem {
     public AbstractArrow createArrow(Level world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
         SculkArrowEntity arrow = new SculkArrowEntity(world, shooter);
         arrow.setBaseDamage(4);
-//        arrow.setCritArrow(true);
         return arrow;
     }
 }

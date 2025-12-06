@@ -204,11 +204,11 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
             if (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) ||
                     InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_RIGHT_SHIFT)) {
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_shrieker_desc", echo_shard, BONUS_DAMAGE_RANGE, BONUS_DAMAGE_MULTIPLIER).withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
-            }else{
+            } else {
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_shrieker_damage", BASE_DAMAGE).withStyle(ChatFormatting.AQUA));
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_shrieker_distance", DEFAULT_DISTANCE).withStyle(ChatFormatting.AQUA));
                 tooltipComponents.add(Component.literal(""));
-                tooltipComponents.add(Component.translatable("wardentools.warden_echo_shrieker_hint").withStyle(ChatFormatting.DARK_AQUA,ChatFormatting.ITALIC));
+                tooltipComponents.add(Component.translatable("wardentools.warden_echo_shrieker_hint").withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
             }
         }
     }

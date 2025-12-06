@@ -52,10 +52,10 @@ public class EchoLocatorItem extends BowItem {
             if (!ammo.isEmpty() || player.isCreative()) {
                 int i = this.getUseDuration(stack, entityLiving) - timeLeft;
                 float f = getPowerForTime(i);
-                if(player.isCreative() & ammo.isEmpty()){
+                if (player.isCreative() & ammo.isEmpty()) {
                     ammo = new ItemStack(ItemRegistry.SCULK_ARROW.get());
                 }
-                if (!((double)f < 0.1)) {
+                if (!((double) f < 0.1)) {
                     List<ItemStack> list = draw(stack, ammo, player);
                     if (level instanceof ServerLevel serverlevel) {
                         if (!list.isEmpty()) {
@@ -72,7 +72,7 @@ public class EchoLocatorItem extends BowItem {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         String sculk_arrow = ItemRegistry.SCULK_ARROW.get().getDescription().getString();
-        tooltipComponents.add(Component.translatable("wardentools.warden_echo_locator_desc",sculk_arrow,sculk_arrow).withStyle(ChatFormatting.DARK_AQUA,ChatFormatting.ITALIC));
+        tooltipComponents.add(Component.translatable("wardentools.warden_echo_locator_desc", sculk_arrow, sculk_arrow).withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
     }
 
     protected ItemStack findSculkArrow(Player player) {
