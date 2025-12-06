@@ -79,7 +79,7 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
             if (loadAmount >= 0.1f) {
                 spawnSonicBoom(stack, serverLevel, user, loadAmount);
                 if (!player.isCreative()) {
-                    player.getCooldowns().addCooldown(this, 120);
+                    player.getCooldowns().addCooldown(this, WTEnchantmentHelper.getCooldown(serverLevel, stack, 140));
                     stack.hurtAndBreak(1, user, EquipmentSlot.MAINHAND);
                     ammo.shrink(1);
                 }
