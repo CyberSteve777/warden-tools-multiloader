@@ -35,6 +35,7 @@ import net.trique.wardentools.particle.echo_particle.EchoParticleOption;
 import net.trique.wardentools.platform.Services;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.registry.TriggerTypeRegistry;
+import net.trique.wardentools.util.WTEnchantmentHelper;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.HashSet;
@@ -131,8 +132,8 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
                 living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
                 living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 160, 2));
                 living.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60));
-                double vertical = 0.5 * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
-                double horizontal = 2.5 * (1.0 - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+                double vertical = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource, 2f) * (1.0 - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+                double horizontal = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource, 6f) * (1.0 - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
             }
         }
