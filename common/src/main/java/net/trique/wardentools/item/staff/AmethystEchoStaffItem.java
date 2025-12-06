@@ -54,8 +54,8 @@ public class AmethystEchoStaffItem extends EchoStaffItem {
             hitTarget.hurt(damageSource, calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
             if(hitTarget instanceof LivingEntity living) {
                 living.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 60, 1));
-                double vertical = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource,  verticalKnockbackCoefficient * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)));
-                double horizontal = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource,  horizontalKnockbackCoefficient * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)));
+                float vertical = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource, verticalKnockbackCoefficient) * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+                float horizontal = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource, horizontalKnockbackCoefficient) * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
             }
         }
