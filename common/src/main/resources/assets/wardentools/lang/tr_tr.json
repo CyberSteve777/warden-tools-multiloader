@@ -158,7 +158,7 @@
   "wardentools.warden_echo_staff_special_attack_range": "Special attack range: %.0f",
   "wardentools.warden_echo_staff_special_attack_hint": "Special attack: Hold [SHIFT] for more info",
   "wardentools.warden_echo_staff_special_attack_desc": "Special attack: When you kill any Mob, you gain [Charge]. Each [Charge] increases its damage by 10%% per [Charge].\nHold [%s]+[%s] to charge %s and consume up to 10 [Charge] to deal damage in a spherical area around you.\nDamage falloffs with distance.",
-  "wardentools.warden_echo_locator_desc": "Empowers [%s]: [%s] starts flying straightforward",
+  "wardentools.warden_echo_locator_desc": "Empowers [%s]: [%s] starts flying straightforward and gets ability radius increase",
   "wardentools.warden_echo_shrieker_damage": "Damage: %.0f",
   "wardentools.warden_echo_shrieker_distance": "Max attack range: %.0f",
   "wardentools.warden_echo_shrieker_desc": "Special ability: Deals damage in a conical area in front of you.\nThis item counts as Bow, but consumes %s to shoot.\nIf target is in range of %.0f blocks or closer, you will deal x%.0f damage.\nDamage falloffs with distance.",

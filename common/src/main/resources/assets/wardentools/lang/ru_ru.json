@@ -141,7 +141,7 @@
   "wardentools.warden_echo_staff_special_attack_range": "Дальность особой атаки: %.0f",
   "wardentools.warden_echo_staff_special_attack_hint": "Особая атака: Зажмите [SHIFT] для дополнительной информации",
   "wardentools.warden_echo_staff_special_attack_desc": "Особая атака: Убивая моба, ты получаешь [Заряд]. Каждый [Заряд] увеличивает урон оружия на 10%% за каждый [Заряд].\nЗажмите [%s]+[%s] чтобы зарядить %s и нанести урон в зоне вокруг тебя, потратив до 10 [Зарядов].\nУрон уменьшается с расстоянием.",
-  "wardentools.warden_echo_locator_desc": "Усиливает [%s]: [%s] начинает лететь прямолинейно",
+  "wardentools.warden_echo_locator_desc": "Усиливает [%s]: [%s] начинает лететь прямолинейно и получает прибавку к радиусу способности",
   "wardentools.warden_echo_shrieker_damage": "Урон: %.0f",
   "wardentools.warden_echo_shrieker_distance": "Максимальная дальность атаки: %.0f",
   "wardentools.warden_echo_shrieker_desc": "Особая способность: Наносит урон в зоне конуса перед тобой.\nЭтот предмет считается Луком, но для стрельбы использует %s.\nЕсли цель находится на расстоянии %.0f блоков или ближе, ты нанесёшь x%.0f урон.\nУрон уменьшается с расстоянием.",
