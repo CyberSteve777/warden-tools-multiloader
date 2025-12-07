@@ -11,6 +11,6 @@
     }
   ],
   "enchantment": "wardentools:resonance",
-  "maxLevel": 5,
+  "maxLevel": 3,
   "minLevel": 1
 }
