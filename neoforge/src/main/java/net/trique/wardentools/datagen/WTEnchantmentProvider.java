@@ -1,13 +1,11 @@
 package net.trique.wardentools.datagen;
 
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.worldgen.BootstrapContext;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -15,8 +13,6 @@ import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.minecraft.world.item.enchantment.effects.AddValue;
 import net.minecraft.world.item.enchantment.effects.MultiplyValue;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.registry.EnchantmentEffectComponentRegistry;
