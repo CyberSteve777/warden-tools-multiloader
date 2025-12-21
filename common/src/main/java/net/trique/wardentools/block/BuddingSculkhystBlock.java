@@ -1,21 +1,24 @@
 package net.trique.wardentools.block;
 
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.AmethystBlock;
-import net.minecraft.world.level.block.AmethystClusterBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.trique.wardentools.registry.BlockRegistry;
 
-public class BuddingSculkhystBlock extends AmethystBlock {
+public class BuddingSculkhystBlock extends BuddingAmethystBlock {
     public static final int GROW_CHANCE = 5;
-    private static final Direction[] DIRECTIONS = Direction.values();
+    private static final Direction[] DIRS = Direction.values();
+
+    @Override
+    public MapCodec<BuddingAmethystBlock> codec() {
+        return simpleCodec(BuddingSculkhystBlock::new);
+    }
 
     public BuddingSculkhystBlock(Properties settings) {
         super(settings);
@@ -26,11 +29,11 @@ public class BuddingSculkhystBlock extends AmethystBlock {
         if (random.nextInt(GROW_CHANCE) != 0) {
             return;
         }
-        Direction direction = UPDATE_SHAPE_ORDER[random.nextInt(UPDATE_SHAPE_ORDER.length)];
+        Direction direction = DIRS[random.nextInt(DIRS.length)];
         BlockPos blockPos = pos.relative(direction);
         BlockState blockState = world.getBlockState(blockPos);
         Block block = null;
-        if (BuddingSculkhystBlock.canGrowIn(blockState)) {
+        if (canGrowIn(blockState)) {
             block = BlockRegistry.SMALL_SCULKHYST_BUD.get();
         } else if (blockState.is(BlockRegistry.SMALL_SCULKHYST_BUD.get()) && blockState.getValue(AmethystClusterBlock.FACING) == direction) {
             block = BlockRegistry.MEDIUM_SCULKHYST_BUD.get();
