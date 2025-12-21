@@ -22,7 +22,7 @@ public class AddEnchantedBookToPoolModifier extends LootModifier {
             LootModifier.codecStart(inst)
                     .and(Enchantment.CODEC.fieldOf("enchantment").forGetter(e -> e.enchantment))
                     .and(Codec.INT.fieldOf("minLevel").forGetter(e -> e.minLevel))
-                    .and(Codec.INT.fieldOf("maxLevel").forGetter(e ->e.maxLevel))
+                    .and(Codec.INT.fieldOf("maxLevel").forGetter(e -> e.maxLevel))
                     .apply(inst, AddEnchantedBookToPoolModifier::new));
     private final Holder<Enchantment> enchantment;
     private final int minLevel;
@@ -38,7 +38,7 @@ public class AddEnchantedBookToPoolModifier extends LootModifier {
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext) {
         for (LootItemCondition condition : this.conditions) {
-            if(!condition.test(lootContext)) {
+            if (!condition.test(lootContext)) {
                 return generatedLoot;
             }
         }

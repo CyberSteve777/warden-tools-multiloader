@@ -17,7 +17,7 @@ public class AddItemModiferWithRandomAmount extends LootModifier {
             LootModifier.codecStart(inst)
                     .and(BuiltInRegistries.ITEM.byNameCodec().fieldOf("item").forGetter(e -> e.item))
                     .and(Codec.INT.fieldOf("min").forGetter(e -> e.min))
-                    .and(Codec.INT.fieldOf("max").forGetter(e ->e.max))
+                    .and(Codec.INT.fieldOf("max").forGetter(e -> e.max))
                     .apply(inst, AddItemModiferWithRandomAmount::new));
     private final Item item;
     private final int min;
@@ -32,8 +32,8 @@ public class AddItemModiferWithRandomAmount extends LootModifier {
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext) {
-            for (LootItemCondition condition : this.conditions) {
-            if(!condition.test(lootContext)) {
+        for (LootItemCondition condition : this.conditions) {
+            if (!condition.test(lootContext)) {
                 return generatedLoot;
             }
         }

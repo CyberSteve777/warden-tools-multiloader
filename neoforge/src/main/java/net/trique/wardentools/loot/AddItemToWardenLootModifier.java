@@ -22,9 +22,9 @@ public class AddItemToWardenLootModifier extends LootModifier {
             LootModifier.codecStart(inst)
                     .and(BuiltInRegistries.ITEM.byNameCodec().fieldOf("item").forGetter(e -> e.item))
                     .and(Codec.FLOAT.fieldOf("baseChance").forGetter(e -> e.baseChance))
-                    .and(Codec.FLOAT.fieldOf("perLevel").forGetter(e ->e.perLevel))
+                    .and(Codec.FLOAT.fieldOf("perLevel").forGetter(e -> e.perLevel))
                     .and(Codec.INT.fieldOf("min").forGetter(e -> e.min))
-                    .and(Codec.INT.fieldOf("max").forGetter(e ->e.max))
+                    .and(Codec.INT.fieldOf("max").forGetter(e -> e.max))
                     .apply(inst, AddItemToWardenLootModifier::new));
     private final Item item;
     private final float baseChance;
@@ -47,7 +47,7 @@ public class AddItemToWardenLootModifier extends LootModifier {
             return generatedLoot;
         }
         for (LootItemCondition condition : this.conditions) {
-            if(!condition.test(lootContext)) {
+            if (!condition.test(lootContext)) {
                 return generatedLoot;
             }
         }
