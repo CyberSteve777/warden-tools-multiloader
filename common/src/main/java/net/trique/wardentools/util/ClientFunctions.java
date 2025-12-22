@@ -34,7 +34,8 @@ public class ClientFunctions {
         return Minecraft.getInstance().player;
     }
     public static void handleClientTick() {
-        if(getLocalPlayer() != null) {//this can run outside the world
+        LocalPlayer player = getLocalPlayer();
+        if(player != null && player.isAlive()) {//this can run outside the world or when player is dead
             C2SKeybindPacket.sendToServer(KeyAction.CONSUME_CHARGES, WTKeybinds.CONSUME_CHARGES.isDown());
         }
     }

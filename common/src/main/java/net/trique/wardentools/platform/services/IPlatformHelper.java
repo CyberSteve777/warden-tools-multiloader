@@ -58,8 +58,9 @@ public interface IPlatformHelper {
         if (value != null) {
             return value;
         }
-        setAttachedValue(entity, attachment, attachment.getDefaultValueSupplier().apply(entity));
-        return getAttachedValue(entity, attachment);
+        value = attachment.getDefaultValueSupplier().apply(entity);
+        setAttachedValue(entity, attachment, value);
+        return value;
     }
 
     <T> void setAttachedValue(Object object, CommonDataAttachment<T> attachment, @Nullable T value);
