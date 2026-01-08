@@ -11,10 +11,10 @@ import java.util.*;
 
 public class CommonDataAttachments {
 
-    private static final Map<ResourceLocation,CommonDataAttachment<?>> MAP =new HashMap<>();
+    private static final Map<ResourceLocation, CommonDataAttachment<?>> MAP = new HashMap<>();
 
     static final StreamCodec<RegistryFriendlyByteBuf, EnumSet<KeyAction>> STREAM_CODEC = KeyAction.STREAM_CODEC.apply(ByteBufCodecs.collection(
-       value -> EnumSet.noneOf(KeyAction.class)
+            value -> EnumSet.noneOf(KeyAction.class)
     ));
 
     public static final CommonDataAttachment<EnumSet<KeyAction>> ACTIVE_KEYBINDS =
@@ -29,7 +29,7 @@ public class CommonDataAttachments {
     static <T> CommonDataAttachment<T> register(CommonDataAttachment<T> type) {
         Services.PLATFORM.registerDataAttachment(type);
         Objects.requireNonNull(type.getAttachment());
-        MAP.put(type.name,type);
+        MAP.put(type.name, type);
         return type;
     }
 

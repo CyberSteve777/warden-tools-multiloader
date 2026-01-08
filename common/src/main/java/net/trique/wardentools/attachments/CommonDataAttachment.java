@@ -12,14 +12,14 @@ import java.util.function.Function;
 
 public class CommonDataAttachment<T> {
 
-    protected final Function<Object,T> defaultValueSupplier;
+    protected final Function<Object, T> defaultValueSupplier;
     protected final ResourceLocation name;
     protected final boolean copyOnDeath;
     protected final Codec<T> codec;
     private final StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec;
     protected Object attachment;
 
-    public CommonDataAttachment(Function<Object,T> defaultValueSupplier, ResourceLocation name, boolean copyOnDeath, Codec<T> codec,
+    public CommonDataAttachment(Function<Object, T> defaultValueSupplier, ResourceLocation name, boolean copyOnDeath, Codec<T> codec,
                                 StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
         this.defaultValueSupplier = defaultValueSupplier;
         this.name = name;
@@ -28,7 +28,7 @@ public class CommonDataAttachment<T> {
         this.streamCodec = streamCodec;
     }
 
-    public static <T> Builder<T> create(Function<Object,T> defaultValueSupplier) {
+    public static <T> Builder<T> create(Function<Object, T> defaultValueSupplier) {
         return new Builder<>(defaultValueSupplier);
     }
 
@@ -36,9 +36,10 @@ public class CommonDataAttachment<T> {
         return new Builder<>(o -> null);
     }
 
-    public Function<Object,T> getDefaultValueSupplier() {
+    public Function<Object, T> getDefaultValueSupplier() {
         return defaultValueSupplier;
-    }        
+    }
+
     public ResourceLocation getName() {
         return name;
     }
@@ -56,7 +57,7 @@ public class CommonDataAttachment<T> {
     }
 
     public boolean canSync() {
-        return streamCodec!=null;
+        return streamCodec != null;
     }
 
     public Object getAttachment() {
@@ -70,7 +71,7 @@ public class CommonDataAttachment<T> {
 
 
     public static class Builder<T> {
-        protected final Function<Object,T> defaultValueSupplier;
+        protected final Function<Object, T> defaultValueSupplier;
         protected boolean copyOnDeath;
         protected Codec<T> codec;
         @Nullable
@@ -98,12 +99,12 @@ public class CommonDataAttachment<T> {
         }
 
         public CommonDataAttachment<T> build(String name) {
-            return build(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID,name));
+            return build(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name));
         }
 
         public CommonDataAttachment<T> build(ResourceLocation name) {
             Objects.requireNonNull(name);
-            return new CommonDataAttachment<>(defaultValueSupplier,name,copyOnDeath, codec,streamCodec);
+            return new CommonDataAttachment<>(defaultValueSupplier, name, copyOnDeath, codec, streamCodec);
         }
     }
 }
