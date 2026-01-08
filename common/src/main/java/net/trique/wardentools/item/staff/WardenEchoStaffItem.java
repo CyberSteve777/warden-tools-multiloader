@@ -91,7 +91,6 @@ public class WardenEchoStaffItem extends EchoStaffItem {
 
         for (Entity hitTarget : hit) {
             DamageSource damageSource = world.damageSources().sonicBoom(user);
-            hitTarget.hurt(damageSource, calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
             if (hitTarget instanceof LivingEntity living) {
                 living.hurt(damageSource, calculateEnchantedDamage(world, stack, hitTarget, damageSource, damage));
                 float vertical = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource, verticalKnockbackCoefficient) * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
@@ -161,8 +160,6 @@ public class WardenEchoStaffItem extends EchoStaffItem {
             float distSq = entity.distanceTo(user);
             float final_damage = calculateDamage(damage, distSq, charges, r);
             DamageSource damageSource = world.damageSources().sonicBoom(user);
-            entity.hurt(damageSource, calculateEnchantedDamage(world, stack, entity, damageSource, final_damage));
-
             if (entity instanceof LivingEntity living) {
                 living.hurt(damageSource, calculateEnchantedDamage(world, stack, entity, damageSource, final_damage));
                 float vertical = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource, verticalKnockbackCoefficient) * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
