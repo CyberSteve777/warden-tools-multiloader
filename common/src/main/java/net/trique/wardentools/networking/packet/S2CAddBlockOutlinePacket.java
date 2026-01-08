@@ -5,6 +5,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.util.warden_curse.WardenCurseClientHelper;
 
@@ -39,5 +40,9 @@ public record S2CAddBlockOutlinePacket(BlockPos pos, int ticks) implements S2CMo
     @Override
     public void handleClient() {
         if (CONFIG.outline_pos.get()) WardenCurseClientHelper.addBlockPos(pos, ticks);
+    }
+
+    public static void sendToClient(BlockPos p, int t, ServerPlayer player) {
+        PacketHandler.sendToClient(new S2CAddBlockOutlinePacket(p, t), player);
     }
 }

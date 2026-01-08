@@ -177,10 +177,9 @@ public class WardenCurseUser implements VibrationSystem {
                                 block_outline_seconds), player);
                     }
                     if (possibleShooter != null && !possibleShooter.equals(holder)) {
-                        Services.PLATFORM.sendToClient(new S2CAddEntityGlowPacket(possibleShooter.getId(),
-                                entity_glow_seconds), player);
-                        Services.PLATFORM.sendToClient(new S2CAddBlockOutlinePacket(
-                                possibleShooter.getOnPos().above(), block_outline_seconds), player);
+                        S2CAddEntityGlowPacket.sendToClient(possibleShooter.getId(), entity_glow_seconds, player);
+                        S2CAddBlockOutlinePacket.sendToClient(possibleShooter.getOnPos().above(), block_outline_seconds,
+                                player);
                     }
                 }
             }

@@ -4,6 +4,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.util.warden_curse.WardenCurseClientHelper;
 
@@ -37,5 +38,9 @@ public record S2CAddEntityGlowPacket(int id, int ticks) implements S2CModPacket<
     @Override
     public void handleClient() {
         WardenCurseClientHelper.addEntity(id, ticks);
+    }
+
+    public static void sendToClient(int i, int t, ServerPlayer player) {
+        PacketHandler.sendToClient(new S2CAddEntityGlowPacket(i, t), player);
     }
 }
