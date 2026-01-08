@@ -112,9 +112,9 @@ public class WardenEchoStaffItem extends EchoStaffItem {
     private int calculateAmountOfChargesToConsume(ItemStack stack, LivingEntity user, int tick_progress) {
         if (user instanceof Player) {
             int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
-            return Math.min(Mth.floor(Math.min(1f, tick_progress / SPECIAL_ATTACK_CHARGE_TIME) * CONFIG.max_charges.get()), charges);
+            return Math.min(Mth.floor(Math.min(1f, tick_progress / SPECIAL_ATTACK_CHARGE_TIME) * CONFIG.charges_cap.get()), charges);
         }
-        return CONFIG.max_charges.get();
+        return CONFIG.charges_cap.get();
     }
 
     @Override

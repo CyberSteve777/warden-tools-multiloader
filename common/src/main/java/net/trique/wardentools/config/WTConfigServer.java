@@ -7,12 +7,12 @@ public class WTConfigServer {
     public static final ModConfigSpec SPEC;
     public static final WTConfigServer CONFIG;
 
-    public final ModConfigSpec.IntValue max_charges;
+    public final ModConfigSpec.IntValue charges_cap;
     public final ModConfigSpec.DoubleValue seconds_to_outline_block;
     public final ModConfigSpec.DoubleValue seconds_to_glow_entity;
 
     private WTConfigServer(ModConfigSpec.Builder builder) {
-        max_charges = builder.comment("Charges cap the Warden Echo Staff can consume per single special attack")
+        charges_cap = builder.comment("Charges cap the Warden Echo Staff can consume per single special attack")
                 .translation(ModHelper.getTranslationKey("charges_cap"))
                 .defineInRange("max_charges", 10, 5, 15);
         seconds_to_outline_block = builder.comment("Seconds the block will be outlined for")
