@@ -153,5 +153,6 @@
   "wardentools.warden_echo_shrieker_desc": "Special ability: Deals damage in a conical area in front of you.\nThis item counts as Bow, but consumes %s to shoot.\nIf target is in range of %.0f blocks or closer, you will deal x%.0f damage.\nDamage falloffs with distance.",
   "key.wardentools.consume_charges": "Warden Echo Staff Special attack",
   "key.categories.wardentools": "Warden Tools",
-  "wardentools.warden_echo_shrieker_hint": "Special ability: Hold [SHIFT] for more info"
+  "wardentools.warden_echo_shrieker_hint": "Special ability: Hold [SHIFT] for more info",
+  "wardentools.charges_cap": "Maximum amount of charges Warden Echo Staff can consume per single special attack"
 }

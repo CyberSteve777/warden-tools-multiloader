@@ -153,6 +153,7 @@
   "wardentools.seconds_to_outline_block": "Seconds of outlining block",
   "wardentools.seconds_to_glow_entity": "Seconds of glowing entity",
   "wardentools.outline_pos": "Outline position",
+  "wardentools.charges_cap": "Maximum amount of charges Warden Echo Staff can consume per single special attack",
   "wardentools.staff_base_damage": "Basic attack damage: %.0f",
   "wardentools.staff_base_range": "Basic attack distance: %.0f",
   "wardentools.warden_echo_staff_charges": "Stored charges: %d",

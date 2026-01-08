@@ -12,8 +12,8 @@ public class WTConfigServer {
     public final ModConfigSpec.DoubleValue seconds_to_glow_entity;
 
     private WTConfigServer(ModConfigSpec.Builder builder) {
-        max_charges = builder.comment("Max charges the Warden Echo Staff can store")
-                .translation(ModHelper.getTranslationKey("max_charges"))
+        max_charges = builder.comment("Charges cap the Warden Echo Staff can consume per single special attack")
+                .translation(ModHelper.getTranslationKey("charges_cap"))
                 .defineInRange("max_charges", 10, 5, 15);
         seconds_to_outline_block = builder.comment("Seconds the block will be outlined for")
                 .translation(ModHelper.getTranslationKey("seconds_to_outline_block"))
