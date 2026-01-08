@@ -19,7 +19,7 @@ public class AffectedEntitiesTrigger extends SimpleCriterionTrigger<AffectedEnti
         return TriggerInstance.CODEC;
     }
 
-    public void trigger(ServerPlayer player, ItemStack handheld, Set<Entity> entities) {
+    public <T extends Entity> void trigger(ServerPlayer player, ItemStack handheld, Set<T> entities) {
         this.trigger(player, triggerInstance -> triggerInstance.matches(handheld, entities.size()));
     }
 
