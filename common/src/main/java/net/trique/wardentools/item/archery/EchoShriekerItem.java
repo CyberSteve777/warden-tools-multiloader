@@ -112,22 +112,20 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
         Set<Entity> hit = new HashSet<>();
         AABB cube = new AABB(new BlockPos((int) source.x(),
                 (int) source.y(), (int) source.z())).inflate(enhanced_distance);
-        hit.addAll(world.getEntitiesOfClass(LivingEntity.class, cube, it -> isAABBInConeSimple(source, offsetToTarget, it.getBoundingBox()) && !((it.isAlliedTo(user)) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
+        hit.addAll(world.getEntities(user, cube, it -> isAABBInConeSimple(source, offsetToTarget, it.getBoundingBox()) && !((it.isAlliedTo(user)) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
         for (float particleScale = 1; particleScale <= offsetToTarget.length(); particleScale++) {
             Vec3 particlePos = source.add(normalized.scale(particleScale));
             world.sendParticles(new EchoParticleOption(particleScale * 1.4f, user.getXRot(), user.getYRot()), particlePos.x, particlePos.y, particlePos.z,
                     1, 0, 0, 0, 0);
         }
-
         hit.remove(user);
-
         for (Entity hitTarget : hit) {
             float distanceToTarget = user.distanceTo(hitTarget);
             float baseDamage = calculateBaseDamage(remainTicks, distanceToTarget);
             DamageSource damageSource = world.damageSources().sonicBoom(user);
             float enchantedDamage = calculateEnchantedDamage(world, stack, hitTarget, damageSource, baseDamage);
             if (hitTarget instanceof LivingEntity living) {
-                hitTarget.hurt(damageSource, enchantedDamage);
+                living.hurt(damageSource, enchantedDamage);
                 living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
                 living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
                 living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 160, 2));
@@ -207,7 +205,7 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
             } else {
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_shrieker_damage", BASE_DAMAGE).withStyle(ChatFormatting.AQUA));
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_shrieker_distance", DEFAULT_DISTANCE).withStyle(ChatFormatting.AQUA));
-                tooltipComponents.add(Component.literal(""));
+                tooltipComponents.add(Component.empty());
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_shrieker_hint").withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
             }
         }

@@ -127,7 +127,8 @@ public class WardenEchoStaffItem extends EchoStaffItem {
                 String special_attack_key = WTKeybinds.CONSUME_CHARGES.getTranslatedKeyMessage().getString();
                 String rmb = InputConstants.getKey("key.mouse.right").getDisplayName().getString();
                 String wes = ItemRegistry.WARDEN_ECHO_STAFF.get().getDescription().getString();
-                tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_desc", special_attack_key, rmb, wes).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+                tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_desc", special_attack_key,
+                        rmb, wes, CONFIG.charges_cap.getAsInt()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_charges", charges).withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_damage", damage * 1.5f).withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_range", 5f).withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
