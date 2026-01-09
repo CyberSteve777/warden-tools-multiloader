@@ -2,7 +2,7 @@ package net.trique.wardentools.registry;
 
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.particle.echo_particle.EchoParticleType;
 import net.trique.wardentools.particle.sonic_wave.SonicWaveParticleType;
@@ -11,7 +11,7 @@ import net.trique.wardentools.registration.RegistrationProvider;
 import net.trique.wardentools.registration.RegistryObject;
 
 public class ParticleRegistry {
-    protected static final RegistrationProvider<ParticleType<?>> PARTICLE_TYPES = RegistrationProvider.get(Registries.PARTICLE_TYPE, Constants.MOD_ID);
+    protected static final RegistrationProvider<ParticleType<?>> PARTICLE_TYPES = RegistrationProvider.get(BuiltInRegistries.PARTICLE_TYPE, Constants.MOD_ID);
 
     public static final RegistryObject<ParticleType<?>, EchoParticleType> ECHO_PARTICLE = PARTICLE_TYPES.register("echo_particle", () -> new EchoParticleType(false));
     public static final RegistryObject<ParticleType<?>, SonicWaveParticleType> SONIC_WAVE = PARTICLE_TYPES.register("sonic_wave", () -> new SonicWaveParticleType(false));

@@ -1,6 +1,6 @@
 package net.trique.wardentools.registry;
 
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.item.archery.EchoShriekerItem;
@@ -19,7 +19,7 @@ import net.trique.wardentools.registration.RegistrationProvider;
 import net.trique.wardentools.registration.RegistryObject;
 
 public class ItemRegistry {
-    protected static final RegistrationProvider<Item> ITEMS = RegistrationProvider.get(Registries.ITEM, Constants.MOD_ID);
+    protected static final RegistrationProvider<Item> ITEMS = RegistrationProvider.get(BuiltInRegistries.ITEM, Constants.MOD_ID);
 
     public static final RegistryObject<Item, EchoStaffItem> ECHO_STAFF = ITEMS.register("echo_staff",
             () -> new EchoStaffItem(getItemProperties().rarity(Rarity.EPIC).durability(75),

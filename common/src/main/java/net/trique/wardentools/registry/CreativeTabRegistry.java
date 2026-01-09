@@ -1,6 +1,7 @@
 package net.trique.wardentools.registry;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
@@ -24,7 +25,7 @@ public class CreativeTabRegistry {
         Constants.LOGGER.info("Adding creative tab for {}", Constants.MOD_NAME);
     }
 
-    protected static final RegistrationProvider<CreativeModeTab> CREATIVE_MODE_TABS = RegistrationProvider.get(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
+    protected static final RegistrationProvider<CreativeModeTab> CREATIVE_MODE_TABS = RegistrationProvider.get(BuiltInRegistries.CREATIVE_MODE_TAB, Constants.MOD_ID);
 
 
     public static final RegistryObject<CreativeModeTab, CreativeModeTab> WARDEN_TOOLS_BLOCKS_TAB = CREATIVE_MODE_TABS.register("blocks",

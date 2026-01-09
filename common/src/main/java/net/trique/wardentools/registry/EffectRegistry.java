@@ -1,7 +1,7 @@
 package net.trique.wardentools.registry;
 
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.trique.wardentools.Constants;
@@ -12,7 +12,7 @@ import net.trique.wardentools.registration.RegistryObject;
 import java.util.function.Supplier;
 
 public class EffectRegistry {
-    protected static final RegistrationProvider<MobEffect> EFFECTS = RegistrationProvider.get(Registries.MOB_EFFECT, Constants.MOD_ID);
+    protected static final RegistrationProvider<MobEffect> EFFECTS = RegistrationProvider.get(BuiltInRegistries.MOB_EFFECT, Constants.MOD_ID);
 
     public static Holder<MobEffect> SCULK_ADAPTION;
     public static Holder<MobEffect> WARDEN_CURSE;

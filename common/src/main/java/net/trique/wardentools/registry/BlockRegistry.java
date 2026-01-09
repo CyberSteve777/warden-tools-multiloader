@@ -1,6 +1,6 @@
 package net.trique.wardentools.registry;
 
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.*;
@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 
 public class BlockRegistry {
 
-    protected static final RegistrationProvider<Block> BLOCKS = RegistrationProvider.get(Registries.BLOCK, Constants.MOD_ID);
+    protected static final RegistrationProvider<Block> BLOCKS = RegistrationProvider.get(BuiltInRegistries.BLOCK, Constants.MOD_ID);
 
     public static final RegistryObject<Block, SculkhystBlock> SCULKHYST_BLOCK = registerBlock("sculkhyst_block", () ->
             new SculkhystBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).strength(1.5f).sound(SoundType.SCULK), UniformInt.of(8, 16)));
