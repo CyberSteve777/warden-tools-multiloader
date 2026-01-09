@@ -8,7 +8,7 @@ public class PacketHandler {
     public static void registerPackets() {
         Services.PLATFORM.registerClientPlayPacket(S2CAddEntityGlowPacket.TYPE, S2CAddEntityGlowPacket.CODEC);
         Services.PLATFORM.registerClientPlayPacket(S2CAddBlockOutlinePacket.TYPE, S2CAddBlockOutlinePacket.CODEC);
-        Services.PLATFORM.registerServerPlayPacket(C2SKeybindPacket.PACKET_ID, C2SKeybindPacket.CODEC);
+        Services.PLATFORM.registerServerPlayPacket(C2SKeybindPacket.TYPE, C2SKeybindPacket.CODEC);
     }
 
     public static void sendToServer(C2SModPacket<?> packet) {

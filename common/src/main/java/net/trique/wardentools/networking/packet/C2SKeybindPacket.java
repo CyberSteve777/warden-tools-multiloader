@@ -19,7 +19,7 @@ public record C2SKeybindPacket(KeyAction action, boolean isHeld) implements C2SM
 
     public static final ResourceLocation ID = ModHelper.getLoc("keybind");
 
-    public static final Type<C2SKeybindPacket> PACKET_ID = new Type<>(ID);
+    public static final Type<C2SKeybindPacket> TYPE = new Type<>(ID);
 
     public static final StreamCodec<RegistryFriendlyByteBuf, C2SKeybindPacket> CODEC =
             StreamCodec.composite(KeyAction.STREAM_CODEC, C2SKeybindPacket::action,
@@ -39,7 +39,7 @@ public record C2SKeybindPacket(KeyAction action, boolean isHeld) implements C2SM
 
     @Override
     public Type<? extends CustomPacketPayload> type() {
-        return PACKET_ID;
+        return TYPE;
     }
 
     public static void sendToServer(KeyAction action, boolean down) {
