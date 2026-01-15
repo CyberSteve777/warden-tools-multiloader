@@ -18,7 +18,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -109,16 +108,15 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
         Vec3 target = source.add(user.getLookAngle().scale(enhanced_distance));
         Vec3 offsetToTarget = target.subtract(source);
         Vec3 normalized = offsetToTarget.normalize();
-        Set<Entity> hit = new HashSet<>();
         AABB cube = new AABB(new BlockPos((int) source.x(),
                 (int) source.y(), (int) source.z())).inflate(enhanced_distance);
-        hit.addAll(world.getEntities(user, cube, it -> isAABBInConeSimple(source, offsetToTarget, it.getBoundingBox()) && !((it.isAlliedTo(user)) || (it instanceof TamableAnimal helper && helper.isOwnedBy(user)))));
+        Set<Entity> hit = new HashSet<>(world.getEntities(user, cube, it -> it.isAlive() &&
+                isAABBInConeSimple(source, offsetToTarget, it.getBoundingBox()) && !it.isAlliedTo(user)));
         for (float particleScale = 1; particleScale <= offsetToTarget.length(); particleScale++) {
             Vec3 particlePos = source.add(normalized.scale(particleScale));
             world.sendParticles(new EchoParticleOption(particleScale * 1.4f, user.getXRot(), user.getYRot()), particlePos.x, particlePos.y, particlePos.z,
                     1, 0, 0, 0, 0);
         }
-        hit.remove(user);
         for (Entity hitTarget : hit) {
             float distanceToTarget = user.distanceTo(hitTarget);
             float baseDamage = calculateBaseDamage(remainTicks, distanceToTarget);
