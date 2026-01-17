@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "wardentools:item/amethyst_upgraded_echo_staff"
+  }
+}

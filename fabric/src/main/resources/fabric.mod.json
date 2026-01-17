@@ -1,36 +1,47 @@
 {
-    "schemaVersion": 1,
-    "id": "mod_id",
-    "version": "${version}",
-    "name": "${mod_name}",
-    "description": "${description}",
-    "authors": [
-        "${mod_author}"
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${description}",
+  "authors": [
+    "${mod_author}",
+    "CyberSteve",
+    "Zyablik",
+    "Tfarecenim",
+    "purrgest"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/warden-tools",
+    "sources": "https://github.com/CyberSteve777/warden-tools-multiloader"
+  },
+  "license": "${license}",
+  "icon": "assets/${mod_id}/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.trique.wardentools.WardenToolsFabric"
     ],
-    "contact": {
-        "homepage": "https://fabricmc.net/",
-        "sources": "https://github.com/FabricMC/fabric-example-mod"
-    },
-    "license": "${license}",
-    "icon": "assets/modid/${mod_id}.png",
-    "environment": "*",
-    "entrypoints": {
-        "main": [
-            "com.example.examplemod.ExampleMod"
-        ]
-    },
-    "mixins": [
-        "${mod_id}.mixins.json",
-        "${mod_id}.fabric.mixins.json"
-    ],
-    "depends": {
-        "fabricloader": ">=0.14",
-        "fabric": "*",
-        "minecraft": "${minecraft_version}",
-        "java": ">=17"
-    },
-    "suggests": {
-        "another-mod": "*"
-    }
+    "client": [
+      "net.trique.wardentools.WardenToolsFabricClient"
+    ]
+  },
+  "accessWidener" : "META-INF/${mod_id}.accesswidener",
+  "mixins": [
+    "${mod_id}.mixins.json",
+    "${mod_id}.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": ">=${fabric_version}",
+    "minecraft": "${minecraft_version}",
+    "java": ">=${java_version}",
+    "forgeconfigapiport": ">=${configApiVer}",
+    "equiplib": ">=${equipLibVer}",
+    "geckolib": ">=${geckolibVer}"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
 }
   
