@@ -17,6 +17,11 @@ legacyForge {
 dependencies {
     compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+    annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.5.2'
+    api "fuzs.forgeconfigapiport:forgeconfigapiport-common:${configApiVer}"
+    compileOnly "me.cybersteve:equiplib-common:${equipLibVer}"
+    modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolibVer}"
+    implementation("com.eliotlash.mclib:mclib:20")
 }
 
 configurations {
@@ -32,5 +37,7 @@ configurations {
 
 artifacts {
     commonJava sourceSets.main.java.sourceDirectories.singleFile
-    commonResources sourceSets.main.resources.sourceDirectories.singleFile
+    for (def dir: sourceSets.main.resources.sourceDirectories.files) {
+        commonResources dir
+    }
 }

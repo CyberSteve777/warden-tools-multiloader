@@ -1,4 +1,14 @@
 plugins {
     id 'fabric-loom' version '1.9-SNAPSHOT' apply(false)
     id 'net.neoforged.moddev.legacyforge' version '2.0.77' apply(false)
+    id "com.matyrobbrt.mc.registrationutils" version "${regPluginVer}"
+}
+
+registrationUtils {
+    group 'net.trique.wardentools.registration'
+    projects {
+        fabric { type 'fabric' } // The fabric project
+        forge { type 'forge' } // The forge project
+        common { type 'common' } // The common project
+    }
 }
