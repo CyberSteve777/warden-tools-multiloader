@@ -1,17 +1,17 @@
 package net.trique.wardentools.config;
 
-import net.neoforged.neoforge.common.ModConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.trique.wardentools.util.ModHelper;
 
 public class WTConfigServer {
-    public static final ModConfigSpec SPEC;
+    public static final ForgeConfigSpec SPEC;
     public static final WTConfigServer CONFIG;
 
-    public final ModConfigSpec.IntValue charges_cap;
-    public final ModConfigSpec.DoubleValue seconds_to_outline_block;
-    public final ModConfigSpec.DoubleValue seconds_to_glow_entity;
+    public final ForgeConfigSpec.IntValue charges_cap;
+    public final ForgeConfigSpec.DoubleValue seconds_to_outline_block;
+    public final ForgeConfigSpec.DoubleValue seconds_to_glow_entity;
 
-    private WTConfigServer(ModConfigSpec.Builder builder) {
+    private WTConfigServer(ForgeConfigSpec.Builder builder) {
         charges_cap = builder.comment("Charges cap the Warden Echo Staff can consume per single special attack")
                 .translation(ModHelper.getTranslationKey("charges_cap"))
                 .defineInRange("max_charges", 10, 5, 15);
@@ -25,7 +25,7 @@ public class WTConfigServer {
     }
 
     static {
-        ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
+        ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
         CONFIG = new WTConfigServer(configBuilder);
         SPEC = configBuilder.build();
     }

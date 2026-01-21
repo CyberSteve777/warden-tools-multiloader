@@ -19,21 +19,16 @@ import net.trique.wardentools.registration.RegistrationProvider;
 import net.trique.wardentools.registration.RegistryObject;
 import net.trique.wardentools.registry.ItemRegistry;
 
-public class WardenArmorMaterials {
-    protected static final RegistrationProvider<ArmorMaterial> ARMOR_MATERIALS = RegistrationProvider.get(Registries.ARMOR_MATERIAL, Constants.MOD_ID);
-    private static final Holder<SoundEvent> SONIC_BOOM_SOUND = Holder.direct(SoundEvents.WARDEN_SONIC_BOOM);
+public enum WardenArmorMaterials implements ArmorMaterial {
+    ;
+    private static final SoundEvent SONIC_BOOM_SOUND = SoundEvents.WARDEN_SONIC_BOOM;
 
     public static void init() {
         Constants.LOGGER.info("Registering armor materials for Warden Tools...");
     }
 
-    private static Holder<ArmorMaterial> registerMaterial(String id, Map<Type, Integer> defensePoints, int enchantability, Holder<SoundEvent> equipSound, Supplier<Ingredient> repairIngredientSupplier, float toughness, float knockbackResistance, boolean dyeable) {
-        List<ArmorMaterial.Layer> layers = List.of(
-                new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, id), "", dyeable)
-        );
-        RegistryObject<ArmorMaterial, ArmorMaterial> materialRegistryObject = ARMOR_MATERIALS.register(id,
-                () -> new ArmorMaterial(defensePoints, enchantability, equipSound, repairIngredientSupplier, layers, toughness, knockbackResistance));
-        return materialRegistryObject.asHolder();
+    private static Holder<ArmorMaterial> registerMaterial(String id, Map<Type, Integer> defensePoints, int enchantability, SoundEvent equipSound, Supplier<Ingredient> repairIngredientSupplier, float toughness, float knockbackResistance) {
+        return new ArmorMaterial(defensePoints, enchantability, equipSound, repairIngredientSupplier, toughness, knockbackResistance);
     }
 
     public static final Holder<ArmorMaterial> SCULKIFIED = registerMaterial("sculkified", Util.make(new EnumMap<>(Type.class), map -> {
@@ -52,4 +47,43 @@ public class WardenArmorMaterials {
             }), 21, SONIC_BOOM_SOUND,
             () -> Ingredient.of(ItemRegistry.WARDEN_INGOT.get()), 5.0f, 0.15f, false);
 
+    @Override
+    public int getDurabilityForType(Type type) {
+        return 0;
+    }
+
+    @Override
+    public int getDefenseForType(Type type) {
+        return 0;
+    }
+
+    @Override
+    public int getEnchantmentValue() {
+        return 0;
+    }
+
+    @Override
+    public SoundEvent getEquipSound() {
+        return null;
+    }
+
+    @Override
+    public Ingredient getRepairIngredient() {
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return "";
+    }
+
+    @Override
+    public float getToughness() {
+        return 0;
+    }
+
+    @Override
+    public float getKnockbackResistance() {
+        return 0;
+    }
 }

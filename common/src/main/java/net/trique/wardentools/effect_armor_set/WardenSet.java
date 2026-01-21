@@ -1,11 +1,9 @@
 package net.trique.wardentools.effect_armor_set;
 
 import me.cybersteve.equiplib.armorset.base.EffectArmorSet;
-import me.cybersteve.equiplib.armorset.impl.FullEffectArmorSet;
 import me.cybersteve.equiplib.item.armor.base.IEffectArmorItem;
 import me.cybersteve.equiplib.util.ArmorSetHelper;
 import me.cybersteve.equiplib.util.EffectList;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;

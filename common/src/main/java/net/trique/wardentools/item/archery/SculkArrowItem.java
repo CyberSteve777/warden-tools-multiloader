@@ -14,7 +14,7 @@ public class SculkArrowItem extends ArrowItem {
     }
 
     @Override
-    public AbstractArrow createArrow(Level world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
+    public AbstractArrow createArrow(Level world, ItemStack stack, LivingEntity shooter) {
         SculkArrowEntity arrow = new SculkArrowEntity(world, shooter);
         arrow.setBaseDamage(4);
         return arrow;

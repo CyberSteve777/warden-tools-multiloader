@@ -1,10 +1,11 @@
 package net.trique.wardentools.attachments;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.trique.wardentools.Constants;
+import net.trique.wardentools.util.ModHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -16,11 +17,11 @@ public class CommonDataAttachment<T> {
     protected final ResourceLocation name;
     protected final boolean copyOnDeath;
     protected final Codec<T> codec;
-    private final StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec;
+    private final StreamCodec<? super FriendlyByteBuf, T> streamCodec;
     protected Object attachment;
 
     public CommonDataAttachment(Function<Object, T> defaultValueSupplier, ResourceLocation name, boolean copyOnDeath, Codec<T> codec,
-                                StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
+                                StreamCodec<? super FriendlyByteBuf, T> streamCodec) {
         this.defaultValueSupplier = defaultValueSupplier;
         this.name = name;
         this.copyOnDeath = copyOnDeath;
@@ -48,7 +49,7 @@ public class CommonDataAttachment<T> {
         return codec;
     }
 
-    public StreamCodec<? super RegistryFriendlyByteBuf, T> getStreamCodec() {
+    public StreamCodec<? super FriendlyByteBuf, T> getStreamCodec() {
         return streamCodec;
     }
 
@@ -75,7 +76,7 @@ public class CommonDataAttachment<T> {
         protected boolean copyOnDeath;
         protected Codec<T> codec;
         @Nullable
-        private StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec;
+        private StreamCodec<? super FriendlyByteBuf, T> streamCodec;
 
         public Builder(Function<Object, T> defaultValueSupplier) {
             this.defaultValueSupplier = defaultValueSupplier;
@@ -87,7 +88,7 @@ public class CommonDataAttachment<T> {
             return this;
         }
 
-        public Builder<T> networkSynchronized(StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
+        public Builder<T> networkSynchronized(StreamCodec<? super FriendlyByteBuf, T> streamCodec) {
             Objects.requireNonNull(streamCodec);
             this.streamCodec = streamCodec;
             return this;
@@ -99,7 +100,7 @@ public class CommonDataAttachment<T> {
         }
 
         public CommonDataAttachment<T> build(String name) {
-            return build(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name));
+            return build(ModHelper.getLoc(name));
         }
 
         public CommonDataAttachment<T> build(ResourceLocation name) {

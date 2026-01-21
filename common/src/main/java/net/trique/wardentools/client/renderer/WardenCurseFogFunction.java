@@ -10,7 +10,7 @@ import net.trique.wardentools.registry.EffectRegistry;
 
 public class WardenCurseFogFunction implements FogRenderer.MobEffectFogFunction {
     @Override
-    public Holder<MobEffect> getMobEffect() {
+    public MobEffect getMobEffect() {
         return EffectRegistry.WARDEN_CURSE;
     }
 

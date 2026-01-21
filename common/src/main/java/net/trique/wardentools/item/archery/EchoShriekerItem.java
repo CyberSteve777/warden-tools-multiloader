@@ -61,7 +61,7 @@ public class EchoShriekerItem extends BowItem implements ISonicBoomItem {
     public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
         ItemStack itemStack = user.getItemInHand(hand);
         boolean bl = !findEchoShard(user).isEmpty();
-        if (!user.hasInfiniteMaterials() && !bl) {
+        if (!user.getAbilities().instabuild && !bl) {
             return InteractionResultHolder.fail(itemStack);
         } else {
             user.startUsingItem(hand);

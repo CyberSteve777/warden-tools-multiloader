@@ -1,9 +1,6 @@
 package net.trique.wardentools;
 
 import net.trique.wardentools.item.material.WardenArmorMaterials;
-import net.trique.wardentools.platform.Services;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.Items;
 import net.trique.wardentools.registry.*;
 import net.trique.wardentools.registry.WTArmorSets;
 
@@ -28,7 +25,7 @@ public class WardenToolsCommon {
         ParticleRegistry.init();
         PotionRegistry.init();
         DataComponentRegistry.init();
-        EnchantmentEffectComponentRegistry.init();
+        EnchantmentRegistry.init();
         EntityRegistry.init();
         TriggerTypeRegistry.init();
         CreativeTabRegistry.init();

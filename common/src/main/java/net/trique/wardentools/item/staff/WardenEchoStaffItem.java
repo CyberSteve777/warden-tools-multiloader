@@ -13,7 +13,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -25,12 +24,12 @@ import net.minecraft.world.phys.Vec3;
 import net.trique.wardentools.client.WTKeybinds;
 import net.trique.wardentools.particle.sonic_wave.SonicWaveParticleOption;
 import net.trique.wardentools.platform.Services;
-import net.trique.wardentools.registry.DataComponentRegistry;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.registry.TriggerTypeRegistry;
 import net.trique.wardentools.util.KeyAction;
 import net.trique.wardentools.util.WTEnchantmentHelper;
 import net.trique.wardentools.util.WardenEchoStaffHelper;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.HashSet;
@@ -51,7 +50,7 @@ public class WardenEchoStaffItem extends EchoStaffItem {
     public void releaseUsing(ItemStack stack, Level world, LivingEntity user, int remainingUsageTicks) {
         if (world instanceof ServerLevel serverLevel && user instanceof Player player) {
             ItemStack echoShardStack = findEchoShard(player);
-            int tick_progress = this.getUseDuration(stack, user) - remainingUsageTicks;
+            int tick_progress = this.getUseDuration(stack) - remainingUsageTicks;
             if (shouldPerformSpecialAttack(stack, user, tick_progress)) {
                 performSpecialAttack(stack, serverLevel, user, tick_progress);
             } else {
@@ -60,10 +59,10 @@ public class WardenEchoStaffItem extends EchoStaffItem {
                     spawnSonicBoom(stack, serverLevel, user);
                 }
             }
-            if (!player.hasInfiniteMaterials()) {
+            if (!player.getAbilities().instabuild) {
                 echoShardStack.shrink(1);
                 player.getCooldowns().addCooldown(this, WTEnchantmentHelper.getCooldown(serverLevel, stack, cooldown));
-                stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+                stack.hurtAndBreak(1, player, holder -> holder.broadcastBreakEvent(player.getUsedItemHand()));
             }
             player.awardStat(Stats.ITEM_USED.get(this));
         }
@@ -96,9 +95,8 @@ public class WardenEchoStaffItem extends EchoStaffItem {
                 float vertical = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource, verticalKnockbackCoefficient) * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 float horizontal = WTEnchantmentHelper.modifyKnockback(world, stack, living, damageSource, horizontalKnockbackCoefficient) * (1.0f - (float) living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 living.push(normalized.x() * horizontal, normalized.y() * vertical, normalized.z() * horizontal);
-                if (!living.isAlive() && living.getLastDamageSource() instanceof DamageSource kill_source && kill_source.equals(damageSource)) {
-                    int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
-                    stack.set(DataComponentRegistry.CHARGE_COUNT.get(), ++charges);
+                if (!living.isAlive() && living.getLastDamageSource() != null && living.getLastDamageSource().equals(damageSource)) {
+                    updateStoredChargesAmount(stack, getStoredChargesAmount(stack) + 1);
                 }
             }
 
@@ -112,29 +110,28 @@ public class WardenEchoStaffItem extends EchoStaffItem {
     private int calculateAmountOfChargesToConsume(ItemStack stack, LivingEntity user, int tick_progress) {
         int charge_progress = Mth.floor(Math.min(1f, tick_progress / SPECIAL_ATTACK_CHARGE_TIME) * CONFIG.charges_cap.get());
         if (user instanceof Player) {
-            int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
-            return Math.min(charge_progress, charges);
+            return Math.min(charge_progress, getStoredChargesAmount(stack));
         }
         return charge_progress;
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         if (Services.PLATFORM.isClient()) {
             if (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) ||
                     InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_RIGHT_SHIFT)) {
-                int charges = stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0);
+                int charges = getStoredChargesAmount(stack);
                 String special_attack_key = WTKeybinds.CONSUME_CHARGES.getTranslatedKeyMessage().getString();
 //                String rmb = InputConstants.getKey("key.mouse.right").getDisplayName().getString();
                 String rmb = InputConstants.Type.MOUSE.getOrCreate(InputConstants.MOUSE_BUTTON_RIGHT).getDisplayName().getString();
                 String self_translation_key = ItemRegistry.WARDEN_ECHO_STAFF.get().getDescription().getString();
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_desc", special_attack_key,
-                        rmb, self_translation_key, CONFIG.charges_cap.getAsInt()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+                        rmb, self_translation_key, CONFIG.charges_cap.get()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_charges", charges).withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_damage", damage * 1.5f).withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_range", 5f).withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
             } else {
-                super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                super.appendHoverText(stack, level, tooltipComponents, tooltipFlag);
                 tooltipComponents.add(Component.empty());
                 tooltipComponents.add(Component.translatable("wardentools.warden_echo_staff_special_attack_hint").withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
             }
@@ -176,7 +173,7 @@ public class WardenEchoStaffItem extends EchoStaffItem {
         if (user instanceof ServerPlayer player) {
             TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, stack, entities);
         }
-        stack.set(DataComponentRegistry.CHARGE_COUNT.get(), Math.max(0, stack.getOrDefault(DataComponentRegistry.CHARGE_COUNT.get(), 0) - charges));
+        updateStoredChargesAmount(stack, Math.max(0, getStoredChargesAmount(stack) - charges));
     }
 
     @Override
@@ -197,5 +194,13 @@ public class WardenEchoStaffItem extends EchoStaffItem {
     @Override
     public int getEnchantmentValue() {
         return 21;
+    }
+
+    private static int getStoredChargesAmount(ItemStack stack) {
+        return stack.getOrCreateTag().getInt("charge_count");
+    }
+
+    private static void updateStoredChargesAmount(ItemStack stack, int new_amount) {
+        stack.getOrCreateTag().putInt("charge_count", new_amount);
     }
 }

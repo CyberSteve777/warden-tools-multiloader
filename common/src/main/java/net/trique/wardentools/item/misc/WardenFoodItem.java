@@ -7,26 +7,26 @@ import net.minecraft.world.food.FoodProperties;
 public class WardenFoodItem {
     public static FoodProperties getSculkShellProperties() {
         return new FoodProperties.Builder()
-            .nutrition(10)
-                .saturationModifier(3.0F).
-                effect(new MobEffectInstance(MobEffects.DARKNESS, 200, 0), 1.0F).
-                effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 2), 1.0F).
-                effect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1200, 2), 1.0F).
-                effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 2), 1.0F).
-                alwaysEdible().build();
+                .nutrition(10)
+                .saturationMod(3.0F)
+                .effect(new MobEffectInstance(MobEffects.DARKNESS, 200, 0), 1.0F)
+                .effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 2), 1.0F)
+                .effect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1200, 2), 1.0F)
+                .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 2), 1.0F)
+                .alwaysEat().build();
     }
 
 
     public static FoodProperties getEchoAppleProperties() {
         return new FoodProperties.Builder()
                 .nutrition(5)
-                .saturationModifier(1.2F).
-                effect(new MobEffectInstance(MobEffects.DARKNESS, 100, 0), 1.0F).
-                effect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 1800, 0), 1.0F).
-                effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1800, 0), 1.0F).
-                effect(new MobEffectInstance(MobEffects.NIGHT_VISION, 1800, 0), 1.0F).
-                effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1800, 0), 1.0F).
-                effect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1800, 0), 1.0f).
-                alwaysEdible().build();
+                .saturationMod(1.2F)
+                .effect(new MobEffectInstance(MobEffects.DARKNESS, 100, 0), 1.0F)
+                .effect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 1800, 0), 1.0F)
+                .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1800, 0), 1.0F)
+                .effect(new MobEffectInstance(MobEffects.NIGHT_VISION, 1800, 0), 1.0F)
+                .effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1800, 0), 1.0F)
+                .effect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1800, 0), 1.0f)
+                .alwaysEat().build();
     }
 }

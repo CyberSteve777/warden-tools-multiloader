@@ -15,11 +15,6 @@ public class BuddingSculkhystBlock extends BuddingAmethystBlock {
     public static final int GROW_CHANCE = 5;
     private static final Direction[] DIRS = Direction.values();
 
-    @Override
-    public MapCodec<BuddingAmethystBlock> codec() {
-        return simpleCodec(BuddingSculkhystBlock::new);
-    }
-
     public BuddingSculkhystBlock(Properties settings) {
         super(settings);
     }

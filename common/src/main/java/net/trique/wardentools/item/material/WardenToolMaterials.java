@@ -11,18 +11,18 @@ import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.util.WTBlockTags;
 
 public enum WardenToolMaterials implements Tier {
-    SCULKIFIED(WTBlockTags.INCORRECT_FOR_SCULKHYST_TOOLS, 1796, 8.5f, 3.5f, 12, () -> Ingredient.of(ItemRegistry.ECHO_INGOT.get())),
-    WARDEN(WTBlockTags.INCORRECT_FOR_WARDEN_TOOLS, 3001, 11.0f, 6.0f, 21, () -> Ingredient.of(ItemRegistry.WARDEN_INGOT.get()));
+    SCULKIFIED(3, 1796, 8.5f, 3.5f, 12, () -> Ingredient.of(ItemRegistry.ECHO_INGOT.get())),
+    WARDEN(4, 3001, 11.0f, 6.0f, 21, () -> Ingredient.of(ItemRegistry.WARDEN_INGOT.get()));
 
-    private final TagKey<Block> inverseTag;
+    private final int level;
     private final int itemDurability;
     private final float miningSpeed;
     private final float attackDamage;
     private final int enchantability;
     private final Supplier<Ingredient> repairIngredient;
 
-    WardenToolMaterials(final TagKey<Block> inverseTag, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
-        this.inverseTag = inverseTag;
+    WardenToolMaterials(int level, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
+        this.level = level;
         this.itemDurability = itemDurability;
         this.miningSpeed = miningSpeed;
         this.attackDamage = attackDamage;
@@ -46,10 +46,9 @@ public enum WardenToolMaterials implements Tier {
     }
 
     @Override
-    public TagKey<Block> getIncorrectBlocksForDrops() {
-        return this.inverseTag;
+    public int getLevel() {
+        return this.level;
     }
-
     @Override
     public int getEnchantmentValue() {
         return this.enchantability;

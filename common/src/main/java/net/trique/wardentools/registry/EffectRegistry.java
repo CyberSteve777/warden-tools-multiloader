@@ -14,13 +14,13 @@ import java.util.function.Supplier;
 public class EffectRegistry {
     protected static final RegistrationProvider<MobEffect> EFFECTS = RegistrationProvider.get(BuiltInRegistries.MOB_EFFECT, Constants.MOD_ID);
 
-    public static Holder<MobEffect> SCULK_ADAPTION;
-    public static Holder<MobEffect> WARDEN_CURSE;
-    public static Holder<MobEffect> SCULK_SCOURGE;
+    public static MobEffect SCULK_ADAPTION;
+    public static MobEffect WARDEN_CURSE;
+    public static MobEffect SCULK_SCOURGE;
 
-    private static <T extends MobEffect> Holder<MobEffect> registerEffect(String name, Supplier<T> effectSupplier) {
-        RegistryObject<MobEffect, T> effectObject = EFFECTS.register(name, effectSupplier);
-        return effectObject.asHolder();
+    private static <T extends MobEffect> MobEffect registerEffect(String name, Supplier<T> effectSupplier) {
+        RegistryObject<T> effectObject = EFFECTS.register(name, effectSupplier);
+        return effectObject.get();
     }
 
 

@@ -45,7 +45,7 @@ public class PotionRegistry {
     }
 
     protected static Holder<Potion> registerPotion(String id, Supplier<Potion> supplier) {
-        RegistryObject<Potion, Potion> potionRegistryObject = POTION_REGISTRATION_PROVIDER.register(id, supplier);
+        RegistryObject<Potion> potionRegistryObject = POTION_REGISTRATION_PROVIDER.register(id, supplier);
         return potionRegistryObject.asHolder();
     }
     

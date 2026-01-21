@@ -9,7 +9,7 @@ import net.trique.wardentools.entity.SculkArrowEntity;
 
 public class SculkArrowRenderer extends ArrowRenderer<SculkArrowEntity> {
 
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/entity/projectiles/sculk_arrow.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/entity/projectiles/sculk_arrow.png");
 
     public SculkArrowRenderer(EntityRendererProvider.Context context) {
         super(context);

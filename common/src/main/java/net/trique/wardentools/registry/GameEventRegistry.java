@@ -10,8 +10,8 @@ public class GameEventRegistry {
     private static final RegistrationProvider<GameEvent> GAME_EVENT_PROVIDER = RegistrationProvider.get(BuiltInRegistries.GAME_EVENT,
             Constants.MOD_ID);
 
-    public static RegistryObject<GameEvent, GameEvent> ENTITY_SOUND = GAME_EVENT_PROVIDER.register("entity_sound",
-            () -> new GameEvent(16));
+    public static RegistryObject<GameEvent> ENTITY_SOUND = GAME_EVENT_PROVIDER.register("entity_sound",
+            () -> new GameEvent("entity_sound", 16));
 
     public static void init() {
         Constants.LOGGER.info("Adding {} Game Events", Constants.MOD_NAME);

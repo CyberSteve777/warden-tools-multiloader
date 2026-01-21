@@ -37,7 +37,7 @@ public class EchoLocatorItem extends BowItem {
     public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
         ItemStack itemStack = user.getItemInHand(hand);
         boolean bl = !findSculkArrow(user).isEmpty();
-        if (!user.hasInfiniteMaterials() && !bl) {
+        if (!user.getAbilities().instabuild && !bl) {
             return InteractionResultHolder.fail(itemStack);
         } else {
             user.startUsingItem(hand);

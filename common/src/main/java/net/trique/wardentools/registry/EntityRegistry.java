@@ -13,10 +13,9 @@ public class EntityRegistry {
             Constants.MOD_ID);
 
 
-    public static RegistryObject<EntityType<?>, EntityType<SculkArrowEntity>> SCULK_ARROW = ENTITY_TYPE.register("sculk_arrow", () ->
+    public static RegistryObject<EntityType<SculkArrowEntity>> SCULK_ARROW = ENTITY_TYPE.register("sculk_arrow", () ->
             EntityType.Builder.<SculkArrowEntity>of(SculkArrowEntity::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
-                    .eyeHeight(0.13F)
                     .clientTrackingRange(4)
                     .updateInterval(20)
                     .build("sculk_arrow")

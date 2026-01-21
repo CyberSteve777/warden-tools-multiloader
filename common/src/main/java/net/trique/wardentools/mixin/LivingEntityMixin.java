@@ -45,13 +45,13 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @Shadow
-    public abstract boolean hasEffect(Holder<MobEffect> effect);
+    public abstract boolean hasEffect(MobEffect effect);
 
     @Shadow
-    public abstract boolean removeEffect(Holder<MobEffect> effect);
+    public abstract boolean removeEffect(MobEffect effect);
 
     @Shadow
-    public abstract MobEffectInstance getEffect(Holder<MobEffect> effect);
+    public abstract MobEffectInstance getEffect(MobEffect effect);
 
 
     @Unique
@@ -61,7 +61,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @WrapMethod(method = "canBeAffected")
     private boolean preventDarknessIfSculkAdapted(MobEffectInstance effectInstance, Operation<Boolean> original) {
-        if (effectInstance.is(MobEffects.DARKNESS) && this.hasEffect(EffectRegistry.SCULK_ADAPTION)) {
+        if (effectInstance.getEffect().equals(MobEffects.DARKNESS) && this.hasEffect(EffectRegistry.SCULK_ADAPTION)) {
             return false;
         }
         return original.call(effectInstance);
@@ -118,14 +118,14 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "onEffectAdded", at = @At("TAIL"))
     private void makeWardenCurseUser(MobEffectInstance effectInstance, Entity entity, CallbackInfo ci) {
-        if (effectInstance.is(EffectRegistry.WARDEN_CURSE)) {
+        if (effectInstance.getEffect().equals(EffectRegistry.WARDEN_CURSE)) {
             wardentools$wardenCurseUser = new WardenCurseUser(wardentools$getSelf());
         }
     }
 
     @Inject(method = "onEffectRemoved", at = @At("TAIL"))
     private void removeWardenCurseUser(MobEffectInstance effectInstance, CallbackInfo ci) {
-        if (effectInstance.is(EffectRegistry.WARDEN_CURSE)) {
+        if (effectInstance.getEffect().equals(EffectRegistry.WARDEN_CURSE)) {
             wardentools$wardenCurseUser = null;
         }
     }

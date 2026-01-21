@@ -1,29 +1,24 @@
 package net.trique.wardentools.util;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.trique.wardentools.Constants;
-import net.trique.wardentools.registry.EnchantmentEffectComponentRegistry;
+import net.trique.wardentools.registry.EnchantmentRegistry;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.apache.commons.lang3.mutable.MutableInt;
-
-import java.util.function.BiFunction;
 
 public class WTEnchantmentHelper extends EnchantmentHelper {
     public static float getRangeBonus(ServerLevel serverLevel, ItemStack tool, float distance) {
         MutableFloat mutablefloat = new MutableFloat(distance);
         runIterationOnItem(tool, ((enchantmentHolder, level) -> {
-            enchantmentHolder.value().modifyUnfilteredValue(EnchantmentEffectComponentRegistry.INCREASE_RANGE.get(),
+            enchantmentHolder.value().modifyUnfilteredValue(EnchantmentRegistry.INCREASE_RANGE.get(),
                     serverLevel.getRandom(), level, mutablefloat);
         }));
         return mutablefloat.floatValue();
@@ -32,7 +27,7 @@ public class WTEnchantmentHelper extends EnchantmentHelper {
     public static int getCooldown(ServerLevel serverLevel, ItemStack tool, int baseCooldown) {
         MutableFloat mutableFloat = new MutableFloat(1);
         runIterationOnItem(tool, ((holder, level) -> holder.value().modifyUnfilteredValue(
-                EnchantmentEffectComponentRegistry.REDUCE_COOLDOWN.get(), serverLevel.getRandom(), level, mutableFloat
+                EnchantmentRegistry.REDUCE_COOLDOWN.get(), serverLevel.getRandom(), level, mutableFloat
         )));
         return Mth.floor(baseCooldown * mutableFloat.floatValue());
     }

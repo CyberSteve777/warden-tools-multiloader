@@ -1,6 +1,6 @@
 package net.trique.wardentools.attachments;
 
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
@@ -13,7 +13,7 @@ public class CommonDataAttachments {
 
     private static final Map<ResourceLocation, CommonDataAttachment<?>> MAP = new HashMap<>();
 
-    static final StreamCodec<RegistryFriendlyByteBuf, EnumSet<KeyAction>> STREAM_CODEC = KeyAction.STREAM_CODEC.apply(ByteBufCodecs.collection(
+    static final StreamCodec<FriendlyByteBuf, EnumSet<KeyAction>> STREAM_CODEC = KeyAction.STREAM_CODEC.apply(ByteBufCodecs.collection(
             value -> EnumSet.noneOf(KeyAction.class)
     ));
 

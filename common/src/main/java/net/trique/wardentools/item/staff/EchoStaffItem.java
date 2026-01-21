@@ -1,11 +1,11 @@
 package net.trique.wardentools.item.staff;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -16,13 +16,12 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -30,6 +29,7 @@ import net.trique.wardentools.item.util.ISonicBoomItem;
 import net.trique.wardentools.registry.ItemRegistry;
 import net.trique.wardentools.registry.TriggerTypeRegistry;
 import net.trique.wardentools.util.WTEnchantmentHelper;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -42,22 +42,25 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
     protected float horizontalKnockbackCoefficient;
     protected float verticalKnockbackCoefficient;
     protected final float CHARGE_TIME = 20f;
+    private final Multimap<Attribute, AttributeModifier> defaultModifiers;
 
     public EchoStaffItem(Properties settings, int cooldown, float distance,
                          float damage, float horizontalKnockbackCoefficient,
                          float verticalKnockbackCoefficient) {
-        super(settings.attributes(createAttributeModifiers()));
+        super(settings);
         this.cooldown = cooldown;
         this.distance = distance;
         this.damage = damage;
         this.horizontalKnockbackCoefficient = horizontalKnockbackCoefficient;
         this.verticalKnockbackCoefficient = verticalKnockbackCoefficient;
+        this.defaultModifiers = createAttributeModifiers();
     }
 
-    public static ItemAttributeModifiers createAttributeModifiers() {
-        return ItemAttributeModifiers.builder()
-                .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, 3.0f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                .add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, 0f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build();
+    public static ImmutableMultimap<Attribute, AttributeModifier> createAttributeModifiers() {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = new ImmutableMultimap.Builder<>();
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier("attack_damage", 3.0f, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier("attack_speed", 0f, AttributeModifier.Operation.ADDITION));
+        return builder.build();
     }
 
     @Override
@@ -74,7 +77,7 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
     public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
         ItemStack itemStack = user.getItemInHand(hand);
         boolean bl = !findEchoShard(user).isEmpty();
-        if (!user.hasInfiniteMaterials() && !bl) {
+        if (!user.getAbilities().instabuild && !bl) {
             return InteractionResultHolder.fail(itemStack);
         } else {
             user.startUsingItem(hand);
@@ -88,7 +91,7 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
     }
 
     @Override
-    public int getUseDuration(ItemStack stack, LivingEntity usr) {
+    public int getUseDuration(ItemStack stack) {
         return 72000;
     }
 
@@ -98,7 +101,7 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced) {
         tooltipComponents.add(Component.translatable("wardentools.staff_base_damage", damage).withStyle(ChatFormatting.AQUA));
         tooltipComponents.add(Component.translatable("wardentools.staff_base_range", distance).withStyle(ChatFormatting.AQUA));
     }
@@ -107,7 +110,7 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
     public void onUseTick(Level world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         super.onUseTick(world, user, stack, remainingUseTicks);
 
-        if (getUseDuration(stack, user) - remainingUseTicks == 1) {
+        if (getUseDuration(stack) - remainingUseTicks == 1) {
             world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.WARDEN_SONIC_CHARGE, user.getSoundSource(), 3.0f, 1.0f);
         }
     }
@@ -116,14 +119,16 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
     public void releaseUsing(ItemStack stack, Level world, LivingEntity user, int timeCharged) {
         if (world instanceof ServerLevel serverLevel && user instanceof Player player) {
             ItemStack echoShardStack = findEchoShard(player);
-            int tick_progress = this.getUseDuration(stack, user) - timeCharged;
+            int tick_progress = this.getUseDuration(stack) - timeCharged;
             float progress = getChargePowerForTime(tick_progress,CHARGE_TIME);
             if (progress >= 0.95f) {
                 spawnSonicBoom(stack, serverLevel, user);
-                if (!player.hasInfiniteMaterials()) {
+                if (!player.getAbilities().instabuild) {
                     echoShardStack.shrink(1);
                     player.getCooldowns().addCooldown(this, WTEnchantmentHelper.getCooldown(serverLevel, stack, cooldown));
-                    stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+                    stack.hurtAndBreak(1, player, holder -> holder.broadcastBreakEvent(
+                            player.getUsedItemHand()
+                    ));
                 }
                 player.awardStat(Stats.ITEM_USED.get(this));
             }
@@ -172,5 +177,10 @@ public class EchoStaffItem extends Item implements ISonicBoomItem {
             TriggerTypeRegistry.AFFECTED_ENTITIES_TRIGGER.get().trigger(player, stack, hit);
         }
 
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot slot) {
+        return slot.equals(EquipmentSlot.MAINHAND) ? this.defaultModifiers : super.getDefaultAttributeModifiers(slot);
     }
 }

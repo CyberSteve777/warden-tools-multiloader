@@ -1,5 +1,6 @@
 package net.trique.wardentools.item.misc;
 
+import com.eliotlash.mclib.math.functions.classic.Mod;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
@@ -7,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlag;
 import net.minecraft.world.item.SmithingTemplateItem;
 import net.trique.wardentools.Constants;
+import net.trique.wardentools.util.ModHelper;
 
 import java.util.List;
 
@@ -43,12 +45,12 @@ public class StaffTemplateItem extends SmithingTemplateItem {
     static {
         TITLE_FORMATTING = ChatFormatting.GRAY;
         DESCRIPTION_FORMATTING = ChatFormatting.BLUE;
-        STAFF_UPGRADE_TEXT = Component.translatable(Util.makeDescriptionId("upgrade", ResourceLocation.parse("staff_upgrade"))).withStyle(TITLE_FORMATTING);
-        STAFF_UPGRADE_APPLIES_TO_TEXT = Component.translatable(Util.makeDescriptionId("item", ResourceLocation.parse("smithing_template.staff_upgrade.applies_to"))).withStyle(DESCRIPTION_FORMATTING);
-        STAFF_UPGRADE_INGREDIENTS_TEXT = Component.translatable(Util.makeDescriptionId("item", ResourceLocation.parse("smithing_template.staff_upgrade.ingredients"))).withStyle(DESCRIPTION_FORMATTING);
-        STAFF_UPGRADE_BASE_SLOT_DESCRIPTION_TEXT = Component.translatable(Util.makeDescriptionId("item", ResourceLocation.parse("smithing_template.staff_upgrade.base_slot_description")));
-        STAFF_UPGRADE_ADDITIONS_SLOT_DESCRIPTION_TEXT = Component.translatable(Util.makeDescriptionId("item", ResourceLocation.parse("smithing_template.staff_upgrade.additions_slot_description")));
-        EMPTY_SLOT_STAFF = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/empty_slot_echo_staff");
-        EMPTY_SLOT_ENDER_EYE = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/empty_slot_ender_eye");
+        STAFF_UPGRADE_TEXT = Component.translatable(Util.makeDescriptionId("upgrade", ResourceLocation.tryParse("staff_upgrade"))).withStyle(TITLE_FORMATTING);
+        STAFF_UPGRADE_APPLIES_TO_TEXT = Component.translatable(Util.makeDescriptionId("item", ResourceLocation.tryParse("smithing_template.staff_upgrade.applies_to"))).withStyle(DESCRIPTION_FORMATTING);
+        STAFF_UPGRADE_INGREDIENTS_TEXT = Component.translatable(Util.makeDescriptionId("item", ResourceLocation.tryParse("smithing_template.staff_upgrade.ingredients"))).withStyle(DESCRIPTION_FORMATTING);
+        STAFF_UPGRADE_BASE_SLOT_DESCRIPTION_TEXT = Component.translatable(Util.makeDescriptionId("item", ResourceLocation.tryParse("smithing_template.staff_upgrade.base_slot_description")));
+        STAFF_UPGRADE_ADDITIONS_SLOT_DESCRIPTION_TEXT = Component.translatable(Util.makeDescriptionId("item", ResourceLocation.tryParse("smithing_template.staff_upgrade.additions_slot_description")));
+        EMPTY_SLOT_STAFF = ModHelper.getLoc("item/empty_slot_echo_staff");
+        EMPTY_SLOT_ENDER_EYE = ModHelper.getLoc("item/empty_slot_ender_eye");
     }
 }
