@@ -36,6 +36,7 @@ public class WardenCurseUser implements VibrationSystem {
     private final net.trique.wardentools.util.warden_curse.Ticker COOLDOWN_TICKER =
             new net.trique.wardentools.util.warden_curse.Ticker();
     private final DynamicGameEventListener<Listener> GAME_EVENT_LISTENER = new DynamicGameEventListener<>(new Listener(this));
+    public static final String KEY = "WTWardenCurseVibrationData";
 
     public WardenCurseUser(LivingEntity livingEntity) {
         holder = livingEntity;

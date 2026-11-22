@@ -24,6 +24,7 @@ import net.trique.wardentools.registry.EffectRegistry;
 import net.trique.wardentools.util.WTBiomeTags;
 import net.trique.wardentools.util.WTEntityTypeTags;
 import net.trique.wardentools.util.warden_curse.WardenCurseUser;
+import net.trique.wardentools.util.warden_curse.WardenCurseUserAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -31,11 +32,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import javax.annotation.Nullable;
 import java.util.function.BiConsumer;
 
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity {
+public abstract class LivingEntityMixin extends Entity implements WardenCurseUserAccessor {
     @Unique
     private WardenCurseUser wardentools$wardenCurseUser = null;
 
@@ -57,6 +59,11 @@ public abstract class LivingEntityMixin extends Entity {
     @Unique
     protected LivingEntity wardentools$getSelf() {
         return (LivingEntity) (Object) this;
+    }
+
+    @Override
+    public @Nullable WardenCurseUser getUser() {
+        return wardentools$wardenCurseUser;
     }
 
     @WrapMethod(method = "canBeAffected")
@@ -90,17 +97,12 @@ public abstract class LivingEntityMixin extends Entity {
         return original.call(source, amount);
     }
 
-    @Override
-    public boolean dampensVibrations() {
-        return hasEffect(EffectRegistry.SCULK_ADAPTION);
-    }
-
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
     private void addVibrationDataFromWardenCurse(CompoundTag compound, CallbackInfo ci) {
         if (wardentools$wardenCurseUser != null) {
             VibrationSystem.Data.CODEC.encodeStart(NbtOps.INSTANCE, wardentools$wardenCurseUser.getVibrationData())
                     .resultOrPartial(Constants.LOGGER::warn)
-                    .ifPresent(tag -> compound.put("WTWardenCurseVibrationData", tag));
+                    .ifPresent(tag -> compound.put(WardenCurseUser.KEY, tag));
         }
 
     }
@@ -109,8 +111,8 @@ public abstract class LivingEntityMixin extends Entity {
     private void readVibrationDataForWardenCurse(CompoundTag compound, CallbackInfo ci) {
         if (hasEffect(EffectRegistry.WARDEN_CURSE)) {
             wardentools$wardenCurseUser = new WardenCurseUser(wardentools$getSelf());
-            if (compound.contains("WTWardenCurseVibrationData", 10)) {
-                VibrationSystem.Data.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, compound.getCompound("WTVibrationData")))
+            if (compound.contains(WardenCurseUser.KEY, 10)) {
+                VibrationSystem.Data.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, compound.getCompound(WardenCurseUser.KEY)))
                         .resultOrPartial(Constants.LOGGER::warn).ifPresent(wardentools$wardenCurseUser::setVibrationData);
             }
         }
@@ -120,12 +122,18 @@ public abstract class LivingEntityMixin extends Entity {
     private void makeWardenCurseUser(MobEffectInstance effectInstance, Entity entity, CallbackInfo ci) {
         if (effectInstance.is(EffectRegistry.WARDEN_CURSE)) {
             wardentools$wardenCurseUser = new WardenCurseUser(wardentools$getSelf());
+            if (level() instanceof ServerLevel level) {
+                wardentools$wardenCurseUser.getListener().add(level);
+            }
         }
     }
 
     @Inject(method = "onEffectRemoved", at = @At("TAIL"))
     private void removeWardenCurseUser(MobEffectInstance effectInstance, CallbackInfo ci) {
         if (effectInstance.is(EffectRegistry.WARDEN_CURSE)) {
+            if (wardentools$wardenCurseUser != null && level() instanceof ServerLevel level) {
+                wardentools$wardenCurseUser.getListener().remove(level);
+            }
             wardentools$wardenCurseUser = null;
         }
     }
