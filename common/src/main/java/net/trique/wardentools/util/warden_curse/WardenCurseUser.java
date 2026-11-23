@@ -1,13 +1,10 @@
 package net.trique.wardentools.util.warden_curse;
 
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.GameEventTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.ItemStack;
@@ -117,26 +114,8 @@ public class WardenCurseUser implements VibrationSystem {
 
         @Override
         public boolean isValidVibration(Holder<GameEvent> gameEvent, GameEvent.Context context) {
-            if (!gameEvent.is(this.getListenableEvents())) {
-                return false;
-            } else {
-                Entity entity = context.sourceEntity();
-                if (entity != null) {
-                    if (entity.isSpectator() || entity.is(holder)) {
-                        return false;
-                    }
-                    if (entity.isSteppingCarefully() && gameEvent.is(GameEventTags.IGNORE_VIBRATIONS_SNEAKING)) {
-                        if (this.canTriggerAvoidVibration() && entity instanceof ServerPlayer serverplayer) {
-                            CriteriaTriggers.AVOID_VIBRATION.trigger(serverplayer);
-                        }
-                        return false;
-                    }
-                    if (entity.dampensVibrations()) {
-                        return false;
-                    }
-                }
-                return context.affectedState() == null || !context.affectedState().is(BlockTags.DAMPENS_VIBRATIONS);
-            }
+            return User.super.isValidVibration(gameEvent, context) && !(context.sourceEntity() instanceof LivingEntity livingEntity &&
+                    livingEntity.is(holder));
         }
 
         @Override
