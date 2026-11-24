@@ -52,20 +52,25 @@ public class WardenEchoStaffItem extends EchoStaffItem {
         if (world instanceof ServerLevel serverLevel && user instanceof Player player) {
             ItemStack echoShardStack = findEchoShard(player);
             int tick_progress = this.getUseDuration(stack, user) - remainingUsageTicks;
+            boolean fired = false;
             if (shouldPerformSpecialAttack(stack, user, tick_progress)) {
                 performSpecialAttack(stack, serverLevel, user, tick_progress);
+                fired = true;
             } else {
                 float progress = getChargePowerForTime(tick_progress, BASE_ATTACK_CHARGE_TIME);
                 if (progress >= 0.95f) {
                     spawnSonicBoom(stack, serverLevel, user);
+                    fired = true;
                 }
             }
-            if (!player.hasInfiniteMaterials()) {
+            if (!player.hasInfiniteMaterials() && fired) {
                 echoShardStack.shrink(1);
                 player.getCooldowns().addCooldown(this, WTEnchantmentHelper.getCooldown(serverLevel, stack, cooldown));
                 stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
             }
-            player.awardStat(Stats.ITEM_USED.get(this));
+            if (fired) {
+                player.awardStat(Stats.ITEM_USED.get(this));
+            }
         }
     }
 
