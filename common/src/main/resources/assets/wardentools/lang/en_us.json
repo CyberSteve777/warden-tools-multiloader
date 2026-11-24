@@ -110,9 +110,13 @@
   "upgrade.minecraft.staff_upgrade": "Echo Staff Upgrade",
 
   "enchantment.wardentools.sonic_boost": "Sonic Boost",
+  "enchantment.wardentools.sonic_boost.desc": "Increases damage of echo staffs and echo shrieker",
   "enchantment.wardentools.propagation": "Propagation",
+  "enchantment.wardentools.propagation.desc": "Increases attack range of echo staffs and echo shrieker",
   "enchantment.wardentools.sonic_punch": "Sonic Punch",
+  "enchantment.wardentools.sonic_punch.desc": "Increases knockback of echo staffs and echo shrieker",
   "enchantment.wardentools.resonance": "Resonance",
+  "enchantment.wardentools.resonance.desc": "Reduces cooldown of echo staffs and echo shrieker",
 
   "wardentools.creative_tab.blocks": "Warden Tools: Blocks",
   "wardentools.creative_tab.equipment": "Warden Tools: Equipment",
@@ -143,7 +147,7 @@
   "wardentools.advancement.too_many_entities.description": "Locate at least 15 entities via Sculk Arrow",
   "wardentools.advancement.upgrade_echo_staff.title": "Power of Echo, but upgraded",
   "wardentools.advancement.upgrade_echo_staff.description": "Upgrade your Echo Stuff",
-  "wardentools.advancement.obtain_echo_shrieker.title": "Individual Portable Shrieker",
+  "wardentools.advancement.obtain_echo_shrieker.title": "Your own portable shrieker",
   "wardentools.advancement.obtain_echo_shrieker.description": "Obtain Echo Shrieker",
   "wardentools.advancement.get_deaf.title": "Deaf'em all",
   "wardentools.advancement.get_deaf.description": "Shriek on at least 8 entities",
