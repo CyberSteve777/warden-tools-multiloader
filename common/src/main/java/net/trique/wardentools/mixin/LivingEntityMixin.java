@@ -62,7 +62,7 @@ public abstract class LivingEntityMixin extends Entity implements WardenCurseUse
     }
 
     @Override
-    public @Nullable WardenCurseUser getUser() {
+    public @Nullable WardenCurseUser wardenTools$getUser() {
         return wardentools$wardenCurseUser;
     }
 

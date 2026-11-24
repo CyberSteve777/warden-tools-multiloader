@@ -22,7 +22,7 @@ public class EntityCallbacksMixin {
         original.call(entity, listenerConsumer);
         if (entity instanceof WardenCurseUserAccessor holder
                 && entity.level() instanceof ServerLevel level) {
-            WardenCurseUser user = holder.getUser();
+            WardenCurseUser user = holder.wardenTools$getUser();
             if (user != null) {
                 listenerConsumer.accept(user.getListener(), level);
             }
