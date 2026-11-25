@@ -162,13 +162,6 @@ public abstract class LivingEntityMixin extends Entity implements WardenCurseUse
         }
     }
 
-    @Override
-    public void updateDynamicGameEventListener(BiConsumer<DynamicGameEventListener<?>, ServerLevel> listenerConsumer) {
-        if (level() instanceof ServerLevel level && wardentools$wardenCurseUser != null) {
-            listenerConsumer.accept(wardentools$wardenCurseUser.getListener(), level);
-        }
-    }
-
     @WrapMethod(method = "hurt")
     public boolean applyExtraDamageFromSculkBless(DamageSource source, float amount, Operation<Boolean> original) {
         if (source.getEntity() instanceof LivingEntity attacker && attacker.hasEffect(EffectRegistry.SCULK_SCOURGE) &&
