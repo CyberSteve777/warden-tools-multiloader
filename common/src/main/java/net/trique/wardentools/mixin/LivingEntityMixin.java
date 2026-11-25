@@ -17,7 +17,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.gameevent.DynamicGameEventListener;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
 import net.trique.wardentools.Constants;
 import net.trique.wardentools.registry.EffectRegistry;
@@ -92,7 +91,7 @@ public abstract class LivingEntityMixin extends Entity implements WardenCurseUse
                         (livingEntity.getType().is(WTEntityTypeTags.SCULK_SCOURGE_REDUCES_DAMAGE_FROM) ||
                                 livingEntity.hasEffect(EffectRegistry.SCULK_ADAPTION))))) {
             int amplifier = getEffect(EffectRegistry.SCULK_SCOURGE).getAmplifier();
-            return original.call(source, amount * 0.1f * (amplifier + 1));
+            return original.call(source, amount * Math.min(0.1f, 1 - (amplifier + 1) * 0.225f));
         }
         return original.call(source, amount);
     }
