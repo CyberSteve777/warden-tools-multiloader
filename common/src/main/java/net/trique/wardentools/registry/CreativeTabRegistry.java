@@ -103,10 +103,10 @@ public class CreativeTabRegistry {
                                 output.accept(SCULK_SHELL.get());
                                 output.accept(SHRIEKER_FANG.get());
                                 output.accept(WARDEN_TENDRIL.get());
-                                var sonic_punch = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.SONIC_PUNCH);
-                                var resonation = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.RESONANCE);
-                                var sonic_boost = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.SONIC_BOOST);
-                                var propagation = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.PROPAGATION);
+                                var sonic_punch = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.SONIC_PUNCH.key);
+                                var resonation = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.RESONANCE.key);
+                                var sonic_boost = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.SONIC_BOOST.key);
+                                var propagation = itemDisplayParameters.holders().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(WTEnchantments.PROPAGATION.key);
                                 output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(sonic_boost, sonic_boost.value().getMaxLevel())));
                                 output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(propagation, propagation.value().getMaxLevel())));
                                 output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(sonic_punch, sonic_punch.value().getMaxLevel())));

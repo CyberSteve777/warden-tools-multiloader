@@ -33,21 +33,21 @@ public class WTEnchantmentProvider extends DatapackBuiltinEntriesProvider {
 
     private static void bootstrap(BootstrapContext<Enchantment> context) {
         HolderGetter<Item> holdergetter = context.lookup(Registries.ITEM);
-        context.register(WTEnchantments.SONIC_BOOST, Enchantment.enchantment(
+        context.register(WTEnchantments.SONIC_BOOST.key, Enchantment.enchantment(
                 Enchantment.definition(holdergetter.getOrThrow(WTItemTags.ECHO_WEAPON_ENCHANTABLE),
                         1,
-                        5,
+                        WTEnchantments.SONIC_BOOST.maxLevel,
                         Enchantment.dynamicCost(5, 10),
                         Enchantment.dynamicCost(25, 10),
                         8,
                         EquipmentSlotGroup.MAINHAND)
         ).withEffect(
-                EnchantmentEffectComponents.DAMAGE, new MultiplyValue(LevelBasedValue.perLevel(1.05f, 0.05f))
-        ).build(WTEnchantments.SONIC_BOOST.location()));
-        context.register(WTEnchantments.SONIC_PUNCH, Enchantment.enchantment(
+                EnchantmentEffectComponents.DAMAGE, new MultiplyValue(LevelBasedValue.perLevel(1.2f, 0.2f))
+        ).build(WTEnchantments.SONIC_BOOST.key.location()));
+        context.register(WTEnchantments.SONIC_PUNCH.key, Enchantment.enchantment(
                 Enchantment.definition(holdergetter.getOrThrow(WTItemTags.ECHO_WEAPON_KNOCKBACK_ENCHANTABLE),
                         2,
-                        2,
+                        WTEnchantments.SONIC_PUNCH.maxLevel,
                         Enchantment.dynamicCost(12, 20),
                         Enchantment.dynamicCost(37, 20),
                         4,
@@ -55,11 +55,11 @@ public class WTEnchantmentProvider extends DatapackBuiltinEntriesProvider {
         ).withEffect(
                 EnchantmentEffectComponents.KNOCKBACK,
                 new AddValue(LevelBasedValue.perLevel(1.0F))
-        ).build(WTEnchantments.SONIC_PUNCH.location()));
-        context.register(WTEnchantments.PROPAGATION, Enchantment.enchantment(
+        ).build(WTEnchantments.SONIC_PUNCH.key.location()));
+        context.register(WTEnchantments.PROPAGATION.key, Enchantment.enchantment(
                 Enchantment.definition(holdergetter.getOrThrow(WTItemTags.ECHO_WEAPON_ENCHANTABLE),
                         1,
-                        3,
+                        WTEnchantments.PROPAGATION.maxLevel,
                         Enchantment.dynamicCost(10, 10),
                         Enchantment.dynamicCost(25, 10),
                         8,
@@ -67,11 +67,11 @@ public class WTEnchantmentProvider extends DatapackBuiltinEntriesProvider {
         ).withSpecialEffect(
                 EnchantmentEffectComponentRegistry.INCREASE_RANGE.get(),
                 new AddValue(LevelBasedValue.perLevel(5f))
-        ).build(WTEnchantments.PROPAGATION.location()));
-        context.register(WTEnchantments.RESONANCE, Enchantment.enchantment(
+        ).build(WTEnchantments.PROPAGATION.key.location()));
+        context.register(WTEnchantments.RESONANCE.key, Enchantment.enchantment(
                 Enchantment.definition(holdergetter.getOrThrow(WTItemTags.ECHO_WEAPON_ENCHANTABLE),
                         1,
-                        3,
+                        WTEnchantments.RESONANCE.maxLevel,
                         Enchantment.dynamicCost(10, 10),
                         Enchantment.dynamicCost(25, 10),
                         8,
@@ -79,7 +79,7 @@ public class WTEnchantmentProvider extends DatapackBuiltinEntriesProvider {
         ).withSpecialEffect(
                 EnchantmentEffectComponentRegistry.REDUCE_COOLDOWN.get(),
                 new AddValue(LevelBasedValue.perLevel(-0.15f))
-        ).build(WTEnchantments.RESONANCE.location()));
+        ).build(WTEnchantments.RESONANCE.key.location()));
     }
 
     @Override

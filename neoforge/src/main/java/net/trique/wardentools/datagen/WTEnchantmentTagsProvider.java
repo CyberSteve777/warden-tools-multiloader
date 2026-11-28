@@ -20,12 +20,12 @@ public class WTEnchantmentTagsProvider extends EnchantmentTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(EnchantmentTags.TREASURE)
-                .add(WTEnchantments.PROPAGATION)
-                .add(WTEnchantments.RESONANCE);
+                .add(WTEnchantments.PROPAGATION.key)
+                .add(WTEnchantments.RESONANCE.key);
         tag(EnchantmentTags.NON_TREASURE)
-                .add(WTEnchantments.SONIC_BOOST)
-                .add(WTEnchantments.SONIC_PUNCH);
+                .add(WTEnchantments.SONIC_BOOST.key)
+                .add(WTEnchantments.SONIC_PUNCH.key);
         tag(Tags.Enchantments.WEAPON_DAMAGE_ENHANCEMENTS)
-                .add(WTEnchantments.SONIC_BOOST);
+                .add(WTEnchantments.SONIC_BOOST.key);
     }
 }

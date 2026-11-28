@@ -29,8 +29,8 @@ public class WTGlobalLootModifierProvider extends GlobalLootModifierProvider {
     @Override
     protected void start() {
         var enchantments = registries.lookupOrThrow(Registries.ENCHANTMENT);
-        var resonance = enchantments.getOrThrow(WTEnchantments.RESONANCE);
-        var propagation = enchantments.getOrThrow(WTEnchantments.PROPAGATION);
+        var resonance = enchantments.getOrThrow(WTEnchantments.RESONANCE.key);
+        var propagation = enchantments.getOrThrow(WTEnchantments.PROPAGATION.key);
         add("add_warden_upgrade_smithing_template", new AddItemModifier(new LootItemCondition[]{
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
                 LootItemRandomChanceCondition.randomChance(0.1f).build()
@@ -54,11 +54,11 @@ public class WTGlobalLootModifierProvider extends GlobalLootModifierProvider {
         add("add_resonance_enchanted_book", new AddEnchantedBookToPoolModifier(new LootItemCondition[] {
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
                 LootItemRandomChanceCondition.randomChance(0.25f).build()
-        }, resonance, resonance.value().getMinLevel(), resonance.value().getMaxLevel()));
+        }, resonance, WTEnchantments.RESONANCE.minLevel, WTEnchantments.RESONANCE.maxLevel));
         add("add_propagation_enchanted_book", new AddEnchantedBookToPoolModifier(new LootItemCondition[] {
                 LootTableIdCondition.builder(ANCIENT_CITY_LOOT_LOCATION).build(),
                 LootItemRandomChanceCondition.randomChance(0.1f).build()
-        }, propagation, propagation.value().getMinLevel(), propagation.value().getMaxLevel()));
+        }, propagation, WTEnchantments.PROPAGATION.minLevel, WTEnchantments.PROPAGATION.maxLevel));
         add("add_warden_soul_to_warden_loot", new AddItemToWardenLootModifier(new LootItemCondition[0],
                 WARDEN_SOUL.get(), 0.3f, 0.1f, 1, 2));
         add("add_warden_tendril_to_warden_loot", new AddItemToWardenLootModifier(new LootItemCondition[0],
