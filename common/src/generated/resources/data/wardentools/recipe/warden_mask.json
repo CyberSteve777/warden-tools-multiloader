@@ -1,5 +1,8 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "wardentools:warden_mask_shaped",
+  "base_helmet": {
+    "item": "wardentools:sculkified_helmet"
+  },
   "category": "equipment",
   "key": {
     "h": {

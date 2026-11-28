@@ -11,6 +11,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import net.trique.wardentools.Constants;
+import net.trique.wardentools.util.WardenMaskRecipeBuilder;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -123,7 +124,7 @@ public class WTRecipeProvider extends RecipeProvider implements IConditionBuilde
     }
 
     private static void offerWardenMaskRecipe(RecipeOutput exporter) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, WARDEN_MASK.get())
+        WardenMaskRecipeBuilder.create(RecipeCategory.COMBAT, WARDEN_MASK.get(), SCULKIFIED_HELMET.get())
                 .define('t', WARDEN_TENDRIL.get())
                 .define('s', Blocks.SCULK_SENSOR)
                 .define('h', SCULKIFIED_HELMET.get())
