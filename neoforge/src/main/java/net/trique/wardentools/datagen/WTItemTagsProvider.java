@@ -45,7 +45,7 @@ public class WTItemTagsProvider extends ItemTagsProvider {
                 SCULKIFIED_HOE.get(), WARDEN_HOE.get()
         );
         tag(ItemTags.HEAD_ARMOR).add(
-                SCULKIFIED_HELMET.get(), WARDEN_HELMET.get()
+                SCULKIFIED_HELMET.get(), WARDEN_HELMET.get(), WARDEN_MASK.get()
         );
         tag(ItemTags.CHEST_ARMOR).add(
                 SCULKIFIED_CHESTPLATE.get(), WARDEN_CHESTPLATE.get()
